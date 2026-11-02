@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "prompt": {"type": "string", "minLength": 200},
+    "schema": {"type": "object"},
+    "codebook_version": {"type": ["integer", "null"]},
+    "cells_version": {"type": ["integer", "null"]},
+    "elements": {"type": "array", "items": {"type": "string"}},
+    "checks": {"type": "array", "items": {"type": "string"}},
+    "include_checks": {"type": "array", "items": {"type": "string"}},
+    "maybe_checks": {"type": "array", "items": {"type": "string"}},
+    "absent_checks": {"type": "array", "items": {"type": "string"}},
+    "label_groups": {"type": "array", "items": {"type": "string"}}
+  },
+  "required": ["prompt", "schema", "elements"]
+}

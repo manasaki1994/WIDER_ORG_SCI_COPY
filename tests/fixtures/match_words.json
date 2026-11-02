@@ -1,0 +1,14 @@
+[
+  {"a": "Work stress in nurses", "b": "Work stress in nurses", "word": "same"},
+  {"a": "Work stress in nurses", "b": "Work Stress in Nurses.", "word": "spelling"},
+  {"a": "Café workers' stress", "b": "Cafe workers stress", "word": "spelling"},
+  {"a": "Journal of Safety", "b": "Journal  of safety", "word": "spelling"},
+  {"a": "one two three four five six seven eight nine", "b": "one two three four five six seven eight nine ten", "word": "nearly"},
+  {"a": "one two three four five six seven eight nine ten", "b": "one two three four five six seven eight eleven twelve", "word": "differs"},
+  {"a": "10.1000/x1", "b": "", "word": "only_a"},
+  {"a": "", "b": "12", "word": "only_b"},
+  {"a": "", "b": "", "word": "missing"},
+  {"a": null, "b": "  ", "word": "missing"},
+  {"a": "2015", "b": "2018", "word": "differs"},
+  {"a": "Journal X", "b": "Journal Y", "word": "differs"}
+]

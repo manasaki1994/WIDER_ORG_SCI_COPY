@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="{{CSP}}">
+<meta name="referrer" content="no-referrer">
+<title>{{TITLE}}</title>
+<style>{{STYLE}}</style>
+</head>
+<body>
+<main id="rp">
+  <header class="rp-head">
+    <h1 id="rp-title">Review package</h1>
+    <p id="rp-project"></p>
+    <p id="rp-notice"></p>
+    <p id="rp-storage" hidden></p>
+    <p id="rp-limits"></p>
+  </header>
+  <div class="rp-bar" role="toolbar" aria-label="Your decisions">
+    <span id="rp-progress" role="status"></span>
+    <button type="button" id="rp-export">Export my decisions</button>
+    <label class="rp-file">Continue from a decisions file <input type="file" id="rp-continue" accept=".json,application/json"></label>
+    <button type="button" id="rp-criteria-toggle" aria-expanded="false" aria-controls="rp-criteria">Criteria</button>
+  </div>
+  <p id="rp-msg" role="status" aria-live="polite"></p>
+  <div class="rp-cols">
+    <nav class="rp-list" aria-label="Records"><ol id="rp-items"></ol></nav>
+    <section id="rp-item" aria-labelledby="rp-item-title"></section>
+    <aside id="rp-criteria" aria-label="Criteria" hidden></aside>
+  </div>
+</main>
+<script type="application/json" id="data">{{DATA}}</script>
+<script>{{SCRIPT}}</script>
+</body>
+</html>

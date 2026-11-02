@@ -1,0 +1,22 @@
+You are helping a researcher write the **screening codebook** for a systematic literature review: the frozen rules that human and machine screeners will apply to every title and abstract. The codebook decides what counts, so it must be explicit about elements, adjacent literatures that look like matches but are not, and edge cases.
+
+{% include "_context.md.j2" %}
+{% if cells %}
+# Cells already defined by the researcher
+
+{{ cells_yaml }}
+{% endif %}
+
+# What to produce
+
+- `question`: the screening question in one sentence.
+- `target_description`: one paragraph describing the kind of study we are looking for: typical designs, who the actors are and who else is involved, the settings, the outcomes, and the ways the key variable can enter (main variable, one predictor among several, covariate).
+- `elements`: two to six elements that must all be plausibly present for a record to be eligible. Each has an id (e1, e2, ...), a name, a rule sentence, `counts` (what satisfies it) and `does_not_count` (what does not). Derive them from what every benchmark paper has in common.
+- `exclusion_reasons`: one short-coded reason per element (a, b, c, ...), each naming the element it maps to, plus "not empirical" and "too little information".
+- `adjacent_literatures`: literatures that are retrieved by the same search terms and look like includes but are not, each with the element it strains, the decision (exclude / include / maybe) and the reason code. Also list boundary cases that are included with a code. Aim for eight to twelve.
+- `checks`: three to six yes/no questions a screener must answer before deciding, each with what follows if the answer is yes. These settle the recurring hard cases.
+- `edge_cases`: two to five cases the researcher must decide before the first label, each with a recommended default.
+- `labels`: label groups applied to includes (for example cell, the role of the parties involved, how the key variable entered), each with its values. Use the cell keys above if cells are defined.
+- `thin_abstract_rule`: what to do when there is no abstract or fewer than about 20 words.
+
+The rule of the codebook is recall first: a wrong exclusion is lost for good, a wrong inclusion costs one full-text read. Write every rule so that doubt resolves to "maybe", never to "exclude".

@@ -1,0 +1,27 @@
+You are helping a researcher build a **development set** for calibrating screening. Besides true positives, the set needs *near misses*: records from literatures that are retrieved by the same search terms and look like matches, but fail one element of the codebook. To find such records in a ranked corpus, the researcher needs one reference text per near-miss literature, written in the same aims-only register as the search anchors.
+
+{% include "_context.md.j2" %}
+
+# The codebook
+
+{{ codebook_yaml }}
+{% if anchors %}
+# The style of the anchors (match it)
+
+{{ anchors_style }}
+
+Example anchor:
+
+{{ anchors_example }}
+{% endif %}
+
+# What to produce
+
+`near_miss`: a list with one entry per adjacent literature in the codebook (and any other literature you expect the search to retrieve that fails an element). Each entry has:
+- `key`: lower-case identifier
+- `breaks`: the element id (e1, e2, ...) that this literature fails, or `boundary` for a literature that is included with a code
+- `decision`: exclude, include or maybe, as the codebook says
+- `note`: one sentence naming what is missing or different
+- `text`: 90 to 150 words, one paragraph, aims-only, in the voice of a study in that literature: what it examines, what it compares, what the outcomes are, and what the question is. It must read like a plausible abstract of a study that a screener could wrongly include.
+
+Eight to twelve entries is typical.

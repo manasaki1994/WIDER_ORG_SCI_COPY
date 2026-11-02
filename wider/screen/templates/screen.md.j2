@@ -1,0 +1,104 @@
+You are screening one bibliographic record, by title and abstract only, for a systematic review. Decide whether the record could belong in the review.
+
+# How to work
+
+- Judge only from the title and abstract supplied. Do not use anything you may know about the paper, its authors or its journal. Never invent detail that is not in the text.
+- Check the {{ n_elements_word }} elements one by one{% if checks %}, answer the {{ n_checks_word }} checks{% endif %}, compare the study with the paper we are looking for, then decide.
+- For every element, quote the words of the text that support your grade, verbatim. A quote is a copy of words from the title or abstract, never a sentence of your own: do not write "The abstract does not mention ..." in a quote field. A grade of "absent" is allowed only with a copied quote of the words that show the element is missing. If you cannot copy such words, leave the quote "" and grade "unclear".
+- A wrong exclusion is lost for good; a wrong inclusion costs one full-text read. Exclude only when the study is unrelated to the topic or when you have quoted the words that show an element is absent. In every other case of doubt, choose "maybe" and say what is missing.
+- {{ thin_abstract_rule }}
+
+# The paper we are looking for
+
+{{ target_description }}
+
+# The question
+
+{{ question }}
+
+# The {{ n_elements_word }} elements
+
+A record is eligible when all {{ n_elements_word }} elements are plausibly present.
+
+{% for e in elements %}
+{{ loop.index }}. {{ e.name }}. {{ e.rule }}{% if e.counts %} Counts: {{ e.counts|join("; ") }}.{% endif %}{% if e.does_not_count %} Does not count: {{ e.does_not_count|join("; ") }}.{% endif %}
+{% endfor %}
+{% if not_a_criterion %}
+Not a criterion: {{ not_a_criterion|join("; ") }}.
+{% endif %}
+{% if checks %}
+
+# {{ n_checks_word|capitalize }} checks, decided by the review author, that you must answer before deciding
+
+{% for c in checks %}
+{{ loop.index }}. {{ c.key }}. {{ c.question }} If yes: {{ c.if_yes }}
+{% endfor %}
+{% endif %}
+{% if adjacent %}
+
+# Adjacent literatures that look like includes but are not
+
+{% for a in adjacent %}
+- {{ a.name }}{% if a.strains_element %} (strains {{ a.strains_element }}){% endif %}: {{ a.decision }}{% if a.reason_code %}, reason {{ a.reason_code }}{% endif %}{% if a.note %}. {{ a.note }}{% endif %}
+{% endfor %}
+{% endif %}
+{% if adjacent_literatures %}
+
+# Adjacent literatures named by the researcher
+
+Records from these literatures come back from the same search but are not what the review looks for. Whatever you decide, say in adjacent_literature which of them the record belongs to, or "none".
+
+{% for a in adjacent_literatures %}
+- {{ a.key }}: {{ a.name }}.{% if a.differs_from_construct %} {{ a.differs_from_construct }}{% endif %}{% if a.discriminating_cue %} Cue: {{ a.discriminating_cue }}{% endif %}
+{% endfor %}
+{% endif %}
+{% if edge_cases %}
+
+# Edge cases, decided by the review author
+
+{% for e in edge_cases %}
+- {{ e.case }}: {{ e.default }} (edge_case "{{ e.key }}")
+{% endfor %}
+{% endif %}
+{% if cells %}
+
+# The cells
+
+If the record is an include, name the cell that fits its main question.
+
+{% for c in cells %}
+- {{ c.key }}: {{ c.question }}
+{% endfor %}
+{% endif %}
+
+# Decision
+
+- include: all {{ n_elements_word }} elements are plausibly present from the title and abstract{% if include_checks %}, or one of the checks {{ include_checks|join(", ") }} applies{% endif %}.
+- exclude: only when the study is unrelated to the topic, or when you have graded an element absent with a quote of the words that show it. Give one reason: {% for r in exclusion_reasons %}{{ r.code }}, {{ r.text }}{{ "; " if not loop.last else "." }}{% endfor %}
+- maybe: in every other case: you cannot tell from the text, a check says so, an edge case applies, the paper is non-empirical but on topic, or there is no usable abstract. Say what is missing.
+
+# Output
+
+Return only one JSON object with exactly these fields, in this order:
+
+- summary: one sentence in your own words saying what the study did and what it compared. Not the title.
+{% for e in elements %}
+- {{ e.id }}: "present", "unclear" or "absent" for {{ e.name|lower }}.
+- {{ e.id }}_quote: the words of the text your grade rests on, copied verbatim, or "" if none.
+{% endfor %}
+{% for c in checks %}
+- {{ c.key }}: true or false.
+{% endfor %}
+- target_fit: "core" if this is the kind of study described above; "adjacent" if it is about the topic but an element is missing or unclear; "unrelated" if it is about neither.
+{% for e in edge_cases %}{% if loop.first %}- edge_case: {% for x in edge_cases %}"{{ x.key }}"{{ ", " if not loop.last else "" }}{% endfor %} or "none".
+{% endif %}{% endfor %}
+- decision: "include", "maybe" or "exclude".
+- exclusion_reason: {% for r in exclusion_reasons %}"{{ r.code }}", {% endfor %}or "none".
+- missing_for_maybe: for a maybe, what the text does not say; otherwise "".
+{% for g in label_groups %}
+{% if g.any_decision %}
+- {{ g.group }}: whatever the decision, one of {% for v in g["values"] %}"{{ v }}"{{ ", " if not loop.last else "" }}{% endfor %}.
+{% else %}
+- {{ g.group }}: for an include, one of {% for v in g["values"] %}"{{ v }}"{{ ", " if not loop.last else "" }}{% endfor %}; otherwise "not_applicable".
+{% endif %}
+{% endfor %}

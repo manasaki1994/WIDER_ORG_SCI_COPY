@@ -1,0 +1,43 @@
+% synthetic BibTeX export
+@comment{generated for tests}
+
+@string{jws = "Journal of Work Studies"}
+
+@article{rw1,
+  title = {Remote work {and} team productivity in distributed software teams},
+  author = {Lee, Ana and Kim, Bo},
+  year = {2021},
+  journal = {Journal of Work Studies},
+  doi = {10.1000/rw.001},
+  abstract = {We study how remote work changes team productivity in distributed software teams using survey data.},
+  keywords = {remote work; productivity}
+}
+
+@article{rw2,
+  title = {Hybrid schedules {and} collaboration quality},
+  author = {Novak, Ivo},
+  year = {2022},
+  journal = {Organization Quarterly},
+  doi = {10.1000/rw.002},
+  abstract = {Hybrid work schedules are compared with office work on collaboration quality and team productivity.},
+  keywords = {remote work; productivity}
+}
+
+@article{rw3,
+  title = {Telework adoption after the p{and}emic: a review},
+  author = {Garcia, Mia and Olsen, Per and Chen, Li},
+  year = {2023},
+  journal = {Review of Management},
+  doi = {10.1000/rw.003},
+  abstract = {A narrative review of telework adoption and its effect on team outcomes and productivity.},
+  keywords = {remote work; productivity}
+}
+
+@article{rw4,
+  title = "Video meetings, fatigue and output of knowledge workers",
+  author = "Haddad, Sam",
+  year = 2020,
+  journal = jws # " (special issue)",
+  doi = "10.1000/rw.004",
+  abstract = "Video meeting load is related to fatigue."
+}

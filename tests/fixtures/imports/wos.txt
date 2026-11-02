@@ -1,0 +1,5 @@
+PT	AU	TI	SO	DE	AB	DI	PY	UT	DT
+J	Garcia, Mia; Olsen, Per; Chen, Li	Telework adoption after the pandemic: a review	Review of Management	remote work; productivity	A narrative review of telework adoption and its effect on team outcomes and productivity.	10.1000/rw.003	2023	WOS:000001	Article
+J	Haddad, Sam	Video meetings, fatigue and output of knowledge workers	Journal of Work Studies	remote work; productivity	Video meeting load is related to fatigue and lower output among remote knowledge workers.	10.1000/rw.004	2020	WOS:000002	Article
+J	Brown, Kay; Lee, Ana	Asynchronous communication norms in remote teams	Teams and Technology	remote work; productivity	Norms for asynchronous communication predict productivity in fully remote teams.		2022	WOS:000003	Article
+J	Rossi, Gia	Office redesign and employee wellbeing	Workplace Journal	remote work; productivity	Office redesign improves wellbeing but has no measured effect on collaboration.	10.1000/rw.006	2019	WOS:000004	Article

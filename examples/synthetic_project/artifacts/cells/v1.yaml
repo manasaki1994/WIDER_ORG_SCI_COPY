@@ -1,0 +1,70 @@
+construct: 'Employee voice and silence: discretionary upward communication, or its withholding, of suggestions,
+  concerns and problems by employees.'
+dimensions:
+- name: form
+  values:
+  - key: voice
+    label: Voice
+    definition: An employee raises suggestions, concerns or proposals with someone inside the organisation who could
+      act on them.
+  - key: silence
+    label: Silence
+    definition: An employee withholds concerns, information or opinions from people who could act on them.
+  - key: whistleblowing
+    label: Whistleblowing
+    definition: An employee reports irregularities or safety problems to an internal or external authority.
+- name: focus
+  values:
+  - key: antecedent
+    label: Antecedents
+    definition: What predicts whether the behaviour occurs.
+  - key: consequence
+    label: Consequences
+    definition: What follows for the employee, the receiver or the organisation once the behaviour has occurred.
+cells:
+- key: voice_antecedent
+  labels:
+    form: voice
+    focus: antecedent
+  question: what leads employees to speak up with suggestions or concerns
+  benchmark_ids:
+  - B1
+- key: voice_consequence
+  labels:
+    form: voice
+    focus: consequence
+  question: how receivers react to voice and what follows for the speaker
+  benchmark_ids:
+  - B4
+  - B5
+- key: silence_antecedent
+  labels:
+    form: silence
+    focus: antecedent
+  question: why employees withhold concerns or opinions
+  benchmark_ids:
+  - B2
+- key: silence_consequence
+  labels:
+    form: silence
+    focus: consequence
+  question: what follows when employees stay silent
+- key: whistleblowing_antecedent
+  labels:
+    form: whistleblowing
+    focus: antecedent
+  question: what leads employees to report irregularities to an authority
+  benchmark_ids:
+  - B3
+- key: whistleblowing_consequence
+  labels:
+    form: whistleblowing
+    focus: consequence
+  question: what happens to employees after they report irregularities
+  benchmark_ids:
+  - B6
+not_a_criterion:
+- setting or industry
+- occupation
+- country
+- research method

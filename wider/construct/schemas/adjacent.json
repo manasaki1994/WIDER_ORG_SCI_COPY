@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "literatures": {"type": "array",
+      "items": {"type": "object",
+        "properties": {
+          "key": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "name": {"type": "string", "minLength": 1},
+          "description": {"type": "string",
+            "description": "What this literature studies, in two or three sentences, in the register of its own abstracts."},
+          "differs_from_construct": {"type": "string",
+            "description": "Which element of the codebook this literature fails, or how it differs from the target studies."},
+          "discriminating_cue": {"type": "string",
+            "description": "The words or framing in a title or abstract that tell this literature apart from an include."},
+          "example_phrases": {"type": "array", "items": {"type": "string"}},
+          "origin": {"type": "string", "enum": ["researcher", "tool"]},
+          "status": {"type": "string", "enum": ["proposed", "approved", "rejected"]},
+          "evidence": {"type": "object",
+            "description": "Optional grounding of a tool proposal: cluster id, record ids and verbatim quotes."}
+        },
+        "required": ["key", "name", "description", "origin", "status"]}}
+  },
+  "required": ["literatures"]
+}

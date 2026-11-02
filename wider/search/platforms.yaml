@@ -1,0 +1,247 @@
+# Per-platform syntax. field_codes: the code written for each block field (title, abstract, keywords; Scopus and Web of
+# Science also hold a code for a field combination), each verified: false until checked against the platform's help
+# page; verified: true needs source: {url, accessed} (the page opened and the date). covers: the record fields a code
+# searches when wider than the block; render_note: a note printed with every string that uses the code. Proximity operator;
+# truncation; whether phrases keep truncation; practical caps; how to paste.
+# export_formats / export_cap: formats the platform can export and the known per-batch record cap of each
+# (used by the import sanity check: a file with exactly that many records was probably truncated).
+# profile: how WIDER's dry run reads a string on the platform (vision change 2a, D6): which record fields each block
+# field searches, the minimum stem before *, whether * works inside a phrase, the proximity range and how the
+# distance counts (between: n words may stand between; within: at most n-1), and the behaviours that make a result
+# uncertain. Google Scholar has none. Each value is a fact to check against the help page (manual check M46).
+# Catalogue fields read by the setup page: description, coverage (one line), export_formats (lower-case
+# file formats the importer understands), export_cap (records per export batch, per format; {} = no known cap), cap_note.
+platforms:
+  ebsco:
+    label: EBSCOhost (Business Source, PsycINFO, ERIC, ...)
+    name: EBSCOhost  # short name for reports (prisma-reporting-assistant, D12)
+    multi_database: true      # one string can search several databases; which ones is not recorded
+    style: ebsco
+    description: Host for many subject databases (Business Source, PsycINFO, ERIC, CINAHL); one string searches several at once.
+    coverage: Management, psychology, education and health journals; strong on business and applied psychology.
+    cap_note: Folder export is limited to batches (typically 200 with abstracts via RIS); page through the results.
+    field_codes:              # the codes the boolean renderer writes per block field (2a, task 2.3; manual check M46)
+      title: {code: "TI", verified: false, note: "title"}
+      abstract: {code: "AB", verified: false, note: "abstract"}
+      keywords: {code: "KW", verified: false, note: "author keywords; not yet checked against the help page (KW vs SU subject terms)"}
+    proximity: "N{n}"          # unordered within n words
+    proximity_ordered: "W{n}"
+    truncation: "*"
+    phrase_truncation: true
+    max_length: null
+    export_formats: [ris, csv, xlsx]
+    export_cap: {ris: 200}    # the RIS export from the folder is capped per batch; the CSV export is not
+    profile:                  # dry-run profile (D6); every value is checked by hand in manual check M46
+      fields: {title: [title], abstract: [abstract], keywords: [keywords]}
+      min_stem: 3               # three letters since Dec 2025
+      phrase_truncation: true
+      proximity_range: [1, 255] # Nn unordered, Wn ordered
+      proximity_counts: between # N5 allows up to five words between the two terms
+      proximity_ordered_available: true
+      stop_words: []            # EBSCO ignores stop words but keeps their position; the list is not recorded yet (M46)
+      uncertain_when: [stop_words]
+    known_item:               # indexing check (D10, task 2.10): what the researcher pastes per missed seed; M47
+      doi: 'DI {doi}'
+      title: 'TI "{title}"'
+      verified: false
+      note: "DI is the DOI field in the EBSCO databases that index it; not every database does"
+    paste: >-
+      Advanced Search, one search box, search mode Boolean/Phrase. Switch off autocorrect and
+      "apply related words". Export in batches; the RIS export is capped per batch.
+  scopus:
+    label: Scopus
+    style: scopus
+    description: Elsevier's multidisciplinary citation index with curated journal coverage and a precise query language.
+    coverage: Multidisciplinary; most peer-reviewed journals in management, social and behavioural sciences since 1996 (older for many).
+    cap_note: Up to 20,000 records per RIS or BibTeX export when logged in, but only 2,000 per CSV export with abstracts; split the query by year ranges beyond that.
+    field_codes:              # the codes the boolean renderer writes per block field (2a, task 2.3; manual check M46)
+      title: {code: "TITLE", verified: false, note: "title only"}
+      abstract: {code: "ABS", verified: false, note: "abstract only"}
+      "title,abstract": {code: "TITLE-ABS", verified: false, note: "title and abstract"}
+      keywords: {code: "TITLE-ABS-KEY", verified: false, covers: [title, abstract, keywords], note: "WIDER has no keywords-only code for Scopus: any block with keywords uses TITLE-ABS-KEY, which also searches title and abstract (AUTHKEY not yet considered)"}
+    proximity: "W/{n}"
+    proximity_ordered: "PRE/{n}"
+    truncation: "*"
+    phrase_truncation: true     # loose phrases "..." allow wildcards
+    max_length: 20000
+    export_formats: [ris, csv, bib]
+    export_cap: {ris: 20000, csv: 2000, bib: 20000}    # the CSV export with abstracts stops at 2,000 documents
+    profile:                  # dry-run profile (D6); every value is checked by hand in manual check M46
+      # a keywords field is rendered as TITLE-ABS-KEY (field_codes above), which also searches title and abstract
+      fields: {title: [title], abstract: [abstract], keywords: [title, abstract, keywords]}
+      min_stem: 3
+      phrase_truncation: true   # loose phrases "..." allow wildcards
+      proximity_range: [0, null] # W/n unordered, PRE/n ordered; no upper limit recorded
+      proximity_counts: between
+      proximity_ordered_available: true
+      stop_words: []
+      uncertain_when: []
+    known_item:               # indexing check (D10, task 2.10): what the researcher pastes per missed seed; M47
+      doi: 'DOI("{doi}")'
+      title: 'TITLE("{title}")'
+      verified: false
+      note: "DOI() and TITLE() in Advanced search"
+    paste: >-
+      Advanced document search. Scopus treats "..." as a loose phrase and {...} as an exact phrase;
+      wildcards work inside loose phrases. Export up to 20,000 records as RIS.
+  wos:
+    label: Web of Science Core Collection
+    name: Web of Science  # short name for reports (prisma-reporting-assistant, D12)
+    multi_database: true      # one string can search several databases; which ones is not recorded
+    style: wos
+    description: Clarivate's selective citation index (SSCI, SCIE, AHCI, ESCI); topic search covers title, abstract and keywords.
+    coverage: Selective, high-impact journals across fields; social sciences well covered through SSCI.
+    cap_note: 500 records per RIS export with abstracts (1,000 without); export by record ranges.
+    field_codes:              # the codes the boolean renderer writes per block field (2a, task 2.3; manual check M46)
+      title: {code: "TI=", verified: false, note: "title"}
+      abstract: {code: "AB=", verified: false, note: "abstract"}
+      keywords: {code: "AK=", verified: false, note: "author keywords; not yet checked against the help page"}
+      "title,abstract,keywords": {code: "TS=", verified: false, covers: [title, abstract, keywords], note: "topic: title, abstract, author keywords and Keywords Plus; used only when the block names all three fields"}
+    proximity: "NEAR/{n}"
+    proximity_ordered: null
+    truncation: "*"
+    phrase_truncation: true
+    max_length: null
+    export_formats: [ris, txt, xls, xlsx, bib]
+    export_cap: {ris: 500, txt: 500, bib: 500, xls: 1000, xlsx: 1000}
+    profile:                  # dry-run profile (D6); every value is checked by hand in manual check M46
+      fields: {title: [title], abstract: [abstract], keywords: [keywords]}
+      min_stem: 3
+      phrase_truncation: true
+      proximity_range: [0, null] # NEAR/x, default 15; no upper limit recorded
+      proximity_default: 15
+      proximity_counts: between
+      proximity_ordered_available: false
+      stop_words: []
+      uncertain_when: [lemmatisation]   # on unless the term is quoted or truncated
+    known_item:               # indexing check (D10, task 2.10): what the researcher pastes per missed seed; M47
+      doi: 'DO=({doi})'
+      title: 'TI=("{title}")'
+      verified: false
+      note: "DO= and TI= in Advanced search"
+    paste: >-
+      Advanced Search. TI= and AB= searched separately and OR-ed. Export to RIS ("Other File Formats",
+      500 per batch) or use the EndNote export.
+  proquest:
+    label: ProQuest
+    name: ProQuest  # short name for reports (prisma-reporting-assistant, D12)
+    multi_database: true      # one string can search several databases; which ones is not recorded
+    style: proquest
+    description: Aggregator of journal, dissertation and news databases (ABI/INFORM, Sociological Abstracts, Dissertations & Theses).
+    coverage: Business (ABI/INFORM), sociology, dissertations and grey literature; coverage depends on the subscribed databases.
+    cap_note: 100 records per direct export; more via "Save to My Research" or by paging through results.
+    field_codes:              # the codes the boolean renderer writes per block field (2a, task 2.3; manual check M46)
+      title: {code: "TI", verified: false, note: "title"}
+      abstract: {code: "AB", verified: false, note: "abstract"}
+      keywords: {code: "IF", verified: false, note: "author keywords; not yet checked against the help page (IF vs SU subject heading)"}
+    proximity: "NEAR/{n}"
+    proximity_ordered: "PRE/{n}"
+    truncation: "*"
+    phrase_truncation: true
+    max_length: null
+    export_formats: [ris, csv, xls, xlsx]
+    export_cap: {ris: 100, csv: 100, xls: 100, xlsx: 100}    # per page/batch without "Save to My Research"
+    profile:                  # dry-run profile (D6); every value is checked by hand in manual check M46
+      fields: {title: [title], abstract: [abstract], keywords: [keywords]}
+      min_stem: null            # no minimum, but * covers at most five characters
+      max_truncation: 5
+      phrase_truncation: true
+      proximity_range: [0, null] # NEAR/n (default 4), PRE/n; no upper limit recorded
+      proximity_default: 4
+      proximity_counts: between
+      proximity_ordered_available: true
+      stop_words: []            # ProQuest has no stop words
+      uncertain_when: []
+    known_item:               # indexing check (D10, task 2.10): what the researcher pastes per missed seed; M47
+      doi: null
+      title: 'TI("{title}")'
+      verified: false
+      note: "no DOI field recorded for ProQuest: the title as a phrase"
+    paste: >-
+      Advanced Search in command line mode. Phrases in double quotes; NEAR/n for proximity.
+      Export to RIS in batches of up to 100 (more with Save to My Research).
+  ovid:
+    label: Ovid (PsycINFO, MEDLINE, Embase)
+    name: Ovid  # short name for reports (prisma-reporting-assistant, D12)
+    multi_database: true      # one string can search several databases; which ones is not recorded
+    style: ovid
+    description: Wolters Kluwer host for PsycINFO, MEDLINE and Embase with field-tagged command-line searching.
+    coverage: Psychology (PsycINFO) and biomedicine (MEDLINE, Embase); controlled vocabulary available.
+    cap_note: Large exports are allowed but slow; export in ranges of a few thousand records.
+    field_codes:              # the codes the boolean renderer writes per block field (2a, task 2.3; manual check M46)
+      title: {code: "ti", verified: false, note: "title suffix"}
+      abstract: {code: "ab", verified: false, note: "abstract suffix"}
+      keywords: {code: "kw", verified: false, note: "author keywords; not yet checked against the help page (kw vs kf; WIDER keeps kw)"}
+    proximity: "ADJ{n}"
+    proximity_ordered: null
+    truncation: "$"
+    phrase_truncation: true     # phrases are unquoted in Ovid; truncation works on the last word
+    max_length: null
+    export_formats: [ris, csv, xlsx]
+    export_cap: {}    # Ovid limits vary by account; add the batch size you observe, e.g. {ris: 5000}
+    profile:                  # dry-run profile (D6); every value is checked by hand in manual check M46
+      fields: {title: [title], abstract: [abstract], keywords: [keywords]}
+      min_stem: null
+      phrase_truncation: true
+      proximity_range: [1, 99]  # ADJn = within n-1 words
+      proximity_counts: within
+      proximity_ordered_available: false
+      stop_words: []            # Ovid's run-time stop words keep their position; the list is not recorded yet (M46)
+      uncertain_when: [stop_words]
+    known_item:               # indexing check (D10, task 2.10): what the researcher pastes per missed seed; M47
+      doi: '{doi}.do.'
+      title: '"{title}".ti.'
+      verified: false
+      note: "the .do. field exists in some Ovid databases only"
+    paste: >-
+      Advanced Search, "Multi-Field" or command line. Ovid phrases are unquoted; proximity ADJn.
+      Export citations with abstract as RIS ("Export → RIS").
+  pubmed:
+    label: PubMed
+    style: pubmed
+    description: Free biomedical index (MEDLINE plus PubMed Central) with limited proximity searching.
+    coverage: Biomedicine, nursing, health services and some psychology; little management literature.
+    cap_note: The "Send to → Citation manager" route is capped at 10,000 records; the PubMed text format has no cap.
+    field_codes:              # the codes the boolean renderer writes per block field (2a, task 2.3; manual check M46)
+      title: {code: "[tiab]", verified: false, render_note: "[tiab] includes author keywords", note: "PubMed has no separate title, abstract or keyword tag in WIDER's renderer: every term gets [tiab]"}
+      abstract: {code: "[tiab]", verified: false, render_note: "[tiab] includes author keywords", note: "PubMed has no separate title, abstract or keyword tag in WIDER's renderer: every term gets [tiab]"}
+      keywords: {code: "[tiab]", verified: false, render_note: "[tiab] includes author keywords", note: "PubMed has no separate title, abstract or keyword tag in WIDER's renderer: every term gets [tiab]"}
+    proximity: '"{phrase}"[tiab:~{n}]'   # since 2022, only for a quoted phrase, no nesting
+    proximity_ordered: null
+    truncation: "*"
+    phrase_truncation: false    # PubMed drops truncation inside phrases
+    max_length: null
+    export_formats: [ris, csv, txt]
+    export_cap: {ris: 10000, csv: 10000, txt: 10000}
+    profile:                  # dry-run profile (D6); every value is checked by hand in manual check M46
+      # WIDER renders [tiab] on every term, whatever fields the block names, and [tiab] includes author keywords
+      fields: {title: [title, abstract, keywords], abstract: [title, abstract, keywords], keywords: [title, abstract, keywords]}
+      min_stem: 4
+      phrase_truncation: false  # PubMed drops truncation inside phrases
+      proximity_range: [0, null] # "a b"[tiab:~N], N = words between, not with truncation
+      proximity_counts: between
+      proximity_ordered_available: false
+      near_as_and: true         # WIDER's renderer expands a proximity group to AND within [tiab]
+      stop_words: []
+      uncertain_when: [automatic_term_mapping, phrase_truncation_differs]
+    known_item:               # indexing check (D10, task 2.10): what the researcher pastes per missed seed; M47
+      doi: '"{doi}"[aid]'
+      title: '"{title}"[ti]'
+      verified: false
+      note: "[aid] is PubMed's article identifier field, which holds the DOI"
+    paste: >-
+      Advanced search. Proximity is limited; proximity groups are expanded to phrases where possible
+      and otherwise to AND within [tiab]. Export "All results" in PubMed format or RIS via Send to → Citation manager.
+  gscholar:
+    label: Google Scholar (reduced string)
+    style: gscholar
+    description: Web-scale academic search with a short query limit; useful as a check, not as a corpus source.
+    coverage: Broadest coverage including grey literature, but no controlled export and unstable ranking.
+    cap_note: No bulk export; third-party tools reach at most about 1,000 results per query.
+    export_formats: []
+    export_cap: {}
+    max_length: 256
+    paste: >-
+      Google Scholar accepts about 256 characters, no truncation and no proximity. The reduced string
+      keeps as many terms of each required block as fit, trimming the longest block first, a truncated term without its `*`; when even one term per block is too long, the last blocks are
+      left out. Excluded (NOT) blocks are left out too. Use it for a quick check, not for the corpus.

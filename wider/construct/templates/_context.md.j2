@@ -1,0 +1,49 @@
+# The review
+
+Research question{% if questions|length > 1 %}s{% endif %}:
+{% for q in questions %}- {{ q }}
+{% endfor %}
+{% if include_notes %}
+What the researcher wants included:
+{{ include_notes }}
+{% endif %}
+{% if exclude_notes %}
+What the researcher wants excluded:
+{{ exclude_notes }}
+{% endif %}
+
+# Development benchmark papers
+
+These {{ benchmark|length }} papers are known to belong in the review. They are the evidence for every proposal you make:
+ground your proposals in what these papers study, how they describe it, and the words they use.
+{% for b in benchmark %}
+
+## [{{ b.benchmark_id }}] {{ b.title }}{% if b.year %} ({{ b.year }}){% endif %}
+
+
+{{ b.abstract or "(no abstract available)" }}
+
+{% endfor %}
+{% if prior_review_titles is defined and prior_review_titles %}
+
+# Titles of studies included in prior reviews
+
+The researcher knows of earlier reviews whose included studies are listed below (titles only, shared at the
+researcher's request). Treat them as further evidence of the vocabulary and the kinds of study the review covers.
+{% for t in prior_review_titles %}- {{ t.title }}{% if t.year %} ({{ t.year }}){% endif %} — {{ t.review }}
+{% endfor %}
+{% endif %}
+{% if clarifications is defined and clarifications %}
+
+# Clarifications from the researcher
+
+{% for c in clarifications %}- {{ c }}
+{% endfor %}{% endif %}
+{% if decisions is defined and decisions %}
+
+# Decisions from the researcher
+
+The researcher answered these questions while refining the query (oldest first). Respect them: do not propose a
+term again that was dropped or rejected, and keep the names that were added.
+{% for d in decisions %}- {{ d }}
+{% endfor %}{% endif %}

@@ -1,0 +1,38 @@
+You are helping a researcher who is building a systematic review of a broad construct. The ranking of the search results by similarity to the review's anchor texts pulled up a cluster of records that contains none of the review's benchmark papers. Your task is to decide whether this cluster is an **adjacent literature**: a neighbouring body of work that shares vocabulary with the target studies but does not answer the research question, and if so, to name it so the review can tell it apart from includes.
+
+{% include "_context.md.j2" %}
+{% if codebook_yaml %}
+
+# What a target study must contain
+
+{{ codebook_yaml }}
+{% endif %}
+{% if existing is defined and existing %}
+
+# Literatures already listed
+
+{% for e in existing %}
+- {{ e.key }}: {{ e.name }}{% if e.discriminating_cue %} — cue: {{ e.discriminating_cue }}{% endif %}
+{% endfor %}
+
+If the cluster is one of these, answer with its key and name and set `already_listed` to true.
+{% endif %}
+
+# How to work
+
+- Judge only from the cluster material in the user message: its frequent terms and the titles and abstracts of its most central records.
+- Ground every claim in quotes: copy, verbatim, the words of the abstracts that show what these studies examine and how they differ from the target. A quote is a copy of words from a record, never a sentence of your own. Give the record id with each quote.
+- If the records do not form one literature, or if they look like genuine candidates for the review rather than a neighbouring field, set `is_adjacent` to false and explain in `differs_from_construct`.
+
+# Output
+
+One JSON object with:
+- `is_adjacent`: true or false
+- `already_listed`: true if the cluster is one of the literatures already listed
+- `key`: lower-case identifier with underscores
+- `name`: the name researchers in that tradition would use for their own field
+- `description`: two or three sentences saying what these studies examine, compare and measure, in the register of their own abstracts
+- `differs_from_construct`: one sentence naming what the target studies require that this literature lacks, or what it adds that the target excludes
+- `discriminating_cue`: the words or framing in a title or abstract that tell a record of this literature apart from an include
+- `example_phrases`: three to five short phrases typical of these abstracts
+- `quotes`: two to four objects `{record_id, quote}`, each quote copied verbatim from that record's title or abstract

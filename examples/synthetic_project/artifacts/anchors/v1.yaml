@@ -1,0 +1,47 @@
+anchors:
+  silence_antecedent: This study examines why employees withhold concerns, information or opinions from people who
+    could act on them. We compare motives for employee silence such as fear of consequences, a sense of futility,
+    deference and the wish to protect colleagues, and the leader behaviours and climates that strengthen or weaken
+    them. The question is what predicts employee silence. This study examines why employees withhold concerns, information
+    or opinions from people who could act on them. We compare motives for employee silence such as fear of consequences,
+    a sense of futility, deference and the wish to protect colleagues, and the leader behaviours and climates that
+    strengthen or weaken them. The question is what predicts employee silence.
+  silence_consequence: 'This study examines what follows when employees stay silent about problems, errors or ideas:
+    effects on the individual''s stress, engagement and intention to leave, and on the team''s error detection,
+    learning and performance. We compare units and periods with more and less employee silence. The question is
+    what the consequences of withholding voice are. This study examines what follows when employees stay silent
+    about problems, errors or ideas: effects on the individual''s stress, engagement and intention to leave, and
+    on the team''s error detection, learning and performance. We compare units and periods with more and less employee
+    silence. The question is what the consequences of withholding voice are.'
+  voice_antecedent: This study examines what leads employees to speak up with suggestions, concerns or ideas to
+    their supervisor or senior managers rather than keep them to themselves. We compare individual, leader and climate
+    predictors of promotive and prohibitive voice, issue selling and upward communication, measured through surveys,
+    diaries and vignettes. The question is which conditions make employees more likely to raise issues upward. This
+    study examines what leads employees to speak up with suggestions, concerns or ideas to their supervisor or senior
+    managers rather than keep them to themselves. We compare individual, leader and climate predictors of promotive
+    and prohibitive voice, issue selling and upward communication, measured through surveys, diaries and vignettes.
+    The question is which conditions make employees more likely to raise issues upward.
+  voice_consequence: 'This study examines what happens after employees speak up: how supervisors and senior managers
+    react to suggestions, concerns and proposals, and what follows for the speaker''s performance ratings, reputation,
+    career and well-being, and for the unit''s decisions and improvement. We compare outcomes of voice that is heeded
+    with voice that is ignored. The question is what the consequences of speaking up are. This study examines what
+    happens after employees speak up: how supervisors and senior managers react to suggestions, concerns and proposals,
+    and what follows for the speaker''s performance ratings, reputation, career and well-being, and for the unit''s
+    decisions and improvement. We compare outcomes of voice that is heeded with voice that is ignored. The question
+    is what the consequences of speaking up are.'
+  whistleblowing_antecedent: This study examines what leads employees who observe irregularities, safety problems
+    or rule breaking at work to report them to an internal authority, an external regulator or the public. We compare
+    individual, situational and organisational predictors of whistleblowing intentions and actual reporting, including
+    channel choice and anonymity. The question is which conditions make reporting more likely. This study examines
+    what leads employees who observe irregularities, safety problems or rule breaking at work to report them to
+    an internal authority, an external regulator or the public. We compare individual, situational and organisational
+    predictors of whistleblowing intentions and actual reporting, including channel choice and anonymity. The question
+    is which conditions make reporting more likely.
+  whistleblowing_consequence: 'This study examines what happens to employees after they report irregularities or
+    safety problems to an internal or external authority: retaliation, career outcomes, well-being and the organisational
+    response to the report, as well as whether the problem was corrected. We compare reporters who used different
+    channels. The question is what the consequences of whistleblowing are. This study examines what happens to employees
+    after they report irregularities or safety problems to an internal or external authority: retaliation, career
+    outcomes, well-being and the organisational response to the report, as well as whether the problem was corrected.
+    We compare reporters who used different channels. The question is what the consequences of whistleblowing are.'
+style: aims only

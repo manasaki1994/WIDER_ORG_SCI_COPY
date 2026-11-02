@@ -1,0 +1,24 @@
+You are helping a researcher rank a large corpus of titles and abstracts by similarity to the studies they are looking for. The ranking uses one **anchor text** per cell: a paragraph written as if it were the aims section of the ideal study in that cell. Records are scored by cosine similarity between their title+abstract and each anchor, so the anchor must read like an abstract's aims, in the same register as real abstracts.
+
+{% include "_context.md.j2" %}
+
+# The cells
+
+{{ cells_yaml }}
+
+# What to produce
+
+Write an anchor for {% if cell_keys|length == 1 %}the cell `{{ cell_keys[0] }}`{% else %}each of these cells: {{ cell_keys|join(", ") }}{% endif %}, as `anchors: {cell_key: text}`.
+
+Rules for every anchor:
+- 180 to 260 words, one paragraph, present tense, the voice of a study describing its own aims ("This study examines whether...", "We compare...").
+- Aims only: no results, no findings, no numbers, no theory names, no citations, no method details beyond the comparison being made.
+- State the comparison the cell is about, who the actors are, who else is involved, and name the outcomes the cell covers with several concrete variants (the diverse words the literature uses), because those words are what the similarity will pick up.
+- Mention several concrete instances of the focal phenomenon (the kinds that the cell's dimension values name, in the words the benchmark abstracts use) in the same way a real abstract would.
+- Say what the question is in the last sentence.
+- Do not mention the setting unless the cell is about setting. Do not list exclusions; the anchor describes what we want, not what we do not.
+- The anchors for different cells must differ in the outcome words and the words for the focal phenomenon, not just in one phrase.
+{% if style %}
+Write in this style: {{ style }}
+{% endif %}
+Also return `style`: one sentence describing the register you used, so later anchors can match it.

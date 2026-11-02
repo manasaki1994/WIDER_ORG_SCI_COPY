@@ -1,0 +1,189 @@
+# Which RIS tags carry which field. Tags are tried in order; the first non-empty wins.
+# ``default`` applies to every platform; a platform entry overrides single fields.
+default:
+  title: [TI, T1]
+  abstract: [AB, N2]
+  doi: [DO, DI]
+  year: [PY, Y1, DA, Y2]
+  authors: [AU, A1]
+  journal: [JO, JF, T2, J2, J1]
+  volume: [VL]
+  issue: [IS]
+  start_page: [SP]
+  end_page: [EP]
+  issn: [SN]
+  keywords: [KW, DE]
+  url: [UR, L2]
+  language: [LA]
+  database: [DB, DP]
+  native_id: [AN, ID, UT]
+  type: [TY, M3]
+scopus: {}
+wos: {}
+ebsco: {}
+proquest:
+  journal: [JF, JO, T2]
+ovid:
+  journal: [JF, T2, JO]
+  authors: [A1, AU]      # A2 are editors in Ovid exports
+pubmed: {}
+
+# ---------------------------------------------------------------------------------------------
+# Column profiles for tabular (CSV/TSV/XLS/XLSX) and BibTeX exports. Column names are matched
+# case-insensitively after collapsing whitespace. ``signature`` lists the columns whose presence
+# identifies the profile (detect_profile); ``fields`` maps standard fields to candidate columns,
+# tried in order. ``multi_sep`` splits author and keyword cells. ``generic`` is the fallback.
+columns:
+  proquest_csv:
+    platform: proquest
+    format: csv
+    signature: [Title, Abstract, StoreId]
+    multi_sep: ";"
+    fields:
+      title: [Title]
+      abstract: [Abstract]
+      doi: [digitalObjectIdentifier, DOI]
+      year: [year, pubdate]
+      authors: [Authors, Author]
+      journal: [pubtitle, "Publication title"]
+      volume: [volume]
+      issue: [issue]
+      pages: [pages]
+      issn: [issn]
+      keywords: [subjectTerms, subjects, identifierKeywords, classification]
+      url: [DocumentURL, URL]
+      language: [language]
+      native_id: [StoreId, AccessionNumber]
+      type: [documentType, ArticleType]
+  ebsco_csv:
+    platform: ebsco
+    format: csv
+    signature: ["Article Title", Abstract, "Accession Number"]
+    multi_sep: ";"
+    fields:
+      title: ["Article Title", Title]
+      abstract: [Abstract]
+      doi: [DOI]
+      year: ["Publication Date", Year]
+      authors: [Author, Authors]
+      journal: ["Journal Title", Source]
+      volume: [Volume]
+      issue: [Issue]
+      start_page: ["First Page", "Start Page"]
+      end_page: ["Last Page"]
+      issn: [ISSN]
+      keywords: ["Subject Terms", "Author-Supplied Keywords", Keywords]
+      url: [URL, PLink]
+      language: [Language]
+      native_id: ["Accession Number"]
+      type: ["Document Type"]
+  scopus_csv:
+    platform: scopus
+    format: csv
+    signature: [Authors, Title, "Source title", EID]
+    multi_sep: ";"
+    fields:
+      title: [Title]
+      abstract: [Abstract]
+      doi: [DOI]
+      year: [Year]
+      authors: [Authors, "Author full names"]
+      journal: ["Source title"]
+      volume: [Volume]
+      issue: [Issue]
+      start_page: ["Page start"]
+      end_page: ["Page end"]
+      issn: [ISSN]
+      keywords: ["Author Keywords", "Index Keywords"]
+      url: [Link]
+      language: ["Language of Original Document"]
+      native_id: [EID]
+      type: ["Document Type"]
+  wos_xlsx:
+    platform: wos
+    format: xlsx
+    signature: ["Article Title", Abstract, "UT (Unique WOS ID)"]
+    multi_sep: ";"
+    fields:
+      title: ["Article Title"]
+      abstract: [Abstract]
+      doi: [DOI, "DOI Link"]
+      year: ["Publication Year", "Publication Date"]
+      authors: [Authors, "Author Full Names"]
+      journal: ["Source Title"]
+      volume: [Volume]
+      issue: [Issue]
+      start_page: ["Start Page"]
+      end_page: ["End Page"]
+      issn: [ISSN]
+      keywords: ["Author Keywords", "Keywords Plus"]
+      url: []
+      language: [Language]
+      native_id: ["UT (Unique WOS ID)"]
+      type: ["Document Type"]
+  wos_tsv:
+    platform: wos
+    format: tsv
+    signature: [PT, TI, AB, UT]
+    multi_sep: ";"
+    fields:
+      title: [TI]
+      abstract: [AB]
+      doi: [DI]
+      year: [PY]
+      authors: [AU, AF]
+      journal: [SO]
+      volume: [VL]
+      issue: [IS]
+      start_page: [BP]
+      end_page: [EP]
+      issn: [SN]
+      keywords: [DE, ID]
+      url: []
+      language: [LA]
+      native_id: [UT]
+      type: [DT]
+  bibtex:
+    platform: any
+    format: bib
+    signature: [title, author]
+    multi_sep: ";"
+    fields:
+      title: [title]
+      abstract: [abstract]
+      doi: [doi]
+      year: [year]
+      authors: [author]
+      journal: [journal, booktitle, source]
+      volume: [volume]
+      issue: [number]
+      pages: [pages]
+      issn: [issn]
+      keywords: [keywords, author_keywords, keywords-plus]
+      url: [url]
+      language: [language]
+      native_id: [unique-id, ID]
+      type: [document_type, type, ENTRYTYPE]
+  generic:
+    platform: any
+    format: csv
+    signature: [Title]
+    multi_sep: ";"
+    fields:
+      title: [Title, "Article Title", "Document Title", TI]
+      abstract: [Abstract, AB, Summary]
+      doi: [DOI, DI, digitalObjectIdentifier]
+      year: [Year, "Publication Year", PY, "Publication Date", Date]
+      authors: [Authors, Author, AU]
+      journal: [Journal, "Source title", "Journal Title", Source, pubtitle, SO]
+      volume: [Volume, VL]
+      issue: [Issue, Number, IS]
+      pages: [Pages]
+      start_page: ["Page start", "Start Page", BP]
+      end_page: ["Page end", "End Page", EP]
+      issn: [ISSN, SN]
+      keywords: [Keywords, "Author Keywords", "Index Keywords", "Subject Terms", DE, ID]
+      url: [URL, Link, DocumentURL]
+      language: [Language, LA]
+      native_id: [ID, EID, "Accession Number", UT]
+      type: ["Document Type", Type, DT]

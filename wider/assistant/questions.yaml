@@ -1,0 +1,191 @@
+# Ask WIDER's question set (guide-assistant D11). Each entry names the sections that answer it; any one of them in the
+# first three by keywords alone counts as found. `wider assistant check-retrieval` reruns the check.
+# Groups: first-time (someone new to WIDER), researcher (running a review), auditor (a statistician or reviewer
+# checking the method), uncovered (questions WIDER's documents do not answer: none may match a section).
+questions:
+  # ------------------------------------------------------------------ first-time
+  - group: first-time
+    question: What do I do first in WIDER?
+    needs: [guide/overview/what-to-do, methods/overview/short, guide/help/what-to-do]
+  - group: first-time
+    question: How do I import my search results?
+    needs: [guide/import/what-to-do, guide/import/what-you-need, guide/import/done-when, guide/import/watch-out]
+  - group: first-time
+    question: What is a duplicate record and why remove duplicates?
+    needs: [glossary/deduplication, methods/deduplication/short, guide/dedup/why-it-matters]
+  - group: first-time
+    question: What does recall mean?
+    needs: [glossary/recall, methods/recall-estimate/short]
+  - group: first-time
+    question: What is a seed paper?
+    needs: [glossary/seed-paper, methods/development-validation-split/short]
+  - group: first-time
+    question: Which model should I choose for query creation?
+    needs: [guide/model/what-to-do, guide/model/what-you-need, guide/model/why-it-matters]
+  - group: first-time
+    question: Does my data leave my computer?
+    needs: [methods/consent-and-privacy/short, methods/consent-and-privacy/why, glossary/local-and-cloud-backend]
+  - group: first-time
+    question: What are concepts and synonyms in a search string?
+    needs: [guide/construct/what-to-do, glossary/concept, glossary/synonym, glossary/search-string]
+  - group: first-time
+    question: What happens to records with a missing abstract?
+    needs: [guide/enrich/what-to-do, guide/enrich/why-it-matters]
+  - group: first-time
+    question: How do I add a note or a tag to a record?
+    needs: [guide/notes/what-to-do, guide/notes/what-you-need]
+  - group: first-time
+    question: Where can I see what was changed and by whom?
+    needs: [guide/history/what-to-do, guide/history/why-it-matters, methods/provenance-and-reporting/short]
+  - group: first-time
+    question: What does Maybe mean when I label a record?
+    needs: [glossary/maybe, glossary/label, guide/sample/what-to-do]
+  - group: first-time
+    question: What is the review plan for?
+    needs: [guide/setup/what-to-do, guide/setup/why-it-matters]
+  - group: first-time
+    question: How do I make a PRISMA flow diagram?
+    needs: [guide/reporting/what-to-do, glossary/prisma, guide/reporting/why-it-matters]
+  - group: first-time
+    question: What does the ranking page do?
+    needs: [guide/rank/what-to-do, glossary/ranking, methods/ranking/short]
+  - group: first-time
+    question: When am I done with screening?
+    needs: [guide/screen/done-when, guide/review/done-when, guide/recall/done-when]
+  # ------------------------------------------------------------------ researcher
+  - group: researcher
+    question: Why are seed papers split into a development set and a validation set?
+    needs: [methods/development-validation-split/why, methods/development-validation-split/short,
+            glossary/query-development-set, glossary/query-validation-set]
+  - group: researcher
+    question: Why is the search string locked before validation?
+    needs: [methods/query-construction/why, methods/query-construction/short, glossary/lock]
+  - group: researcher
+    question: Can I unlock the search string after the check?
+    needs: [glossary/unlock, methods/query-construction/why, methods/query-construction/auditors]
+  - group: researcher
+    question: How does WIDER find near-duplicate records with different titles?
+    needs: [methods/deduplication/short, methods/deduplication/why, methods/deduplication/auditors]
+  - group: researcher
+    question: How are records ranked by similarity to the seed papers?
+    needs: [methods/ranking/short, methods/ranking/why, glossary/ranking, glossary/embedding]
+  - group: researcher
+    question: How many records should I label in the development sample?
+    needs: [methods/development-sample/short, methods/development-sample/why, glossary/development-sample]
+  - group: researcher
+    question: Why is the validation sample stratified by band?
+    needs: [methods/stratified-sampling/why, methods/stratified-sampling/short, glossary/band]
+  - group: researcher
+    question: What recall target should I set?
+    needs: [methods/recall-target/short, methods/recall-target/why, glossary/recall-target]
+  - group: researcher
+    question: What if the recall target is not met? Do I need more labels?
+    needs: [methods/recall-target/short, methods/recall-target/why, glossary/recall-target]
+  - group: researcher
+    question: How does a language model screen records?
+    needs: [methods/llm-screening/short, methods/llm-screening/why, guide/screen/what-to-do]
+  - group: researcher
+    question: What is a third read when two passes disagree?
+    needs: [glossary/third-read, glossary/pass, methods/llm-screening/why, methods/llm-screening/auditors]
+  - group: researcher
+    question: How does adjudication work when two reviewers disagree?
+    needs: [glossary/adjudication, methods/labels-and-agreement/short, methods/labels-and-agreement/why]
+  - group: researcher
+    question: Why is the second reviewer blinded to the first reviewer's labels?
+    needs: [methods/blinding/short, methods/blinding/why, glossary/blinding]
+  - group: researcher
+    question: Which backends need my consent before they are contacted?
+    needs: [methods/consent-and-privacy/short, methods/consent-and-privacy/why, glossary/consent]
+  - group: researcher
+    question: What goes into the replication package?
+    needs: [methods/provenance-and-reporting/short, methods/provenance-and-reporting/why,
+            methods/provenance-and-reporting/auditors, guide/recall/what-to-do]
+  - group: researcher
+    question: What is a research stream in the codebook?
+    needs: [glossary/research-stream, glossary/codebook]
+  - group: researcher
+    question: What are anchor sentences and near misses for?
+    needs: [glossary/anchor-sentence, glossary/near-miss, glossary/boundary-case]
+  # ------------------------------------------------------------------ auditor
+  - group: auditor
+    question: How is the recall estimate computed from the weighted validation sample?
+    needs: [methods/recall-estimate/auditors, methods/recall-estimate/why, methods/recall-estimate/short,
+            glossary/estimate, glossary/weight]
+  - group: auditor
+    question: What confidence interval is reported for recall?
+    needs: [methods/recall-estimate/auditors, methods/recall-estimate/short, glossary/confidence-interval]
+  - group: auditor
+    question: What are the inclusion probabilities and weights in the stratified sample?
+    needs: [glossary/inclusion-probability, glossary/weight, methods/stratified-sampling/auditors]
+  - group: auditor
+    question: Is the bound still valid if more labels are added after a look?
+    needs: [glossary/anytime-valid-bound, glossary/look, methods/recall-target/auditors, methods/recall-target/why]
+  - group: auditor
+    question: What confidence level and margin are used?
+    needs: [glossary/confidence-level, glossary/margin, methods/recall-estimate/auditors]
+  - group: auditor
+    question: Which band is a census and which is sampled?
+    needs: [glossary/census, glossary/band, methods/stratified-sampling/auditors, methods/stratified-sampling/short]
+  - group: auditor
+    question: How is a systematic sample drawn within a band?
+    needs: [glossary/systematic-sample, methods/stratified-sampling/auditors]
+  - group: auditor
+    question: Is the validation set hidden from query development?
+    needs: [methods/development-validation-split/auditors, methods/development-validation-split/why,
+            glossary/query-validation-set]
+  - group: auditor
+    question: How is agreement between reviewers measured?
+    needs: [methods/labels-and-agreement/auditors, glossary/agreement, methods/labels-and-agreement/short]
+  - group: auditor
+    question: How is the LLM configuration and prompt recorded for reproducibility?
+    needs: [glossary/llm-configuration, glossary/prompt, methods/llm-screening/auditors,
+            methods/provenance-and-reporting/auditors]
+  - group: auditor
+    question: What does the provenance record contain?
+    needs: [glossary/provenance, methods/provenance-and-reporting/auditors, methods/provenance-and-reporting/short]
+  - group: auditor
+    question: How is the majority decision of several passes formed?
+    needs: [glossary/majority, glossary/pass, methods/llm-screening/auditors]
+  - group: auditor
+    question: What is the estimated prevalence of relevant papers?
+    needs: [glossary/prevalence, glossary/relevant-paper, methods/recall-estimate/auditors]
+  - group: auditor
+    question: How is precision reported?
+    needs: [glossary/precision]
+  - group: auditor
+    question: What exactly is sent to a cloud backend?
+    needs: [methods/consent-and-privacy/auditors, methods/consent-and-privacy/why, glossary/local-and-cloud-backend]
+  - group: auditor
+    question: How is blinding enforced for the second reviewer?
+    needs: [methods/blinding/auditors, methods/blinding/why, glossary/blinding]
+  # ------------------------------------------------------------------ uncovered
+  - group: uncovered
+    question: What is the capital of France?
+    needs: []
+  - group: uncovered
+    question: How do I change the font size in Microsoft Word?
+    needs: []
+  - group: uncovered
+    question: What is the derivative of x squared?
+    needs: []
+  - group: uncovered
+    question: Who won the football world cup in 2018?
+    needs: []
+  - group: uncovered
+    question: Write me a poem about autumn leaves.
+    needs: []
+  - group: uncovered
+    question: How do I configure Zotero's citation style?
+    needs: []
+  - group: uncovered
+    question: What is the weather tomorrow in Berlin?
+    needs: []
+  - group: uncovered
+    question: How do I bake sourdough bread?
+    needs: []
+  - group: uncovered
+    question: Translate good morning into Japanese.
+    needs: []
+  - group: uncovered
+    question: What is the boiling point of water at altitude?
+    needs: []

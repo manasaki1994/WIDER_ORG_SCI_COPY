@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "style": {"type": "string", "description": "The register every anchor is written in."},
+    "anchors": {"type": "object", "minProperties": 1,
+      "additionalProperties": {"type": "string", "minLength": 200}}
+  },
+  "required": ["anchors"]
+}

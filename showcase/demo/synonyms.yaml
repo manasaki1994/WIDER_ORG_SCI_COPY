@@ -1,0 +1,50 @@
+blocks:
+- key: speaking_up
+  name: Speaking up or staying silent
+  description: Words for raising ideas, concerns or problems at work, or for keeping them to oneself.
+  role: required
+  terms:
+  - '"speaking up"'
+  - '"speak up"'
+  - '"spoke up"'
+  - voice
+  - suggestion*
+  - '"raising concerns"'
+  - concerns
+  - silence
+  - silent
+  - whistleblow*
+  - '"report* problems"'
+  - '"issue selling"'
+  - '"selling issues"'
+  - disagree*
+  fields:
+  - title
+  - abstract
+  - keywords
+- key: at_work
+  name: At work
+  description: Words for the people and places of paid work.
+  role: required
+  terms:
+  - employee*
+  - staff
+  - worker*
+  - workplace
+  - manager*
+  - supervisor*
+  - nurse*
+  - teacher*
+  - team*
+  fields:
+  - title
+  - abstract
+  - keywords
+logic:
+  and:
+  - or:
+    - speaking_up
+  - or:
+    - at_work
+notes: Written by hand for the interactive demo (showcase/demo), so the Search strings page shows two short blocks a
+  first-time visitor can read. A paper must use a word from each block.

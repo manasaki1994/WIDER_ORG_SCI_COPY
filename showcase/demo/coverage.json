@@ -1,0 +1,657 @@
+{
+ "_about": "Which /api/ calls the interactive demo answers (design D4, D9). 'record': GETs the recorder asks besides the pages' own, each template filled from the named lists. 'patterns': recorded answers reused for calls that differ only in the named parameters. 'handlers': calls the demo simulates (demo.js). 'not_in_demo': calls the demo refuses, with the reason the visitor sees. 'never_record': GETs the recorder must not keep.",
+ "record": [
+  {
+   "path": "/api/enrich/records?group={group}&limit=50",
+   "from": [
+    "enrich_groups"
+   ]
+  },
+  {
+   "path": "/api/records/{record}",
+   "from": [
+    "records"
+   ]
+  },
+  {
+   "path": "/api/records/{record}?author=Reviewer%20A&blind=false",
+   "from": [
+    "records"
+   ]
+  },
+  {
+   "path": "/api/records/{record}?author=Reviewer%20A&blind=true",
+   "from": [
+    "records"
+   ]
+  },
+  {
+   "path": "/api/history?record_id={record}",
+   "from": [
+    "records"
+   ]
+  },
+  {
+   "path": "/api/history?record_id={record}&blind=true&author=Reviewer%20A",
+   "from": [
+    "records"
+   ]
+  },
+  {
+   "path": "/api/history?limit=200",
+   "from": []
+  },
+  {
+   "path": "/api/history?limit=200&author=Reviewer%20A",
+   "from": []
+  },
+  {
+   "path": "/api/history?limit=200&kind={kind}",
+   "from": [
+    "history_kinds"
+   ]
+  },
+  {
+   "path": "/api/history?limit=200&kind={kind}&author=Reviewer%20A",
+   "from": [
+    "history_kinds"
+   ]
+  },
+  {
+   "path": "/api/stages/{stage}/results?limit=30",
+   "from": [
+    "stages"
+   ]
+  },
+  {
+   "path": "/api/construct/{kind}/{version}",
+   "from": [
+    "artifacts"
+   ]
+  },
+  {
+   "path": "/api/construct/{kind}/prompt",
+   "from": [
+    "kinds"
+   ]
+  },
+  {
+   "path": "/api/guide/{page}",
+   "from": [
+    "pages"
+   ]
+  },
+  {
+   "path": "/api/notebook/dedup?a={a}&b={b}",
+   "from": [
+    "pairs"
+   ]
+  },
+  {
+   "path": "/api/dedup/records?limit=50",
+   "from": []
+  },
+  {
+   "path": "/api/dedup/merged?limit=50",
+   "from": []
+  },
+  {
+   "path": "/api/import/sources",
+   "from": []
+  },
+  {
+   "path": "/api/rank?offset=0&limit=50",
+   "from": []
+  },
+  {
+   "path": "/api/rank?offset=0&limit=50&cell={cell}",
+   "from": [
+    "cells"
+   ]
+  },
+  {
+   "path": "/api/rank?offset=0&limit=50&ranking={ranking}",
+   "from": [
+    "rankings"
+   ]
+  },
+  {
+   "path": "/api/rank?offset=0&limit=50&ranking={ranking}&cell={cell}",
+   "from": [
+    "rankings",
+    "cells"
+   ]
+  },
+  {
+   "path": "/api/rank/validate",
+   "from": []
+  },
+  {
+   "path": "/api/rank/ablate",
+   "from": []
+  },
+  {
+   "path": "/api/rank/cluster",
+   "from": []
+  },
+  {
+   "path": "/api/coverage?scope={scope}",
+   "from": [
+    "coverage_scopes"
+   ]
+  },
+  {
+   "path": "/api/annotations/summary?author=Reviewer%20A&blind=false",
+   "from": []
+  },
+  {
+   "path": "/api/annotations/summary?author=Reviewer%20A&blind=true",
+   "from": []
+  },
+  {
+   "path": "/api/annotations/summary?author=&blind=false",
+   "from": []
+  },
+  {
+   "path": "/api/annotations",
+   "from": []
+  },
+  {
+   "path": "/api/labels/queue?reviewer=Reviewer%20A",
+   "from": []
+  },
+  {
+   "path": "/api/labels/queue?reviewer=Reviewer%20A&blind=false",
+   "from": []
+  },
+  {
+   "path": "/api/questions?status=open",
+   "from": []
+  },
+  {
+   "path": "/api/questions?status=all&limit=100",
+   "from": []
+  },
+  {
+   "path": "/api/screen/sets?protocol={protocol}",
+   "from": [
+    "protocols"
+   ]
+  },
+  {
+   "path": "/api/screen/models?protocol={protocol}",
+   "from": [
+    "protocols"
+   ]
+  },
+  {
+   "path": "/api/screen/models?protocol={protocol}&result_set={set}",
+   "from": [
+    "sets"
+   ]
+  },
+  {
+   "path": "/api/screen/sets/{protocol}/compare?a={a}&b={b}",
+   "from": [
+    "set_pairs"
+   ]
+  },
+  {
+   "path": "/api/screen/sets/{protocol}/compare?a={a}&b={b}&models_only=true",
+   "from": [
+    "set_pairs"
+   ]
+  },
+  {
+   "path": "/api/screen/calls/{run}?limit=2000",
+   "from": [
+    "runs"
+   ]
+  },
+  {
+   "path": "/api/screen/calls/{run}?limit=2000&decision={decision}",
+   "from": [
+    "runs",
+    "decisions"
+   ]
+  },
+  {
+   "path": "/api/screen/evaluate/{run}",
+   "from": [
+    "runs"
+   ]
+  },
+  {
+   "path": "/api/screen/evaluate/{run}?sample={sample}",
+   "from": [
+    "runs",
+    "samples"
+   ]
+  },
+  {
+   "path": "/api/adjacent/cases/{run}",
+   "from": [
+    "runs"
+   ]
+  },
+  {
+   "path": "/api/adjacent/cases/{run}?sample={sample}",
+   "from": [
+    "runs",
+    "samples"
+   ]
+  },
+  {
+   "path": "/api/recall?protocol={protocol}&sample={sample}",
+   "from": [
+    "protocols",
+    "samples"
+   ]
+  },
+  {
+   "path": "/api/recall?protocol={protocol}&sample={sample}&result_set={set}",
+   "from": [
+    "sets",
+    "samples"
+   ]
+  },
+  {
+   "path": "/api/recall?protocol={protocol}&sample={sample}&result_set={b}&compare={a}",
+   "from": [
+    "set_pairs",
+    "samples"
+   ]
+  },
+  {
+   "path": "/api/outputs/methods",
+   "from": []
+  },
+  {
+   "path": "/api/outputs/methods/draft",
+   "from": []
+  },
+  {
+   "path": "/api/outputs/methods/draft?protocol={protocol}",
+   "from": [
+    "protocols"
+   ]
+  },
+  {
+   "path": "/api/outputs/methods/draft?protocol={protocol}&result_set={set}",
+   "from": [
+    "sets"
+   ]
+  },
+  {
+   "path": "/api/outputs/validity",
+   "from": []
+  },
+  {
+   "path": "/api/construct/synonyms",
+   "from": []
+  },
+  {
+   "path": "/api/decisions",
+   "from": []
+  },
+  {
+   "path": "/api/providers/presets",
+   "from": []
+  },
+  {
+   "path": "/api/query/indexing",
+   "from": []
+  },
+  {
+   "path": "/api/query/limits",
+   "from": []
+  },
+  {
+   "path": "/api/query/profiles",
+   "from": []
+  },
+  {
+   "path": "/api/query/rounds",
+   "from": []
+  },
+  {
+   "path": "/api/seeds/files",
+   "from": []
+  },
+  {
+   "path": "/api/seeds/names",
+   "from": []
+  },
+  {
+   "path": "/api/seeds/policy",
+   "from": []
+  },
+  {
+   "path": "/api/seeds/streams",
+   "from": []
+  },
+  {
+   "path": "/api/benchmark/seed",
+   "from": []
+  },
+  {
+   "path": "/api/prior-reviews",
+   "from": []
+  },
+  {
+   "path": "/api/prior-reviews/coverage?scope=platforms",
+   "from": []
+  },
+  {
+   "path": "/api/prior-reviews/coverage?scope=corpus",
+   "from": []
+  },
+  {
+   "path": "/api/query/edits",
+   "from": []
+  },
+  {
+   "path": "/api/query/diagnose",
+   "from": []
+  },
+  {
+   "path": "/api/report",
+   "from": []
+  },
+  {
+   "path": "/api/query/diagnose?platform={platform}",
+   "from": [
+    "platforms"
+   ]
+  },
+  {
+   "path": "/api/prior-reviews/{review}/papers",
+   "from": [
+    "prior_reviews"
+   ]
+  },
+  {
+   "path": "/api/report?protocol={protocol}&sample={sample}",
+   "from": [
+    "protocols",
+    "samples"
+   ]
+  },
+  {
+   "path": "/api/report?protocol={protocol}&sample={sample}&result_set={set}",
+   "from": [
+    "sets",
+    "samples"
+   ]
+  },
+  {
+   "path": "/api/labels/agreement?sample={sample}&a=Reviewer%20A&b=Reviewer%20B",
+   "from": [
+    "samples"
+   ]
+  },
+  {
+   "path": "/api/labels/compare?sample={sample}&a=Reviewer%20A&b=Reviewer%20B",
+   "from": [
+    "samples"
+   ]
+  }
+ ],
+ "patterns": {
+  "GET /api/records/{record_id}": [
+   "author"
+  ],
+  "GET /api/history": [
+   "author"
+  ],
+  "GET /api/annotations/summary": [
+   "author"
+  ],
+  "GET /api/labels/queue": [
+   "reviewer"
+  ],
+  "GET /api/coverage": [
+   "seen_choice",
+   "validation"
+  ],
+  "GET /api/rank/validate": [
+   "seen_choice",
+   "validation",
+   "ranking"
+  ],
+  "GET /api/rank/ablate": [
+   "seen_choice",
+   "validation"
+  ],
+  "GET /api/labels/agreement": [
+   "a",
+   "b"
+  ],
+  "GET /api/labels/compare": [
+   "a",
+   "b"
+  ]
+ },
+ "handlers": [
+  "POST /api/labels",
+  "GET /api/validation/status",
+  "POST /api/dedup/decide",
+  "POST /api/dedup/run",
+  "POST /api/history/{change_id}/undo",
+  "POST /api/history/undo-last",
+  "POST /api/rank/run",
+  "POST /api/samples/draw",
+  "POST /api/jobs/screen",
+  "POST /api/jobs/{job_id}/cancel",
+  "GET /api/jobs",
+  "GET /api/jobs/{job_id}",
+  "GET /api/screen/progress/{run_id}",
+  "POST /api/outputs/prisma",
+  "POST /api/outputs/methods",
+  "GET /api/screen/compare",
+  "POST /api/assistant/ask",
+  "GET /api/assistant/history"
+ ],
+ "never_record": [
+  "GET /api/backends/detect",
+  "GET /api/providers/{name}/models"
+ ],
+ "not_in_demo": {
+  "GET /api/backends/detect": "This asks a model, a provider or a website, and the demo stays offline.",
+  "GET /api/providers/{name}/models": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/backends/check": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/providers/{name}/probe": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/embeddings/{name}/probe": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/embeddings/{name}/download": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/providers/models": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/benchmark/fetch": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/benchmark/resolve": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/prior-reviews/resolve": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/prior-reviews/chain": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/lookups/allow": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/lookups/terms/allow": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/jobs/enrich": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/jobs/embed": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/jobs/rank-update": "Updating the ranking can embed texts with a model, and the demo stays offline (wider rank update).",
+  "POST /api/rank/keep": "Keeping the ranking is a signed change of the project, and the demo changes nothing (wider rank keep).",
+  "GET /api/send-notice/{action}": "The demo sends nothing to a model or a website, so it shows no sending sentence.",
+  "POST /api/jobs/propose/{kind}": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/construct/{kind}/propose": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/adjacent/propose": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/adjacent/find": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/seeds/mine": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/seeds/extract": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/query/cluster": "This asks a model, a provider or a website, and the demo stays offline.",
+  "POST /api/providers": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "POST /api/providers/default": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "POST /api/providers/stage": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "DELETE /api/providers/{name}": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "PATCH /api/providers/{name}": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "DELETE /api/providers/{name}/consent": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "POST /api/providers/{name}/consent": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "POST /api/embeddings": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "POST /api/embeddings/default": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "DELETE /api/embeddings/{name}": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "PATCH /api/embeddings/{name}": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "DELETE /api/embeddings/{name}/consent": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "POST /api/embeddings/{name}/consent": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "POST /api/lookups/revoke": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "POST /api/lookups/terms/revoke": "Model and provider settings cannot be changed in the demo: it never contacts a model or a provider.",
+  "DELETE /api/lookups/cache": "The demo stays offline, so it keeps no stored answers to clear.",
+  "POST /api/estimate": "not worked out in the demo, which never calls a model (nothing is charged).",
+  "POST /api/benchmark/add": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/benchmark/assign": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/benchmark/move-used": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/benchmark/keywords": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/benchmark/source": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/benchmark/split": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "DELETE /api/benchmark/{benchmark_id}": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/platforms/add": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/platforms/order": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/platforms/role": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "DELETE /api/platforms/{key}": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/prior-reviews/policy": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/prior-reviews/text": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "DELETE /api/prior-reviews/{review_id}": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "PATCH /api/project": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/protocol/reset": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/protocol/set": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/seeds/files/{benchmark_id}": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "DELETE /api/seeds/files/{benchmark_id}": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/seeds/names/admit": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/seeds/policy": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/seeds/streams/label": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/adjacent/add": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/adjacent/seed": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/adjacent/{key}/edit": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/adjacent/{key}/status/{status}": "Setting up the question, seed papers and search platforms is shown as already done in the demo. In WIDER you do this at the start of your own project.",
+  "POST /api/prior-reviews/upload": "The demo cannot read files from your computer. In WIDER you import the exports of your own searches here.",
+  "POST /api/import/upload": "The demo cannot read files from your computer. In WIDER you import the exports of your own searches here.",
+  "POST /api/import/run": "The demo cannot read files from your computer. In WIDER you import the exports of your own searches here.",
+  "POST /api/import/final": "The demo cannot read files from your computer. In WIDER you import the exports of your own searches here.",
+  "POST /api/import/sources/{source_id}/included": "The demo cannot read files from your computer. In WIDER you import the exports of your own searches here.",
+  "POST /api/query/import": "The demo cannot read files from your computer. In WIDER you import the exports of your own searches here.",
+  "POST /api/screen/adjudication": "The demo cannot read files from your computer. In WIDER you import an adjudicator's decisions for some records here (wider screen import-adjudication).",
+  "POST /api/construct/unlock": "The codebook and the other inclusion rules are shown as already approved in the demo. In WIDER you write, change and approve them here.",
+  "POST /api/construct/{kind}/save": "The codebook and the other inclusion rules are shown as already approved in the demo. In WIDER you write, change and approve them here.",
+  "POST /api/construct/{kind}/{version}/restore": "The codebook and the other inclusion rules are shown as already approved in the demo. In WIDER you write, change and approve them here.",
+  "POST /api/construct/{kind}/{version}/status/{status}": "The codebook and the other inclusion rules are shown as already approved in the demo. In WIDER you write, change and approve them here.",
+  "POST /api/screen/build-prompt": "The codebook and the other inclusion rules are shown as already approved in the demo. In WIDER you write, change and approve them here.",
+  "POST /api/query/archive": "Changing the search string is shown with the demo's own search-terms panel. In WIDER you edit and re-run the search here.",
+  "POST /api/query/dry-run": "Changing the search string is shown with the demo's own search-terms panel. In WIDER you edit and re-run the search here.",
+  "POST /api/query/edit": "Changing the search string is shown with the demo's own search-terms panel. In WIDER you edit and re-run the search here.",
+  "POST /api/query/indexing": "Changing the search string is shown with the demo's own search-terms panel. In WIDER you edit and re-run the search here.",
+  "POST /api/query/limits": "Changing the search string is shown with the demo's own search-terms panel. In WIDER you edit and re-run the search here.",
+  "POST /api/query/rounds/refresh": "Changing the search string is shown with the demo's own search-terms panel. In WIDER you edit and re-run the search here.",
+  "POST /api/query/rounds/{round_no}/accept": "Changing the search string is shown with the demo's own search-terms panel. In WIDER you edit and re-run the search here.",
+  "POST /api/query/rounds/{round_no}/count": "Changing the search string is shown with the demo's own search-terms panel. In WIDER you edit and re-run the search here.",
+  "GET /api/query/rounds/{round_no}/accept": "Changing the search string is shown with the demo's own search-terms panel. In WIDER you edit and re-run the search here.",
+  "GET /api/query/rounds/{round_no}/provenance": "Changing the search string is shown with the demo's own search-terms panel. In WIDER you list a round's decisions, model calls and outside requests here.",
+  "GET /api/query/rounds/{round_no}/replay": "Changing the search string is shown with the demo's own search-terms panel. In WIDER you replay a round here to check it still gives the same results.",
+  "POST /api/records/{record_id}/notes": "Notes and tags are not kept in the demo. In WIDER they are saved with the record and signed with your name.",
+  "DELETE /api/records/{record_id}/notes/{note_id}": "Notes and tags are not kept in the demo. In WIDER they are saved with the record and signed with your name.",
+  "POST /api/records/{record_id}/tags": "Notes and tags are not kept in the demo. In WIDER they are saved with the record and signed with your name.",
+  "DELETE /api/records/{record_id}/tags/{tag}": "Notes and tags are not kept in the demo. In WIDER they are saved with the record and signed with your name.",
+  "POST /api/decisions/export": "This export is not part of the demo. In WIDER it writes a file into your project folder.",
+  "POST /api/outputs/package": "This export is not part of the demo. In WIDER it writes a file into your project folder.",
+  "POST /api/outputs/prisma-s": "This export is not part of the demo. In WIDER it writes the PRISMA-S search report into your project folder.",
+  "POST /api/outputs/prisma-checklist": "This export is not part of the demo. In WIDER it writes the PRISMA 2020 checklist into your project folder (wider export prisma-checklist).",
+  "POST /api/outputs/corpus": "This export is not part of the demo. In WIDER it writes every record, bibliographic data only, into your project folder (wider export references --corpus).",
+  "POST /api/outputs/references": "This export is not part of the demo. In WIDER it writes a file into your project folder.",
+  "POST /api/outputs/references?all=true": "Writing every decision set is not part of the demo. In WIDER it writes one file of each kind per set and an index into your project folder (wider export references --all).",
+  "GET /api/results": "The Results dashboard is not part of the demo. In WIDER it shows the agreement between the passes, the recall estimate with its chart, the PRISMA counts, the reference files and the documents of one result set on one page (wider results).",
+  "POST /api/report": "This export is not part of the demo. In WIDER it writes a file into your project folder.",
+  "POST /api/report/bundle": "This export is not part of the demo. In WIDER it writes a file into your project folder.",
+  "POST /api/screen/export": "This export is not part of the demo. In WIDER it writes a file into your project folder.",
+  "POST /api/projects/create": "The demo has one example project. In WIDER you create and open your own projects on Home.",
+  "POST /api/projects/forget": "The demo has one example project. In WIDER you create and open your own projects on Home.",
+  "POST /api/projects/open": "The demo has one example project. In WIDER you create and open your own projects on Home.",
+  "POST /api/labels/adjudicate": "Settling a disagreement between two reviewers needs a second reviewer, which the demo does not have. In WIDER the second reviewer labels blind, then you settle each disagreement here.",
+  "POST /api/samples/{name}/lock": "The demo shows a finished example project, so this part is switched off here. In WIDER you can do this on your own project.",
+  "PATCH /api/screen/sets/{protocol}/{n}": "The demo shows a finished example project, so this part is switched off here. In WIDER you can do this on your own project.",
+  "POST /api/questions/mode": "Answers to WIDER's questions are not kept in the demo. In WIDER each answer is recorded in the project's history.",
+  "POST /api/questions/{question_id}/answer": "Answers to WIDER's questions are not kept in the demo. In WIDER each answer is recorded in the project's history.",
+  "POST /api/questions/{question_id}/dismiss": "Answers to WIDER's questions are not kept in the demo. In WIDER each answer is recorded in the project's history.",
+  "GET /api/construct/{kind}/diff/{a}/{b}": "Every rule in the example project has one version, so there is nothing to compare. In WIDER this shows what changed between two versions.",
+  "GET /api/construct/{kind}/outline": "The codebook and the other inclusion rules are shown as already approved in the demo. In WIDER an empty rule starts from an outline of the fields its format needs.",
+  "GET /api/prior-reviews/{review_id}/papers": "The example project lists no prior reviews. In WIDER this shows the papers of a prior review you added.",
+  "GET /api/benchmark/candidates": "Seed chaining candidates come from an online lookup; the demo makes no lookups, so there are none to list.",
+  "POST /api/benchmark/chain": "Seed chaining asks OpenAlex for the seed papers' references and citations; the demo never goes online. Run it in your own WIDER (wider benchmark chain).",
+  "GET /api/coverage/independent": "The independent check is not recorded in the demo. In your own WIDER: wider coverage --independent [--protocol P], or this card after the validation set is shown.",
+  "POST /api/benchmark/references": "The demo keeps no seed PDFs and never goes online. In your own WIDER: wider benchmark references [ID] [--route auto|openalex|pdf] [--tier grobid|crossref|model].",
+  "POST /api/benchmark/candidates/{candidate_id}/add": "There are no chaining candidates in the demo. In your own WIDER: wider benchmark add --from-candidate N.",
+  "POST /api/benchmark/candidates/{candidate_id}/dismiss": "There are no chaining candidates in the demo. In your own WIDER: wider benchmark candidates --dismiss N.",
+  "POST /api/benchmark/candidates/import": "The demo keeps no files you choose. In your own WIDER: wider benchmark candidates --import FILE --origin LABEL (nothing is sent).",
+  "POST /api/benchmark/candidates/imports/{import_no}/dismiss": "There are no candidate imports in the demo. In your own WIDER: wider benchmark candidates --dismiss-import N.",
+  "GET /api/query/missed-names": "There are no chaining candidates in the demo. In your own WIDER: wider query missed-names.",
+  "POST /api/query/missed-names": "The model pass runs a language model; the demo runs no model. In your own WIDER: wider query missed-names --model.",
+  "POST /api/query/parse": "Importing a search string changes the project; the demo is read-only. In your own WIDER: wider query import.",
+  "GET /api/query/review": "The second reader's findings come from a model run; the demo runs no model.",
+  "POST /api/query/review": "The second reader runs a language model; the demo runs no model. In your own WIDER: wider query review.",
+  "POST /api/query/yield": "A term count asks OpenAlex over the internet; the demo sends nothing. In your own WIDER: wider query yield \"<term>\" (after wider lookups terms allow).",
+  "GET /api/screen/compare/{name}": "Comparing configurations runs a model, and the demo stays offline.",
+  "POST /api/screen/compare": "Comparing configurations runs a model, and the demo stays offline.",
+  "POST /api/screen/compare/estimate": "Comparing configurations runs a model, and the demo stays offline.",
+  "POST /api/samples/{name}/extend": "Adding boundary cases changes the demo's sample and embeds texts; the demo keeps its samples as recorded. In your own WIDER: wider sample extend development --pool boundary.",
+  "POST /api/jobs/compare": "Comparing configurations runs a model, and the demo stays offline.",
+  "GET /api/screen/passes": "Choosing a backend for pass B and the judge is not part of the demo, which runs no model. In your own WIDER: wider screen protocol --provider-b NAME --provider-c NAME.",
+  "GET /api/labels/criteria": "Validation planning and labelling change the project; the demo shows the recorded validation card only.",
+  "POST /api/labels/criteria": "Validation planning and labelling change the project; the demo shows the recorded validation card only.",
+  "POST /api/validation/extend": "Validation planning and labelling change the project; the demo shows the recorded validation card only.",
+  "POST /api/validation/plan": "Validation planning and labelling change the project; the demo shows the recorded validation card only.",
+  "POST /api/validation/stop": "Validation planning and labelling change the project; the demo shows the recorded validation card only.",
+  "POST /api/validation/target": "Validation planning and labelling change the project; the demo shows the recorded validation card only.",
+  "GET /api/outputs/selection": "The Export records card's count line, record list and package contents are not shown in this demo.",
+  "POST /api/outputs/selection": "This export is not part of the demo. In WIDER it writes the chosen records, the audit CSV or the export package into your project folder (wider export selection).",
+  "GET /api/review": "The Screening review page is not shown in this demo. In WIDER it lists the records that need a person, with each pass's read, and records your signed decisions (wider review list, wider review decide).",
+  "GET /api/review/criteria": "The Screening review page is not shown in this demo. In WIDER it lists the records that need a person, with each pass's read, and records your signed decisions (wider review list, wider review decide).",
+  "GET /api/review/summary": "The Screening review page is not shown in this demo. In WIDER it lists the records that need a person, with each pass's read, and records your signed decisions (wider review list, wider review decide).",
+  "GET /api/review/{record_id}": "The Screening review page is not shown in this demo. In WIDER it lists the records that need a person, with each pass's read, and records your signed decisions (wider review list, wider review decide).",
+  "POST /api/review/{record_id}": "The Screening review page is not shown in this demo. In WIDER it lists the records that need a person, with each pass's read, and records your signed decisions (wider review list, wider review decide).",
+  "POST /api/review/qc": "A quality-control sample changes the project; the demo is read-only. In your own WIDER: wider review qc draw --n N --seed S.",
+  "GET /api/history/kinds": "The History page's list of kinds is not part of the demo yet; the demo's History shows the recorded changes only.",
+  "POST /api/history/redo-last": "Redo with Ctrl+Shift+Z is not part of the demo; the Redo button on an Undone message works here. In WIDER the key puts back your last undo (wider history redo).",
+  "GET /api/researchers": "The card \"Names in shared files\" is not shown in this demo. In WIDER it sets how shared files name researchers and lists the names with their pseudonyms (wider researchers list, wider researchers attribution, wider researchers confirm, wider researchers join).",
+  "POST /api/researchers/attribution": "The card \"Names in shared files\" is not shown in this demo. In WIDER it sets how shared files name researchers and lists the names with their pseudonyms (wider researchers list, wider researchers attribution, wider researchers confirm, wider researchers join).",
+  "POST /api/researchers/confirm": "The card \"Names in shared files\" is not shown in this demo. In WIDER it sets how shared files name researchers and lists the names with their pseudonyms (wider researchers list, wider researchers attribution, wider researchers confirm, wider researchers join).",
+  "POST /api/researchers/join": "The card \"Names in shared files\" is not shown in this demo. In WIDER it sets how shared files name researchers and lists the names with their pseudonyms (wider researchers list, wider researchers attribution, wider researchers confirm, wider researchers join).",
+  "GET /api/blinding/status": "The card \"Review packages\" is not shown in this demo. In WIDER it makes a review package for a second reviewer, imports their decisions and withdraws a package (wider blinding package, wider blinding import, wider blinding status, wider blinding withdraw).",
+  "GET /api/blinding/package/{package_id}/file": "The card \"Review packages\" is not shown in this demo. In WIDER it makes a review package for a second reviewer, imports their decisions and withdraws a package (wider blinding package, wider blinding import, wider blinding status, wider blinding withdraw).",
+  "POST /api/blinding/import": "The card \"Review packages\" is not shown in this demo. In WIDER it makes a review package for a second reviewer, imports their decisions and withdraws a package (wider blinding package, wider blinding import, wider blinding status, wider blinding withdraw).",
+  "POST /api/blinding/package": "The card \"Review packages\" is not shown in this demo. In WIDER it makes a review package for a second reviewer, imports their decisions and withdraws a package (wider blinding package, wider blinding import, wider blinding status, wider blinding withdraw).",
+  "POST /api/blinding/package/preview": "The card \"Review packages\" is not shown in this demo. In WIDER it makes a review package for a second reviewer, imports their decisions and withdraws a package (wider blinding package, wider blinding import, wider blinding status, wider blinding withdraw).",
+  "POST /api/blinding/package/{package_id}/withdraw": "The card \"Review packages\" is not shown in this demo. In WIDER it makes a review package for a second reviewer, imports their decisions and withdraws a package (wider blinding package, wider blinding import, wider blinding status, wider blinding withdraw).",
+  "POST /api/labels/independence": "The demo keeps its recorded validation labels as they are. In your own WIDER, a reviewer's imported labels are declared independent of the model here (wider label provenance SAMPLE --reviewer NAME --independent BASIS).",
+  "GET /api/plan": "The Review plan page is not shown in this demo. In WIDER it shows five task cards (research question, seed papers, prior reviews, databases, finding more seed papers), each with its state and open questions (wider plan [--json]).",
+  "GET /api/methods": "The Methods page is not shown in this demo. In WIDER it explains why each method works the way it does, in plain words and then for auditors, with a glossary (wider guide methods [<topic>|glossary]).",
+  "GET /api/methods/{topic}": "The Methods page is not shown in this demo. In WIDER it explains why each method works the way it does, in plain words and then for auditors, with a glossary (wider guide methods [<topic>|glossary]).",
+  "GET /api/reporting/{checklist}": "The PRISMA reporting page is not shown in this demo. In WIDER it shows, for each PRISMA 2020 and PRISMA-S item, what the item asks, what WIDER recorded and what is still missing (wider report prisma status|show).",
+  "GET /api/reporting/{checklist}/{no}": "The PRISMA reporting page is not shown in this demo. In WIDER it shows, for each PRISMA 2020 and PRISMA-S item, what the item asks, what WIDER recorded and what is still missing (wider report prisma status|show).",
+  "GET /api/reporting/flow": "The PRISMA reporting page is not shown in this demo. In WIDER it shows the PRISMA 2020 flow boxes with where each number comes from (wider report prisma flow).",
+  "POST /api/reporting/{checklist}/{no}/text": "Saving reporting text is not part of the demo. In WIDER it writes your text for the item into the project's reporting folder, listed in History (wider report prisma edit|na|clear).",
+  "POST /api/reporting/{checklist}/{no}/na": "Saving reporting text is not part of the demo. In WIDER it writes your text for the item into the project's reporting folder, listed in History (wider report prisma edit|na|clear).",
+  "POST /api/reporting/{checklist}/{no}/clear": "Saving reporting text is not part of the demo. In WIDER it writes your text for the item into the project's reporting folder, listed in History (wider report prisma edit|na|clear).",
+  "POST /api/reporting/flow": "Saving flow counts is not part of the demo. In WIDER it writes the counts WIDER does not record, listed in History (wider report prisma flow --count NAME=N).",
+  "POST /api/reporting/flow/clear": "Saving flow counts is not part of the demo. In WIDER it writes the counts WIDER does not record, listed in History (wider report prisma flow --count NAME=N).",
+  "POST /api/reporting/export": "This export is not part of the demo. In WIDER it writes the PRISMA checklists, the methods text and the editable flow diagram into your project folder (wider report prisma export).",
+  "DELETE /api/assistant/history": "In the demo Ask WIDER answers only its example questions, recorded beforehand; it stays offline. In WIDER this is part of asking your own questions (wider assistant).",
+  "POST /api/assistant/unhelpful": "In the demo Ask WIDER answers only its example questions, recorded beforehand; it stays offline. In WIDER this is part of asking your own questions (wider assistant).",
+  "GET /api/assistant/budget": "In the demo Ask WIDER answers only its example questions, recorded beforehand; it stays offline. In WIDER this is part of asking your own questions (wider assistant).",
+  "POST /api/assistant/budget": "In the demo Ask WIDER answers only its example questions, recorded beforehand; it stays offline. In WIDER this is part of asking your own questions (wider assistant).",
+  "POST /api/import/sources/{source_id}/sample": "Marking an imported file as a random sample is not part of the demo. In WIDER it scales the diagnosis and the suggested edits to estimates (wider import sample FILE --of N)."
+ },
+ "ask_examples": [
+  {
+   "question": "Why does the model read each record more than once?",
+   "page": "screen"
+  },
+  {
+   "question": "What does the second reader do?",
+   "page": "screen"
+  },
+  {
+   "question": "What does the validation sample tell me?",
+   "page": "sample"
+  }
+ ]
+}

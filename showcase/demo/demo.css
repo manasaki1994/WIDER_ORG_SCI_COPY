@@ -1,0 +1,221 @@
+/* WIDER interactive demo layer (openspec change interactive-demo, design D7). Uses the app's own colour tokens. */
+:root { --demo-bar-h: 44px; --demo-amber: #92400e; --demo-amber-bg: #fef3c7; --demo-amber-line: #f59e0b; }
+@media (prefers-color-scheme: dark) {
+  :root { --demo-amber: #fcd34d; --demo-amber-bg: #3a2a0c; --demo-amber-line: #b45309; }
+}
+
+/* the focus page (Label records, Adjudication) loses the tour's 340px: one column as the app has at 900px or less */
+@media (max-width: 1239px) { .demo-tour-on .drawer.full .fx-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* the bar sits above the app; the app moves down by its height, so nothing is hidden */
+.demo-on body { padding-top: var(--demo-bar-h); }
+/* the app's sticky top bar (and what sticks under it) stays below the fixed demo bar, so no top-bar button
+   scrolls under it (tester 1 Nov 2026: "Apply decisions and check again" could not be clicked at 1280x800) */
+.demo-on .top { top: var(--demo-bar-h); }
+.demo-on .sidebar { top: calc(var(--demo-bar-h) + var(--top-h)); height: calc(100vh - var(--demo-bar-h) - var(--top-h)); }
+.demo-on .guide-panel { top: calc(var(--demo-bar-h) + var(--top-h)); max-height: calc(100vh - var(--demo-bar-h) - var(--top-h)); }
+.demo-on .settings-nav { top: calc(var(--demo-bar-h) + var(--top-h, 50px) + 12px); }
+.demo-on .shell { min-height: calc(100vh - var(--demo-bar-h)); }
+.demo-on .drawer:not(.docked) { top: var(--demo-bar-h); height: calc(100vh - var(--demo-bar-h)); }
+.demo-on .dd-panel { top: calc(56px + var(--demo-bar-h)); }
+
+.demo-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 30; height: var(--demo-bar-h);
+  display: flex; align-items: center; gap: 12px; padding: 0 12px;
+  background: var(--demo-amber-bg); color: var(--demo-amber); border-bottom: 2px solid var(--demo-amber-line);
+  font-size: 13px; line-height: 1.3; }
+.demo-badge { flex: none; padding: 3px 8px; border-radius: 999px; background: var(--demo-amber); color: var(--demo-amber-bg);
+  font-weight: 700; letter-spacing: .02em; text-transform: uppercase; font-size: 11px; }
+.demo-bar-text { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.demo-notice { flex: 0 1 auto; max-width: 42%; padding: 3px 8px; border-radius: 6px; background: var(--card); color: var(--fg);
+  border: 1px solid var(--demo-amber-line); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.demo-notice[hidden] { display: none; }
+.demo-bar-actions { flex: none; display: flex; align-items: center; gap: 6px; }
+.demo-bar button { padding: 4px 10px; font-size: 13px; }
+.demo-quiet, .demo-bar .demo-quiet { background: var(--card); color: var(--fg); border: 1px solid var(--field-line); }
+.demo-quiet:hover { background: var(--stone-bg); }
+.demo-switch { display: inline-flex; border: 1px solid var(--field-line); border-radius: var(--radius-control); overflow: hidden; }
+.demo-switch button { border: 0; border-radius: 0; background: var(--card); color: var(--fg); }
+.demo-switch button[aria-pressed="true"] { background: var(--blue-fill); color: var(--on-blue); }
+.demo-bar button[hidden] { display: none; }
+
+/* the start card */
+dialog.demo-start { width: min(600px, calc(100vw - 32px)); border: 1px solid var(--line); border-radius: var(--radius-card);
+  background: var(--card); color: var(--fg); padding: 20px 22px; }
+dialog.demo-start::backdrop { background: rgba(0, 0, 0, .45); }
+.demo-start h2 { margin: 0 0 8px; font-size: 20px; text-transform: none; letter-spacing: 0; color: var(--fg); }
+.demo-start p { margin: 0 0 12px; }
+.demo-start-choices { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 14px 0; }
+.demo-choice { display: flex; flex-direction: column; gap: 4px; text-align: left; padding: 12px 14px; }
+.demo-choice span { font-size: 13px; opacity: .92; }
+.demo-narrow { display: none; color: var(--demo-amber); font-weight: 600; }
+.demo-start-foot { font-size: 13px; color: var(--muted); }
+
+@media (max-width: 900px) {
+  .demo-bar-text { display: none; }
+  .demo-narrow { display: block; }
+}
+
+/* the terms panel on the Search strings page (terms.js, design D6) */
+.demo-terms { margin: 16px 0; border-left: 4px solid var(--demo-amber); }
+.demo-terms-block { border: 1px solid var(--line); border-radius: var(--radius-control); padding: 8px 12px 4px; margin: 0 0 12px; }
+.demo-terms-block legend { padding: 0 6px; font-weight: 600; }
+.demo-chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 4px 0 10px; padding: 0; }
+.demo-chip { display: inline-flex; align-items: center; gap: 2px; padding: 1px 2px 1px 10px; border: 1px solid var(--field-line);
+  border-radius: 999px; background: var(--card); font-size: 13px; }
+.demo-chip-x { padding: 0 7px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-size: 15px; line-height: 1.4; }
+.demo-chip-x:hover, .demo-chip-x:focus-visible { background: var(--stone-bg); color: var(--fg); }
+.demo-terms-block form { margin-bottom: 0; }
+.demo-terms-block input { width: 16em; max-width: 100%; }
+.demo-terms-block p[role="status"] { min-height: 1.2em; margin: 4px 0; }
+#demo-terms-count { font-weight: 600; margin: 4px 0 8px; }
+
+/* The screening replay below the Run row (screening.js): newest decision on top, splits marked. */
+.demo-ticker { margin: 8px 0 16px; padding: 10px 14px; border: 1px solid var(--line); border-left: 4px solid var(--demo-amber);
+  border-radius: var(--radius-control); background: var(--card); }
+.demo-ticker[hidden] { display: none; }
+.demo-ticker-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.demo-ticker-why { margin: 4px 0 6px; }
+.demo-ticker-list { margin: 0; padding: 0; list-style: none; font-variant-numeric: tabular-nums; }
+.demo-ticker-list li { margin: 2px 0; padding-left: 11px; border-left: 3px solid transparent; }
+.demo-ticker-split { font-weight: 600; }
+.demo-ticker-list .demo-ticker-split { border-left-color: var(--demo-amber); }
+.demo-ticker-end { margin: 8px 0 0; }
+.demo-ticker-end:empty { display: none; }
+.demo-terms-warn { color: var(--demo-amber); font-weight: 600; }
+.demo-terms-group ul { margin: 2px 0 10px; padding-left: 20px; }
+.demo-terms-id { font-variant-numeric: tabular-nums; color: var(--muted); }
+
+/* the guided tour (tour.js, design D7): a panel docked on the right; the page moves over so nothing is covered */
+:root { --demo-tour-w: 340px; }
+.demo-tour-on body { padding-right: var(--demo-tour-w); }
+.demo-tour-on .drawer:not(.docked) { right: var(--demo-tour-w); }
+.demo-tour-on .dd-panel { right: calc(12px + var(--demo-tour-w)); }
+/* below 1180 px the app floats its side panel (Ask WIDER) on the right edge: keep it beside the tour, not under it */
+@media (max-width: 1179px) { .demo-tour-on .guide-panel { right: var(--demo-tour-w); } }
+/* with the tour open the app is 340px narrower: up to 1700px its one-row top bar no longer fits a project name and
+   the main button, so it takes the app's own two planned rows (style.css, G0: where you are, then what you can do) instead of squeezing one row until
+   the main button runs under Ask WIDER and the names shrink to "Dedu…" (tester 1 Nov 2026) */
+@media (min-width: 1101px) and (max-width: 1700px) {
+  .demo-tour-on body { --top-h: 94px; }
+  .demo-tour-on .top { flex-wrap: wrap; row-gap: 6px; }
+  .demo-tour-on .top .brand, .demo-tour-on .top .sp { display: none; }
+  .demo-tour-on #tb-home { order: 1; } .demo-tour-on .tb-crumb { order: 2; flex: 1 1 0; }
+  .demo-tour-on .tb-name { order: 3; } .demo-tour-on .top .tb-help { order: 4; }
+  .demo-tour-on .top .brk { display: block; order: 5; flex-basis: 100%; height: 0; }
+  .demo-tour-on .tb-actions { order: 6; flex-shrink: 0; } .demo-tour-on #tb-ask { order: 7; }
+  .demo-tour-on #tb-questions { order: 8; } .demo-tour-on #tb-guide { order: 9; }
+  .demo-tour-on body:has(#tb-crumb[hidden]) { --top-h: 50px; }
+  .demo-tour-on body:has(#tb-crumb[hidden]) .top .brk { display: none; }
+}
+/* likewise the app drops the "Open project", "All projects" and "Switch project" words while it is at most 1600px
+   wide (style.css, G0); with the tour open that is up to a 1940px window */
+@media (min-width: 1101px) and (max-width: 1940px) {
+  .demo-tour-on .plbl { display: none; }
+  .demo-tour-on #tb-home .tb-lbl, .demo-tour-on .switch .swl { position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; }
+}
+/* the tour takes 340px: below this width the duplicate list and the pair stand one above the other, as the app
+   does on a narrow window, so the pair keeps room for its two columns */
+@media (max-width: 1439px) {
+  .demo-tour-on .dd-work { grid-template-columns: minmax(0, 1fr); height: auto; }
+  .demo-tour-on .dd-listcard #dd-list { display: block; max-height: 260px; overflow-y: auto; }
+  .demo-tour-on .dd-listcard #dd-list > tbody { display: table; width: 100%; }
+}
+.demo-tour { position: fixed; top: var(--demo-bar-h); right: 0; bottom: 0; width: var(--demo-tour-w); z-index: 20;
+  display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding: 14px 16px; background: var(--card); color: var(--fg);
+  border-left: 3px solid var(--demo-amber-line); box-shadow: -4px 0 16px rgba(0, 0, 0, .08); font-size: 14px; }
+.demo-tour[hidden] { display: none; }
+.demo-tour-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.demo-tour-where { color: var(--muted); font-size: 12px; }
+.demo-tour h2 { margin: 2px 0 0; font-size: 18px; line-height: 1.3; text-transform: none; letter-spacing: 0; color: var(--fg); }
+.demo-tour h2:focus { outline: none; }
+.demo-tour-body p { margin: 0 0 8px; line-height: 1.5; }
+.demo-who { align-self: flex-start; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+.demo-who-you { background: var(--violet-bg); color: var(--violet); border: 1px solid var(--violet); }
+.demo-who-wider { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue); }
+.demo-tour-tradeoff { margin: 0; padding: 8px 10px; border-left: 3px solid var(--stone); background: var(--stone-bg); line-height: 1.45; }
+.demo-tour-tradeoff[hidden], .demo-tour-passed[hidden], .demo-tour-report[hidden], .demo-tour button[hidden] { display: none; }
+.demo-tour-passed { padding: 8px 10px; border: 1px dashed var(--field-line); border-radius: var(--radius-control); }
+.demo-tour-passed p { margin: 0 0 6px; }
+.demo-tour-report { margin: 0; padding: 8px 10px; border-radius: var(--radius-control); background: var(--green-bg); color: var(--green); font-weight: 600; }
+.demo-tour-report.demo-tour-waiting { background: var(--demo-amber-bg); color: var(--demo-amber); }
+.demo-tour-link { align-self: flex-start; border: 0; background: transparent; color: var(--blue); padding: 2px 0; text-decoration: underline; text-align: left; }
+.demo-tour-link:hover { background: transparent; }
+.demo-tour-nav { display: flex; gap: 6px; margin-top: 4px; }
+.demo-tour-nav .demo-tour-primary { margin-left: auto; }
+.demo-tour-more { display: flex; flex-wrap: wrap; gap: 6px; }
+.demo-tour button { padding: 5px 11px; font-size: 13px; }
+.demo-tour .demo-tour-small { padding: 2px 8px; font-size: 12px; }
+.demo-tour button:disabled { opacity: .5; cursor: default; }
+.demo-tour-keys { margin: auto 0 0; padding-top: 8px; color: var(--muted); font-size: 12px; }
+.demo-target { outline: 3px solid var(--demo-amber-line) !important; outline-offset: 3px; border-radius: 4px; }
+.demo-target { scroll-margin-top: calc(var(--demo-bar-h) + var(--top-h, 50px) + 16px); }
+
+/* the concept cards, the Concepts menu and the end card */
+dialog.demo-card { width: min(620px, calc(100vw - 32px)); max-height: calc(100vh - 64px); overflow-y: auto; border: 1px solid var(--line);
+  border-radius: var(--radius-card); background: var(--card); color: var(--fg); padding: 18px 22px; line-height: 1.5; }
+dialog.demo-card::backdrop { background: rgba(0, 0, 0, .45); }
+dialog.demo-end { width: min(860px, calc(100vw - 32px)); }
+.demo-card h2 { margin: 0 0 10px; font-size: 20px; text-transform: none; letter-spacing: 0; color: var(--fg); }
+.demo-card-kind { margin: 0; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+.demo-card-list { list-style: none; padding: 0; margin: 0 0 12px; }
+.demo-card-list li { margin: 4px 0; }
+.demo-card-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; margin-top: 12px; }
+.demo-end-commands code { padding: 1px 6px; border-radius: 4px; background: var(--stone-bg); font-size: 13px; }
+.demo-end-commands li { margin: 4px 0; }
+.demo-end-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.demo-end-table th, .demo-end-table td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+/* the app's messages stay left of the tour card, so Undo, Redo and the close button can be pressed */
+.demo-tour-on .toasts { right: calc(var(--demo-tour-w) + 16px); }
+.demo-tour-on body.drawer-open .toasts { right: calc(var(--drawer-w) + var(--demo-tour-w) + 16px); }
+
+/* the chapter intro and the Chapters list (change demo-chapters-and-video, D2, D4) */
+.demo-tour-intro { margin: 0; padding: 8px 10px; border-left: 3px solid var(--blue); background: var(--stone-bg); line-height: 1.45; }
+.demo-tour-intro[hidden] { display: none; }
+.demo-chapter { display: flex; flex-direction: column; gap: 2px; width: 100%; text-align: left; padding: 8px 12px; }
+.demo-chapter span { font-size: 13px; }
+.demo-chapter .demo-chapter-count { color: var(--muted); font-size: 12px; }
+
+/* narrow screens (D7): the tour card docks at the bottom, above the app's fixed main button (tour.js sets bottom),
+   the Demo Mode bar wraps; nothing scrolls sideways */
+/* change demo-chapters-and-video: no Guide (D5), one fixed name (D6), Ask WIDER as recorded examples (D5b) */
+#tb-guide, #ptab-guide, #ppane-guide, #tb-more-list [data-more="guide"] { display: none !important; }
+.tb-more-wrap:not(:has([data-more]:not([data-more="guide"]))) { display: none !important; }
+[data-set-name], #home-name { display: none !important; }
+#tb-name span[aria-hidden="true"]:has(+ [data-set-name]) { display: none !important; }
+#ask-box .ask-label, #ask-box #ask-q, #ask-box .ask-row, #ask-box .send-note, #ask-box .ask-forget-row,
+#ask-box .ask-acts, #ask-box .ask-sources a, #ask-top, .demo-hide { display: none !important; }
+.demo-ask-examples { margin: 0 0 12px; }
+.demo-ask-lead { margin: 0 0 6px; }
+.demo-ask-list { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.demo-ask-ex { text-align: left; white-space: normal; }
+.demo-ask-recorded { margin: 0 0 4px; font-weight: 600; }
+
+@media (max-width: 700px) {
+  :root.demo-on { --demo-bar-h: 0px; }
+  .demo-bar { position: sticky; height: auto; flex-wrap: wrap; padding: 6px 12px; gap: 6px; }
+  .demo-on body { padding-top: 0; }
+  .demo-notice { max-width: 100%; white-space: normal; order: 5; flex-basis: 100%; }
+  .demo-bar-actions { flex-wrap: wrap; }
+  .demo-tour-on body { padding-right: 0; padding-bottom: 50vh; }
+  .demo-tour-on .drawer:not(.docked) { right: 0; }
+  .demo-tour-on .dd-panel { right: 12px; }
+  .demo-tour-on .guide-panel { right: 0; z-index: 25; }   /* on a phone the open panel sits over the docked tour */
+  .demo-tour-on .toasts, .demo-tour-on body.drawer-open .toasts { right: 16px; }
+  .demo-tour { top: auto; left: 0; right: 0; bottom: 0; width: auto; max-height: 50vh; overflow-y: auto;
+    border-left: 0; border-top: 2px solid var(--demo-amber-line); box-shadow: 0 -4px 16px rgba(0, 0, 0, .18); }
+  .demo-tour-keys { display: none; }
+  /* the focus page covers the wrapped demo bar (its own bar has Leave); the docked tour stays over its lower half,
+     and the page scrolls far enough to show its decisions above the tour */
+  .demo-on .drawer.full { z-index: 31; }
+  .demo-tour-on .drawer.full { padding-bottom: calc(50vh + 56px); }
+  .demo-tour-on body.drawer-full .demo-tour { z-index: 32; }
+  .demo-target { scroll-margin-top: 8px; }
+}
+
+/* a call the demo does not answer is no error: shown in plain dark grey, not in the app's red */
+.demo-off { color: #3f3f46 !important; }
+@media (prefers-color-scheme: dark) { .demo-off { color: #d4d4d8 !important; } }
+
+/* Home's "try the interactive demo" box: you are in it already */
+.home-demo { display: none !important; }

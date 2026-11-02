@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIDER · Literature Review Prototype</title>
+<meta name="description" content="WIDER, a prototype tool for systematic reviews of broad constructs: a walk through the offline demo of one review on invented data, in chapters, and the demo itself.">
+<meta name="robots" content="noindex">
+<link rel="preload" href="fonts/PublicSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family:"Public Sans"; font-weight:400; font-display:swap; src:url("fonts/PublicSans-Regular.woff2") format("woff2"); }
+@font-face { font-family:"Public Sans"; font-weight:500; font-display:swap; src:url("fonts/PublicSans-Medium.woff2") format("woff2"); }
+@font-face { font-family:"Public Sans"; font-weight:600; font-display:swap; src:url("fonts/PublicSans-SemiBold.woff2") format("woff2"); }
+@font-face { font-family:"Public Sans"; font-weight:700; font-display:swap; src:url("fonts/PublicSans-Bold.woff2") format("woff2"); }
+:root { --paper:#f9fafb; --sheet:#ffffff; --ink:#111827; --graphite:#4b5563; --faint:#6b7280; --line:#e5e7eb;
+  --blue:#2563eb; --blue-wash:#eff6ff; --violet:#6d28d9; --violet-wash:#f5f3ff; color-scheme:light;
+  --font:"Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif; }
+/* the dark tokens are those of wider/ui/static/style.css */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --paper:#111318; --sheet:#1b1e24; --ink:#e5e7eb; --graphite:#9ca3af; --faint:#9ca3af; --line:#2a2d34; --blue:#93b4f8; --blue-wash:#1b2643; --violet:#c4b5fd; --violet-wash:#2a2142; color-scheme:dark; } }
+:root[data-theme="dark"] { --paper:#111318; --sheet:#1b1e24; --ink:#e5e7eb; --graphite:#9ca3af; --faint:#9ca3af; --line:#2a2d34; --blue:#93b4f8; --blue-wash:#1b2643; --violet:#c4b5fd; --violet-wash:#2a2142; color-scheme:dark; }
+* { box-sizing:border-box; }
+html { -webkit-text-size-adjust:100%; }
+body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 var(--font);
+  -webkit-font-smoothing:antialiased; }
+.wrap { max-width:1080px; margin:0 auto; padding:0 24px; }
+header.top { border-bottom:1px solid var(--line); }
+header.top .wrap { display:flex; align-items:center; gap:16px; height:60px; }
+.brand { font-weight:700; letter-spacing:.14em; font-size:15px; }
+.tag { font-size:12px; color:var(--faint); border:1px solid var(--line); border-radius:999px; padding:1px 10px; }
+.hero { padding:64px 0 28px; }
+h1 { font-size:clamp(30px, 4.6vw, 48px); line-height:1.12; letter-spacing:-.02em; font-weight:700; margin:0; max-width:880px; text-wrap:balance; }
+.lede { font-size:clamp(17px, 2vw, 19px); color:var(--graphite); max-width:760px; margin:20px 0 0; text-wrap:pretty; }
+.video { margin:36px 0 0; background:var(--sheet); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+.video video { display:block; width:100%; height:auto; aspect-ratio:16 / 9; background:var(--paper); }
+.video figcaption { font-size:13px; color:var(--faint); padding:10px 16px; border-top:1px solid var(--line); }
+.chapters { padding:4px 16px 14px; }
+.chapters ol { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px; }
+.chapters button { font:inherit; font-size:14px; color:var(--ink); background:var(--paper); border:1px solid var(--line);
+  border-radius:8px; padding:6px 10px; cursor:pointer; min-height:36px; }
+.chapters button:hover { border-color:var(--blue); }
+.chapters button:focus-visible, .as-text summary:focus-visible, .try a:focus-visible { outline:2px solid var(--blue); outline-offset:2px; }
+.chapters time { color:var(--faint); margin-right:6px; font-variant-numeric:tabular-nums; }
+.as-text { border-top:1px solid var(--line); padding:10px 16px; font-size:15px; }
+.as-text summary { cursor:pointer; color:var(--blue); }
+.as-text ol { margin:12px 0 4px; padding-left:0; list-style:none; max-width:760px; }
+.as-text li { margin:0 0 10px; color:var(--ink); }
+.as-text time { color:var(--faint); margin-right:8px; font-variant-numeric:tabular-nums; }
+.try { font-size:17px; margin:22px 0 0; max-width:760px; }
+.try a { color:var(--blue); font-weight:600; }
+section.block { padding:56px 0 8px; }
+h2 { font-size:22px; line-height:1.3; margin:0 0 8px; letter-spacing:-.01em; }
+.sub { color:var(--graphite); margin:0 0 28px; max-width:720px; }
+.steps { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+.steps li { background:var(--sheet); padding:20px 22px 22px; }
+.steps b { display:block; font-size:12px; font-weight:600; letter-spacing:.1em; color:var(--blue); margin-bottom:6px; }
+.steps h3 { font-size:16px; margin:0 0 6px; font-weight:600; }
+.steps p { margin:0; font-size:15px; color:var(--graphite); }
+.split { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:16px; }
+.note { background:var(--sheet); border:1px solid var(--line); border-radius:12px; padding:20px 22px; }
+.note h3 { font-size:16px; margin:0 0 8px; font-weight:600; display:flex; align-items:center; gap:10px; }
+.note p { margin:0; font-size:15px; color:var(--graphite); }
+.chip { font-size:12px; font-weight:500; border-radius:999px; padding:1px 10px; }
+.chip.you { background:var(--blue-wash); color:var(--blue); }
+.chip.wider { background:var(--violet-wash); color:var(--violet); }
+footer { margin-top:64px; border-top:1px solid var(--line); }
+footer .wrap { padding-top:22px; padding-bottom:40px; font-size:13px; color:var(--faint); }
+@media (max-width:600px) { .wrap { padding:0 16px; } .hero { padding-top:40px; } section.block { padding-top:44px; } }
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><span class="brand">WIDER</span><span class="tag">prototype</span></div></header>
+<main class="wrap">
+  <section class="hero">
+    <h1>A literature review tool for broad constructs, where the same idea is studied under many names</h1>
+    <p class="lede">Some topics are hard to review not because there is little written about them, but because it is
+      spread across many fields and vocabularies. WIDER leads a researcher through such a review step by step: the
+      model proposes, reads and quotes; the researcher decides; and every step is recorded.</p>
+    <figure class="video">
+      <video id="tour-video" controls playsinline preload="metadata" poster="poster.jpg">
+        <source src="wider-showcase.mp4" type="video/mp4">
+        <track kind="chapters" src="wider-showcase.chapters.vtt" srclang="en" label="Chapters">
+        <track kind="captions" src="wider-showcase.captions.vtt" srclang="en" label="English">
+        Your browser cannot play this video. <a href="wider-showcase.mp4">Download it</a> instead.
+      </video>
+      <figcaption>A walk through the offline demo of one review, in chapters, from the question to a recall estimate
+        (about eleven minutes). Silent; the text is on screen, and captions can be turned on. The review, its papers and
+        their authors are invented for this demo; the screening is a recorded run of OpenAI's gpt-4o-mini on them,
+        replayed in the browser.</figcaption>
+      <nav class="chapters" aria-label="Video chapters" hidden><ol id="video-chapters"></ol></nav>
+      <details class="as-text" hidden><summary>Read the video as text</summary><ol id="video-text"></ol></details>
+    </figure>
+    <p class="try"><a href="demo/">Try the demo yourself</a>: the same invented review in your browser, with a guided
+      tour in chapters. Nothing you do there is sent anywhere.</p>
+  </section>
+
+  <section class="block">
+    <h2>One review, ten steps</h2>
+    <p class="sub">Each step has a page in the app and a command for scripts. A step opens when the one before it is done.</p>
+    <ol class="steps">
+      <li><b>01</b><h3>Question and seed papers</h3><p>The papers you already know guide the search and later test whether it found them.</p></li>
+      <li><b>02</b><h3>Construct</h3><p>Concepts, anchors, a codebook and synonyms. The model proposes; you edit, approve and freeze each version.</p></li>
+      <li><b>03</b><h3>Search strings</h3><p>The approved synonyms become a search string in each database's own syntax.</p></li>
+      <li><b>04</b><h3>Import</h3><p>Database exports are read as they are, with a check on which seed papers each search found.</p></li>
+      <li><b>05</b><h3>Duplicates</h3><p>Clear matches merge on their own; the unclear pairs are shown side by side for you to decide.</p></li>
+      <li><b>06</b><h3>Missing abstracts</h3><p>Filled from open scholarly indexes when you allow it; nothing is overwritten.</p></li>
+      <li><b>07</b><h3>Ranking</h3><p>Records are sorted by closeness to the construct and never filtered out.</p></li>
+      <li><b>08</b><h3>Human sample</h3><p>A stratified sample that a person labels blind, without seeing the model's decision.</p></li>
+      <li><b>09</b><h3>Screening</h3><p>Two independent model reads and a tie-break, each decision backed by verbatim quotes.</p></li>
+      <li><b>10</b><h3>Recall and report</h3><p>A recall estimate with a confidence interval, the PRISMA flow and a methods report.</p></li>
+    </ol>
+  </section>
+
+  <section class="block">
+    <h2>Who does what</h2>
+    <p class="sub">The split is the same on every page.</p>
+    <div class="split">
+      <div class="note"><h3><span class="chip you">You</span> decide</h3><p>Approve the construct, settle unclear
+        duplicates, label the blind sample and sign each decision with your name. Nothing moves on without you.</p></div>
+      <div class="note"><h3><span class="chip wider">WIDER</span> proposes and records</h3><p>Drafts synonyms, ranks
+        and screens with quotes, and stores every model call with its prompt, so the review can be replayed offline.</p></div>
+      <div class="note"><h3>Runs on your computer</h3><p>A local model is enough, and records do not have to leave the
+        computer. Cloud models, such as the one whose screening the video replays, can be added; their keys are read from the environment
+        only.</p></div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap">WIDER is a research prototype. The papers, authors and records in the video are invented demo data.</div></footer>
+<script>
+/* The chapter buttons and the text version, drawn from the video's two WebVTT tracks (browsers do not reliably draw
+   a chapter menu of their own). Without the tracks both stay hidden. */
+(function () {
+  var video = document.getElementById("tour-video");
+  if (!video) return;
+  function clock(t) { var s = Math.floor(t); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }
+  function stamp(t) { var e = document.createElement("time"); e.textContent = clock(t); return e; }
+  function fill(el, list, draw) {
+    el.track.mode = "hidden";   // the cues load without showing over the picture
+    function go() {
+      var cues = Array.prototype.slice.call(el.track.cues || []);
+      if (!cues.length) return;
+      list.textContent = "";
+      cues.forEach(function (c) { var li = draw(c); if (li) list.appendChild(li); });
+      list.parentNode.hidden = false;
+    }
+    if (el.readyState === 2) go(); else el.addEventListener("load", go);
+  }
+  var tracks = video.querySelectorAll("track");
+  fill(tracks[0], document.getElementById("video-chapters"), function (c) {
+    var li = document.createElement("li"), b = document.createElement("button");
+    b.type = "button";
+    b.appendChild(stamp(c.startTime));
+    b.appendChild(document.createTextNode(c.text));
+    b.addEventListener("click", function () { video.currentTime = c.startTime; video.play(); });
+    li.appendChild(b);
+    return li;
+  });
+  // a long caption is split into short cues "5-1", "5-2", ... for the picture: the text version joins them again
+  var last = null;
+  fill(tracks[1], document.getElementById("video-text"), function (c) {
+    var text = c.text.replace(/\s*\n\s*/g, " "), part = /-(\d+)$/.exec(c.id || "");
+    if (part && part[1] !== "1" && last) { last.appendChild(document.createTextNode(" " + text)); return null; }
+    last = document.createElement("li");
+    last.appendChild(stamp(c.startTime));
+    last.appendChild(document.createTextNode(text));
+    return last;
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+You are helping a researcher prepare a systematic review of a broad construct. Before the search is run, the researcher lists the **adjacent literatures**: neighbouring bodies of work that share vocabulary with the target studies, will be retrieved by the same search terms, and would contaminate the results if a screener mistook them for includes. Naming them lets the review draw marginal cases for calibration and lets the screening prompt tell them apart.
+
+{% include "_context.md.j2" %}
+{% if codebook_yaml %}
+
+# What a target study must contain
+
+{{ codebook_yaml }}
+{% endif %}
+{% if existing is defined and existing %}
+
+# Literatures already listed (do not repeat them)
+
+{% for e in existing %}
+- {{ e.key }}: {{ e.name }}{% if e.discriminating_cue %} — cue: {{ e.discriminating_cue }}{% endif %}
+{% endfor %}
+{% endif %}
+
+# What to produce
+
+`literatures`: four to eight entries, each a body of work that a title-and-abstract search for this question would retrieve although it does not answer it. Draw them from the research question and from the vocabulary of the benchmark abstracts: ask which other research traditions use the same words for a different question, the same setting for a different outcome, or the same outcome for a different cause. Each entry has:
+- `key`: lower-case identifier with underscores
+- `name`: the name researchers in that tradition would use for their own field
+- `description`: two or three sentences saying what these studies examine, compare and measure, written the way their own abstracts would say it
+- `differs_from_construct`: one sentence naming what the target studies require that this literature lacks, or what it adds that the target excludes
+- `discriminating_cue`: the words or framing in a title or abstract that tell a record from this literature apart from an include
+- `example_phrases`: three to five short phrases typical of abstracts in this literature
+
+Stay with literatures a database search for this question would actually surface. Do not list topics that merely sound related, and do not invent fields.

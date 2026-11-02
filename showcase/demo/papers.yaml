@@ -1,0 +1,386 @@
+# The invented papers of the interactive demo (showcase/demo). Every title, abstract, number and author is made up;
+# no real paper is described. The review question and codebook are the synthetic example's (employee voice and
+# silence, scripts/make_synthetic_example.py). Each paper carries the reference decision "Reviewer A" gives it under
+# that codebook; the borderline ones say why a careful reader could hesitate, which is what the demo's screening step
+# explains. kind: include | borderline | near (adjacent literature, excluded) | unrelated (another field, excluded).
+# found_in: the fake databases (alpha, beta, gamma) that return the paper; a paper on two or three is a duplicate to merge.
+papers:
+- id: P01
+  kind: include
+  decision: include
+  found_in: [alpha, beta, gamma]
+  year: 2019
+  title: "Speaking up to supervisors: what makes service employees offer suggestions"
+  abstract: >-
+    We surveyed 412 hotel and retail employees and their supervisors to find out who offers ideas for improvement.
+    Employees spoke up more often when their supervisor was seen as open to new ideas and when they felt personally
+    responsible for the quality of service. Long working hours made suggestions less likely.
+- id: P02
+  kind: include
+  decision: include
+  found_in: [alpha, beta, gamma]
+  year: 2018
+  title: "Why nurses keep patient-safety concerns to themselves"
+  abstract: >-
+    Interviews with 38 hospital nurses explored why they sometimes stay silent about safety concerns. Nurses described
+    fear of being seen as difficult and a feeling that nothing would change. Silence was more common on wards where
+    managers changed often.
+- id: P03
+  kind: include
+  decision: include
+  found_in: [alpha, gamma]
+  year: 2020
+  title: "Reporting accounting irregularities: when do employees go to the regulator?"
+  abstract: >-
+    In a vignette experiment, 290 accountants decided how to report an irregularity they had noticed. Most chose an
+    internal channel first. Reporting to an outside regulator became more likely when an earlier internal report had
+    been ignored.
+- id: P04
+  kind: include
+  decision: include
+  found_in: [alpha, beta]
+  year: 2016
+  title: "Middle managers selling issues to top management"
+  abstract: >-
+    We followed 54 proposals that middle managers raised with the top team of a manufacturing firm. Proposals framed as
+    a business opportunity were taken up more often than those framed as a problem. Managers who had raised accepted
+    proposals before were more likely to try again.
+- id: P05
+  kind: include
+  decision: include
+  found_in: [alpha, beta, gamma]
+  year: 2021
+  title: "How managers react when employees point out problems"
+  abstract: >-
+    In an experiment, 180 managers rated an employee who either suggested an improvement or pointed out a problem.
+    Pointing out a problem led to lower performance ratings, unless the employee also offered a solution. The penalty
+    was smaller for employees the manager already trusted.
+- id: P06
+  kind: include
+  decision: include
+  found_in: [alpha, gamma]
+  year: 2017
+  title: "Speaking up in the cockpit: first officers and error reporting"
+  abstract: >-
+    In a flight simulator study with 64 airline crews, we recorded whether first officers told the captain about errors
+    they noticed. A captain's briefing that invited questions made reporting more likely, and crews whose first officer
+    spoke up made fewer uncorrected errors.
+- id: P07
+  kind: include
+  decision: include
+  found_in: [alpha, beta]
+  year: 2015
+  title: "Disagreeing with the team leader in project teams"
+  abstract: >-
+    Panel data on 96 project teams show when open disagreement with the leader helps. Team members' dissent improved
+    the quality of team decisions when the leader explicitly asked for objections, and had no effect otherwise.
+- id: P08
+  kind: include
+  decision: include
+  found_in: [alpha, beta, gamma]
+  year: 2022
+  title: "Does speaking up pay? Suggestions and promotion over six years"
+  abstract: >-
+    Using personnel records of 2,300 employees in a logistics company, we related how often employees made suggestions
+    to their later promotions. Frequent suggestions went with faster promotion, but only for employees whose
+    supervisors described their input as constructive.
+- id: P09
+  kind: include
+  decision: include
+  found_in: [alpha, gamma]
+  year: 2020
+  title: "After an ignored suggestion: do employees go quiet?"
+  abstract: >-
+    In a four-week diary study, 120 office employees recorded the suggestions they made and how their manager
+    responded. A suggestion that was ignored made employees less likely to raise anything the following week.
+- id: P10
+  kind: include
+  decision: include
+  found_in: [alpha, beta]
+  year: 2019
+  title: "Speaking up about errors in surgical teams"
+  abstract: >-
+    Observers recorded how often team members in 48 surgical teams pointed out possible errors during operations. Team
+    members spoke up more often in teams whose surgeon had introduced everyone by name at the start, and errors were
+    caught earlier in those teams.
+- id: P11
+  kind: include
+  decision: include
+  found_in: [alpha, gamma]
+  year: 2023
+  title: "Working from home and raising concerns with the manager"
+  abstract: >-
+    A survey of 650 employees compared how often people working from home and in the office raised concerns with their
+    manager. Employees working from home raised fewer concerns, but the gap closed when they had a weekly one-to-one
+    video call.
+- id: P12
+  kind: include
+  decision: include
+  found_in: [alpha, beta]
+  year: 2018
+  title: "Newcomers and raising concerns in social care"
+  abstract: >-
+    We surveyed 300 care workers about whether they raised concerns about care quality with their supervisor.
+    Newcomers raised concerns less often than staff with longer tenure, and having an assigned mentor reduced the gap.
+- id: P13
+  kind: include
+  decision: include
+  found_in: [alpha, beta, gamma]
+  year: 2021
+  title: "The cost of silence: withheld concerns and exhaustion among teachers"
+  abstract: >-
+    In a two-wave survey of 540 school teachers, those who often kept concerns from their head teacher reported more
+    emotional exhaustion a year later. The link held after accounting for workload.
+- id: P14
+  kind: include
+  decision: include
+  found_in: [alpha, gamma]
+  year: 2022
+  title: "Students on work placements speaking up about unsafe practice"
+  abstract: >-
+    Interviews with 45 nursing and engineering students on work placements asked whether they told a supervisor when
+    they saw unsafe practice. Students spoke up when their placement supervisor had asked for feedback early on and
+    stayed silent when they feared a poor placement grade.
+- id: P15
+  kind: include
+  decision: include
+  found_in: [alpha, beta]
+  year: 2017
+  title: "Anonymous hotlines and employees' willingness to report problems"
+  abstract: >-
+    Across 40 firms, employees in firms with an anonymous reporting hotline said they were more willing to report
+    problems they observed to management. The effect was strongest among employees on temporary contracts.
+- id: P16
+  kind: include
+  decision: include
+  found_in: [alpha, beta, gamma]
+  year: 2020
+  title: "Humble leaders and employee suggestions in software firms"
+  abstract: >-
+    A multilevel study of 70 software teams found that team members offered more suggestions to leaders who admitted
+    their own mistakes. Feeling safe to take interpersonal risks explained part of this link.
+- id: P17
+  kind: borderline
+  decision: exclude
+  why: "Voice is only one part of a combined citizenship score and is never analysed on its own."
+  found_in: [beta, gamma]
+  year: 2014
+  title: "Citizenship behaviour and team performance in retail stores"
+  abstract: >-
+    We measured organisational citizenship behaviour in 120 retail stores with a combined scale that covers helping
+    colleagues, following rules and making suggestions. Stores with higher citizenship scores had higher sales the
+    following year.
+- id: P18
+  kind: borderline
+  decision: exclude
+  why: "A scale development study: the one correlation is a validity check, not a tested predictor or outcome."
+  found_in: [alpha, beta]
+  year: 2019
+  title: "A short scale for measuring employee suggestions"
+  abstract: >-
+    We developed a six-item scale of how often employees make suggestions at work and tested it in two samples of 300
+    and 450 employees. The items formed one factor, and scores correlated moderately with job satisfaction, which we
+    report as evidence of validity.
+- id: P19
+  kind: borderline
+  decision: exclude
+  why: "The channel is a formal representation scheme, which the codebook does not count as voluntary speaking up."
+  found_in: [beta]
+  year: 2013
+  title: "Union representatives raising members' complaints in formal meetings"
+  abstract: >-
+    We studied how union representatives in 30 workplaces put members' complaints on the agenda of formal
+    consultation meetings with management. Complaints raised in writing before the meeting were resolved more often.
+- id: P20
+  kind: borderline
+  decision: include
+  why: "The firefighters are volunteers, not paid staff; the codebook counts members of an organisation."
+  found_in: [alpha, gamma]
+  year: 2021
+  title: "Speaking up among volunteer firefighters"
+  abstract: >-
+    A survey of 260 volunteer firefighters asked how often they told their crew commander about safety problems.
+    Volunteers who felt their commander listened spoke up more, and those who spoke up were more likely to stay with
+    the brigade a year later.
+- id: P21
+  kind: borderline
+  decision: exclude
+  why: "The reports are required by law, so the behaviour is not the employee's own choice."
+  found_in: [alpha, beta]
+  year: 2018
+  title: "Mandatory incident reporting by hospital pharmacists"
+  abstract: >-
+    Hospital pharmacists must report every dispensing incident to a national system. Using five years of records from
+    22 hospitals, we found that report numbers rose after the system was simplified, and that hospitals with more
+    reports had fewer repeated incidents.
+- id: P22
+  kind: borderline
+  decision: exclude
+  why: "The warnings go to colleagues, not to someone who could act on the problem."
+  found_in: [gamma]
+  year: 2020
+  title: "Warning colleagues about hazards in warehouse teams"
+  abstract: >-
+    We observed 35 warehouse teams and recorded how often workers warned each other about hazards on the floor. Teams
+    with more peer warnings had fewer minor accidents. Supervisors were not involved in the warnings we recorded.
+- id: P23
+  kind: borderline
+  decision: include
+  why: "The platform is a formal tool, but using it is voluntary and the ideas go to managers who can act."
+  found_in: [alpha, beta]
+  year: 2022
+  title: "Employee ideas on an online suggestion platform"
+  abstract: >-
+    We analysed 8,000 ideas that employees of a utility company posted on a voluntary online suggestion platform read by
+    managers. Employees posted more ideas after their earlier ideas received a quick reply, and ideas that were
+    adopted led to more ideas from the same team.
+- id: P24
+  kind: borderline
+  decision: exclude
+  why: "A description of a programme with no predictor or outcome studied."
+  found_in: [alpha]
+  year: 2016
+  title: "Building a speak-up programme: a company's experience"
+  abstract: >-
+    This case description explains how a mid-sized insurer set up a programme to encourage staff to speak up, including
+    training for managers and a monthly feedback forum. We describe the steps taken and the lessons the company drew.
+- id: P25
+  kind: borderline
+  decision: exclude
+  why: "The people speaking up are patients, not employees or members of the organisation."
+  found_in: [beta, gamma]
+  year: 2019
+  title: "Patients raising concerns with hospital staff"
+  abstract: >-
+    A survey of 900 hospital patients asked whether they told staff when something about their care seemed wrong.
+    Patients who had been invited to ask questions on admission raised concerns more often.
+- id: P26
+  kind: borderline
+  decision: exclude
+  why: "The participants are students imagining a job, not employees or students in a work placement."
+  found_in: [alpha]
+  year: 2021
+  title: "Would you speak up? Business students respond to workplace scenarios"
+  abstract: >-
+    In an online experiment, 240 business students read scenarios about a new job and said whether they would tell
+    their manager about a problem. Students said they would speak up more often when the scenario described an open
+    manager.
+- id: P27
+  kind: borderline
+  decision: include
+  why: "Staff pass customers' complaints on to managers by their own choice; the codebook counts this as upward voice."
+  found_in: [alpha, gamma]
+  year: 2018
+  title: "Front-line staff passing customer complaints on to managers"
+  abstract: >-
+    We surveyed 380 call-centre employees about how often they told managers about recurring customer complaints.
+    Employees passed on complaints more often when they believed managers fixed the underlying problems, and less
+    often when their own targets were at risk.
+- id: P28
+  kind: near
+  decision: exclude
+  found_in: [beta, gamma]
+  year: 2012
+  title: "Works councils and productivity in manufacturing firms"
+  abstract: >-
+    Using establishment data on 1,800 manufacturing firms, we compare productivity in firms with and without an elected
+    works council. Firms with a works council had slightly higher productivity, mainly in larger plants.
+- id: P29
+  kind: near
+  decision: exclude
+  found_in: [beta]
+  year: 2011
+  title: "Grievance arbitration outcomes in unionised plants"
+  abstract: >-
+    We analysed 600 grievance cases that went to arbitration in unionised plants. Cases with written evidence were
+    decided for the employee more often, and the average case took seven months.
+- id: P30
+  kind: near
+  decision: exclude
+  found_in: [beta, gamma]
+  year: 2017
+  title: "Customer complaint handling and repurchase intentions"
+  abstract: >-
+    An online survey of 1,100 shoppers found that a quick and friendly response to a complaint increased the intention
+    to buy again from the same shop.
+- id: P31
+  kind: near
+  decision: exclude
+  found_in: [gamma]
+  year: 2015
+  title: "Citizen participation in municipal budgeting"
+  abstract: >-
+    We studied 25 towns that let residents vote on part of the municipal budget. Turnout was higher where the town held
+    neighbourhood meetings before the vote.
+- id: P32
+  kind: near
+  decision: exclude
+  found_in: [beta, gamma]
+  year: 2019
+  title: "Information sharing in distributed software teams"
+  abstract: >-
+    A study of 60 software teams spread across several countries found that teams shared more information between
+    sites when they used a common chat tool, which shortened delivery times.
+- id: P33
+  kind: near
+  decision: exclude
+  found_in: [alpha, beta]
+  year: 2016
+  title: "Psychological safety climate and team learning in hospital units"
+  abstract: >-
+    In 50 hospital units, a climate in which staff felt safe to take interpersonal risks went with more team learning
+    activities and better quality ratings. Individual speaking up was not measured.
+- id: P34
+  kind: unrelated
+  decision: exclude
+  found_in: [gamma]
+  year: 2018
+  title: "Plankton blooms and sea-surface temperature"
+  abstract: >-
+    Satellite data from 2003 to 2017 show that plankton blooms started earlier in years with warmer sea-surface
+    temperatures.
+- id: P35
+  kind: unrelated
+  decision: exclude
+  found_in: [beta]
+  year: 2020
+  title: "A new catalyst for ammonia production"
+  abstract: >-
+    We report a catalyst that produces ammonia at lower pressure than current methods and test it over 500 hours.
+- id: P36
+  kind: unrelated
+  decision: exclude
+  found_in: [gamma]
+  year: 2014
+  title: "Soil carbon under no-till farming"
+  abstract: >-
+    Field trials over ten years found more carbon in the top soil layer of fields farmed without ploughing.
+- id: P37
+  kind: unrelated
+  decision: exclude
+  found_in: [beta]
+  year: 2022
+  title: "Predicting protein structure with neural networks"
+  abstract: >-
+    We train a neural network to predict how proteins fold and compare its predictions with laboratory measurements.
+- id: P38
+  kind: unrelated
+  decision: exclude
+  found_in: [beta, gamma]
+  year: 2013
+  title: "Interest rates and inflation in small open economies"
+  abstract: >-
+    Using data from 18 small economies, we show how changes in central bank interest rates pass through to inflation.
+- id: P39
+  kind: unrelated
+  decision: exclude
+  found_in: [gamma]
+  year: 2019
+  title: "Urban heat islands and tree cover"
+  abstract: >-
+    Across 30 cities, neighbourhoods with more tree cover were up to three degrees cooler on summer afternoons.
+# the known papers (the benchmark): invented seed papers the researcher already knows; four to develop the search,
+# two kept aside to check it
+benchmark:
+  development: [P01, P02, P04, P06]
+  validation: [P05, P08]

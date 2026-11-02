@@ -1,0 +1,36 @@
+You are helping a researcher build a **Boolean search query** for a systematic literature review of a broad construct that is studied under many names across fields. The query will be rendered for Scopus, Web of Science, EBSCO, ProQuest and Ovid, searched in titles and abstracts. Your task is to propose the concept blocks and the synonym terms in each block.
+
+{% include "_context.md.j2" %}
+{% if cells %}
+# Cells already defined by the researcher
+
+{{ cells_yaml }}
+{% endif %}
+{% if codebook %}
+# The codebook's elements
+
+{{ codebook_yaml }}
+{% endif %}
+
+# What to produce
+
+A JSON object with `blocks` and `logic`.
+
+Each block is one concept that a relevant record must mention (role "required") or that only sharpens the search (role "optional"). Typical structure: one block per element of the construct{% if codebook and codebook.elements %} (here: {% for e in codebook.elements %}{{ e.name }}{{ ", " if not loop.last else "" }}{% endfor %}){% endif %}; where an element has distinct kinds{% if cells and cells.dimensions %} (for example the values of the dimension "{{ cells.dimensions[0].name }}": {% for v in cells.dimensions[0]["values"] %}{{ v.key }}{{ ", " if not loop.last else "" }}{% endfor %}){% endif %}, one block per kind joined by OR. Three to six blocks is typical.
+
+Each block's `terms` is a list. Write terms in this mini-language (the words below only show the syntax; take the real words from the benchmark abstracts and from the fields that study the construct):
+- a word with right truncation: `behavio*`, `evaluat*`
+- a quoted phrase, optionally truncated: `"decision making"`, `"team performance*"`
+- a proximity group as an object: `{"near": ["employee*", "turnover"], "distance": 3}`; an inner list is an OR group: `{"near": ["effect*", ["performance", "productivity", "output"]], "distance": 5}`
+
+Rules for terms:
+- Be exhaustive within each block: the whole point of this review is that the literature uses diverse vocabulary across management, psychology, sociology, education, economics, law and the other fields that study the construct. Mine the benchmark abstracts for the words they actually use and add the terms those fields would use for the same thing. Fifty to two hundred terms per block is normal.
+- Include both British and American spellings where they differ (behaviour/behavior, organisation/organization, judgement/judgment).
+- Use truncation to catch inflections, but not so short that it floods (not `beha*`, yes `behavio*`).
+- Use proximity for two-word concepts whose order varies ("team performance", "performance of the team").
+- Do not include terms that are only about the setting or the population unless the researcher asked for them.
+- Never put the whole research question in one term; each term is one concept.
+
+`logic` combines block keys with `{"and": [...]}`, `{"or": [...]}` and `{"not": ...}`. Required blocks are joined with AND; alternative kinds with OR. Use a `not` only if the researcher's exclusion notes clearly call for one.
+
+Add a `notes` string that explains your block design in three sentences.

@@ -1,0 +1,227 @@
+# Stage registry: the WIDER procedure in order. Each stage ships a CLI command and a UI page.
+# `title` names the page (sidebar, stepper, heading, `wider stages`); `short` is the sidebar label, the same here.
+# `section` places an available stage under one of `sections:` (number and title); extension stages take none.
+# `command` is the stage's one next-step command (status, summaries); `commands` lists every command of its page
+# (default: [command]).
+# `requires` names earlier stages that must be done; `used_by` names the later stages that read a stage's result
+# (written by hand: nothing requires Missing abstracts, yet Ranking and Screening read the abstracts); `done_when`
+# lists store checks (all must pass) that `wider.core.stages.stage_states()` evaluates: table (row count), artifact (kind with status), meta (key present).
+# Stage-2 extensions (full-text screening, extraction, synthesis) register here without touching the core.
+sections:
+- {number: 1, title: Literature search}
+- {number: 2, title: Data cleaning}
+- {number: 3, title: Model tuning and validation}
+- {number: 4, title: Screening and outputs}
+stages:
+- key: setup
+  title: Review plan
+  short: Review plan    # sidebar label
+  section: 1
+  command: ui    # `wider init` creates the project; the interview on the setup page (or benchmark/providers/query platforms) fills it
+  commands: [init, plan, benchmark, protocol, providers]    # what the page does, for scripts (Explain, Help, docs/names.md)
+  status: available
+  description: >
+    Write down the research question(s), the inclusion and exclusion notes, the seed papers (a development and a
+    validation set), and the databases you will search. Everything later
+    is checked against these inputs.
+  why: >
+    A review of a broad construct drifts unless the question and the known-relevant papers are fixed first; the
+    validation seed papers are held back so the search can be tested once, honestly.
+  requires: []
+  used_by: [construct, query, import, rank, recall]   # the question, the seed papers and the databases
+  produces: [project.yaml, benchmark.csv]
+  done_when:
+  - {check: table, name: benchmark_papers, min: 1}
+  - {check: config, name: questions}
+- key: construct
+  title: Concepts and synonyms
+  short: Concepts and synonyms    # sidebar label
+  section: 1
+  command: construct list   # `wider next` prints a command that runs, not a group's help
+  commands: [construct]
+  status: available
+  description: >
+    The LLM proposes, from your question and the development seed papers' abstracts, the construct cells, the
+    screening codebook, synonym blocks for the query, one anchor sentence per cell, and near-miss (adjacent
+    literature) descriptions. You edit and approve each; every version is kept.
+  why: >
+    Broad constructs are reviewed well only when their vocabulary and boundaries are written down before searching;
+    grounding the proposals in your own seed papers keeps them specific to your literature.
+  requires: [setup]
+  used_by: [query, rank, sample, screen]   # synonyms, anchor sentences, near misses, the codebook
+  produces: [artifacts/cells, artifacts/codebook, artifacts/synonyms, artifacts/anchors, artifacts/near_miss, artifacts/adjacent]
+  done_when:
+  - {check: artifact, name: cells, status: approved}
+  - {check: artifact, name: synonyms, status: approved}
+- key: query
+  title: Search strings
+  short: Search strings    # sidebar label
+  section: 1
+  command: query render   # `wider next` prints a command that runs, not a group's help
+  commands: [query]
+  status: available
+  description: >
+    The approved synonym blocks are rendered into one Boolean string per chosen database, in that database's own
+    syntax. You run the searches yourself and bring back the exports. Coverage of the development seed papers is
+    checked while you edit; the validation set is reported only once the query is frozen or the uploads
+    are marked final.
+  why: >
+    Databases differ in syntax and limits; one shared query representation keeps the strings consistent and
+    reproducible, and the freeze rule prevents tuning the query to the test papers.
+  requires: [construct]
+  used_by: [import, recall]   # the query version of each import; the methods text
+  produces: [artifacts/synonyms (frozen), exports/queries]
+  done_when:
+  - {check: artifact, name: synonyms, status: frozen, frozen_query: true}
+- key: import
+  title: Search results
+  short: Search results    # sidebar label
+  section: 1
+  command: import run   # `wider next` prints a command that runs, not a group's help
+  commands: [import]
+  status: available
+  description: >
+    Database exports (RIS, CSV/TSV, XLS/XLSX or BibTeX, one folder per database) are recognised by their header,
+    standardised and stored with their source file; a file is imported once, by content hash, and gets a sanity
+    verdict (ok, capped, off-topic, empty, duplicate). Coverage then shows which seed papers each database
+    returned (by DOI, exact title, then fuzzy title) and, after dedup, which the corpus holds.
+  why: >
+    An export that is not the result of your query (wrong search, truncated download) silently ruins recall;
+    a seed paper missing from the database that should have found it is the cheapest warning you will get.
+  requires: [query]
+  used_by: [dedup, recall]   # the records; the PRISMA counts
+  produces: [raw_records, sources]
+  done_when:
+  - {check: table, name: raw_records, min: 1}
+- key: dedup
+  title: Deduplication
+  short: Deduplication    # sidebar label
+  section: 2
+  command: dedup run   # `wider next` prints a command that runs, not a group's help
+  commands: [dedup]
+  status: available
+  description: >
+    Records are merged by DOI, then exact title, then fuzzy title with corroboration (year, first author,
+    journal). Uncertain pairs go to a manual queue; your decisions are stored and re-applied. PRISMA counts and
+    audit files are written.
+  why: >
+    Rules alone over-merge or under-merge; a transparent queue with named rules makes the counts auditable.
+  requires: [import]
+  used_by: [enrich, rank, sample, screen, recall]   # the unique records
+  produces: [records, dedup_pairs, dedup_clusters, exports/prisma]
+  done_when:
+  - {check: table, name: records, min: 1}
+- key: enrich
+  title: Missing abstracts
+  short: Missing abstracts    # sidebar label
+  section: 2
+  command: enrich
+  status: available
+  description: >
+    Records with a thin or missing abstract are completed from OpenAlex, Crossref, Europe PMC and Semantic Scholar
+    in that order; nothing already present is overwritten and every fetch is logged.
+  why: >
+    Ranking and screening read the abstract; a record without one is judged on its title alone, so it is easily
+    ranked low or set aside.
+  requires: [dedup]
+  used_by: [rank, screen]   # the abstracts: nothing requires Missing abstracts, yet both read them
+  produces: [enrichment_log]
+  done_when:   # a lookup ran, or no record has a thin abstract left to look up (inspection 1 Nov 2026)
+  - {check: enrich_settled}
+- key: rank
+  title: Ranking
+  short: Ranking    # sidebar label
+  section: 3
+  command: rank run   # `wider next` prints a command that runs, not a group's help
+  commands: [rank]
+  status: available
+  description: >
+    Every record is embedded and scored against the approved anchors (mean of its top cells). The ranking
+    sorts, never filters. Seed-paper ranks, recall@K and tests without one part over anchor versions and embedding models
+    show how well the anchors work; clusters in the top of the ranking describe the topics found.
+  why: >
+    A ranking lets the human and LLM effort concentrate where relevant papers are dense, while a probability sample
+    over the whole ranking keeps the recall estimate honest.
+  requires: [dedup]
+  used_by: [sample, recall]   # the bands and weights of the samples
+  produces: [embedding_sets, rankings, ranking_rows]
+  done_when:
+  - {check: table, name: rankings, min: 1}
+- key: sample
+  title: Samples and labelling
+  short: Samples and labelling    # sidebar label
+  section: 3
+  command: sample status   # `wider next` prints it while the development sample is incomplete (D8)
+  commands: [sample, label]
+  status: available
+  description: >
+    A band-stratified probability sample (for the recall estimate) and a purposive development set (likely
+    includes, near-misses per adjacent literature, cluster medoids, thin abstracts, tail) are drawn and labelled
+    in the blinded queue by one or two reviewers.
+  why: >
+    Human labels on a known design are what make the LLM's recall measurable; the development set is where the
+    prompt is tuned on the hardest cases.
+  requires: [rank]
+  used_by: [screen, recall]   # the labels the screening is scored against
+  produces: [samples, sample_rows, labels]
+  done_when:
+  - {check: table, name: labels, min: 1}
+- key: screen
+  title: Screening
+  short: Screening    # sidebar label
+  section: 4
+  command: screen status   # `wider next` prints a command that runs, not a group's help
+  commands: [screen, review]
+  status: available
+  description: >
+    The codebook becomes a prompt and JSON schema; each record is screened in an isolated call that quotes the
+    words behind every grade, and an "absent" grade whose quote is not in the record becomes unclear. Development-set evaluation reports misses per adjacent literature; the corpus protocol
+    runs two passes, a blind third read on disagreement and a second screen of the maybes.
+  why: >
+    Verbatim quotes and a recall-first rule keep a small model from excluding on a hunch; repeated reads and a blind
+    third read on disagreement catch some of its slips, and show where it answers inconsistently.
+  requires: [sample]
+  used_by: [recall]
+  produces: [runs, screen_calls, screen_decisions]
+  done_when:
+  - {check: table, name: screen_decisions, min: 1}
+- key: recall
+  title: Recall and report
+  short: Recall and report    # sidebar label
+  section: 4
+  command: recall
+  status: available
+  description: >
+    Band-weighted recall of the LLM screen against the human labels, with an interval and the number of relevant papers, the PRISMA flow
+    and a shareable report without abstracts.
+  why: >
+    The claim a review makes is "we found nearly all of it"; this stage puts a number and an interval on it.
+  requires: [screen]
+  used_by: []
+  produces: [exports/report]
+  done_when:
+  - {check: meta, name: last_report}
+- key: fulltext
+  title: Full-text screening
+  short: Full text    # sidebar label
+  command: fulltext
+  status: extension
+  description: Stage-2 extension point.
+  why: Abstract-level screening leaves the includes and maybes; reading their full texts is the next decision layer.
+  requires: [recall]
+- key: extract
+  title: Data extraction
+  short: Extraction    # sidebar label
+  command: extract
+  status: extension
+  description: Stage-2 extension point.
+  why: Once the set is final, the same codebook elements can be extracted per paper for the synthesis.
+  requires: [fulltext]
+- key: synthesis
+  title: Synthesis
+  short: Synthesis    # sidebar label
+  command: synth
+  status: extension
+  description: Stage-2 extension point.
+  why: The extracted elements are what a synthesis of a wide literature is built from.
+  requires: [extract]

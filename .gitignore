@@ -1,0 +1,40 @@
+# environments and caches
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.DS_Store
+.env
+
+# local practice projects for the demo servers (synthetic data, never committed)
+.demo/
+
+# review data must never enter this repository
+*.ris
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.npy
+data/
+runs/
+responses.jsonl
+exports/
+inputs/
+seed_pdfs/
+
+# Claude Code session files (worktrees, launch configs); never committed
+.claude/*
+!.claude/commands/
+.claude/commands/*
+!.claude/commands/opsx/
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/openspec-*/
+!.claude/skills/html-screenshots/
+!.claude/agents/
+openspec/changes/**/sim/raw/

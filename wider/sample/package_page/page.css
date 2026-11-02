@@ -1,0 +1,31 @@
+:root { --fg: #111; --bg: #fff; --line: #c8c8c8; --accent: #1f5f99; --soft: #f4f6f8; }
+@media (prefers-color-scheme: dark) { :root { --fg: #eee; --bg: #161616; --line: #444; --accent: #8ab8e6; --soft: #222; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 1200px; margin: 0 auto; padding: 16px; }
+h1 { font-size: 1.5rem; margin: 0 0 .5rem; }
+h2 { font-size: 1.2rem; margin: 0 0 .5rem; }
+h3 { font-size: 1rem; margin: 1rem 0 .25rem; }
+.rp-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+button, select, input, textarea { font: inherit; color: inherit; }
+button { padding: 6px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--soft); cursor: pointer; }
+button[aria-pressed="true"] { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.rp-file input { display: block; }
+.rp-cols { display: grid; grid-template-columns: minmax(180px, 1fr) 3fr; gap: 16px; margin-top: 12px; }
+.rp-cols.with-criteria { grid-template-columns: minmax(180px, 1fr) 3fr 2fr; }
+.rp-list ol { list-style: none; margin: 0; padding: 0; max-height: 75vh; overflow: auto; }
+.rp-list button { width: 100%; text-align: left; margin-bottom: 4px; }
+.rp-list button[aria-current="true"] { border-color: var(--accent); border-width: 2px; }
+.rp-done::before { content: "\2713  "; }
+.rp-meta { margin: 0 0 .5rem; }
+.rp-abstract { white-space: pre-wrap; }
+.rp-source { background: none; border: none; padding: 0; text-decoration: underline; color: var(--accent); }
+.rp-decide { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+fieldset { border: 1px solid var(--line); border-radius: 6px; margin: 8px 0; }
+label { display: block; margin: 6px 0; }
+textarea { width: 100%; min-height: 5em; }
+input[type="text"] { width: 100%; }
+#rp-criteria { border-left: 1px solid var(--line); padding-left: 12px; max-height: 80vh; overflow: auto; }
+.rp-nav { display: flex; gap: 8px; margin-top: 12px; }
+@media (max-width: 760px) { .rp-cols, .rp-cols.with-criteria { grid-template-columns: 1fr; } #rp-criteria { border-left: none; padding-left: 0; } }

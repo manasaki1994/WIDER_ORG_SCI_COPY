@@ -1,0 +1,298 @@
+topics:
+  overview:
+    sources:
+    - wider/stages.yaml
+    - wider/core/stages.py:stage_states
+    - wider/core/stages.py:next_stage
+    - wider/core/stages.py:route_sentence
+    fingerprint: 91a40a1cbca4b8be2c1965407dbe44aa241dfd0665bf1841596ecc8ab254687f
+    text: 72855ff48a2c4f82866196c0b1998a8c7ef6717dfcba3279976b72883414cb0f
+    status: drafted
+    date: '2026-11-01'
+  query-construction:
+    sources:
+    - wider/construct/propose.py:build_prompt
+    - wider/construct/propose.py:benchmark_context
+    - wider/construct/propose.py:MAX_ABSTRACT_WORDS
+    - wider/construct/propose.py:propose_async
+    - wider/construct/adjacent.py:propose_from_question_async
+    - wider/construct/artifacts.py:save_new_version
+    - wider/construct/artifacts.py:set_status
+    - wider/construct/artifacts.py:freeze_plan
+    - wider/construct/artifacts.py:frozen_query
+    - wider/construct/artifacts.py:unlock
+    - wider/construct/artifacts.py:record_unlock
+    - wider/search/evaluate.py:evaluate
+    - wider/search/diagnostics.py:suggested_edits
+    - wider/search/diagnostics.py:budget
+    fingerprint: bc679fbad3847781a637e5f929d0d24665ea1e206dcc6065a56b76b5318b2052
+    text: 77236ee31a6dbd1e4834cc90f0238acc82747f60fc786e1340be397e05063e57
+    status: drafted
+    date: '2026-11-01'
+  development-validation-split:
+    sources:
+    - wider/construct/seed.py:suggest_split
+    - wider/construct/seed.py:apply_split
+    - wider/construct/seed.py:set_notices
+    - wider/construct/seed.py:move_used
+    - wider/construct/seed.py:set_assignment
+    - wider/construct/seed.py:resolve
+    - wider/search/coverage.py:validation_unlocked
+    - wider/search/coverage.py:look
+    - wider/search/coverage.py:used_papers
+    - wider/search/coverage.py:validity_note
+    - wider/search/coverage.py:check
+    - wider/core/matching.py:locate_benchmark
+    - wider/search/diagnostics.py:clopper_pearson
+    fingerprint: aa4b5b28829c55d05458f7ed8288bc279dbc5ea934e0669ad3f0dc501390bd57
+    text: 5200ade042d8a667e8afd8430dccd82fa53a98c6c6a8ab21640537648df44e0c
+    status: drafted
+    date: '2026-11-01'
+  deduplication:
+    sources:
+    - wider/dedup/diagnostics.py
+    - wider/dedup/engine.py:stage_a
+    - wider/dedup/engine.py:stage_b
+    - wider/dedup/engine.py:stage_c
+    - wider/dedup/engine.py:SafeUnion
+    - wider/dedup/engine.py:run
+    - wider/dedup/engine.py:build_masters
+    fingerprint: 3bd4ae7e6bd6b4a05c7d3f036c00e23fc12f88373e9d43424d9c483cc29b0479
+    text: ac2b3b19534bf9392f92c1aa4926eca524e6b356bb3fbdfb3a5fe956f8bb031d
+    status: drafted
+    date: '2026-11-01'
+  ranking:
+    sources:
+    - wider/rank/score.py
+    - wider/rank/corpus.py:record_text
+    - wider/rank/corpus.py:clean_keywords
+    - wider/rank/corpus.py:strip_boilerplate
+    - wider/rank/corpus.py:corpus_texts
+    - wider/rank/corpus.py:embed_corpus
+    - wider/rank/cluster.py
+    - wider/rank/ablate.py:ablation
+    - wider/rank/adjacent.py:candidate_clusters
+    - wider/rank/adjacent.py:verify_quotes
+    - wider/rank/adjacent.py:find_candidates
+    - wider/embeddings/base.py:Embedder
+    - wider/embeddings/base.py:l2_normalise
+    - wider/embeddings/registry.py:probe
+    - wider/embeddings/registry.py:make_embedder
+    fingerprint: 434184478aa798278b984b38f196629832f261de72d3321bcc0594a8613169fc
+    text: 56cb4f3401e78ff17ccc757dc3bec138bc28fd9bc6cec8bfabbe152aa2b8b564
+    status: reviewed
+    date: '2026-10-30'
+    answer: a-20261030-112810-efdd
+  development-sample:
+    sources:
+    - wider/sample/design.py:draw_development
+    - wider/sample/design.py:draw_boundary
+    - wider/sample/design.py:extend_development
+    fingerprint: d8a01de808e38009d41b9eaf950b83b3be20ee28f996dacb7936d13cabbd71b6
+    text: 94d7e6c96ef1c2aa278a5f561145468b602cb297e6422235030c8c8f42e0c6ab
+    status: drafted
+    date: '2026-11-01'
+  stratified-sampling:
+    sources:
+    - wider/sample/design.py:draw_probability
+    - wider/sample/design.py:sys_sample
+    - wider/sample/design.py:resolve_bands
+    - wider/sample/design.py:probability_frame
+    - wider/sample/design.py:in_band
+    - wider/sample/design.py:extend_probability
+    - wider/sample/design.py:band_weights
+    - wider/sample/design.py:weights_basis
+    - wider/sample/plan.py:allocate
+    - wider/sample/plan.py:plan
+    - wider/sample/plan.py:apply_plan
+    fingerprint: d87b378c046829c4c0581f88b4b82e930a650196a76497970cb469f7c62acc48
+    text: eb95fa0791529e6c509eae04fb0a1b86f383295eef3883df409faaa0f13bb360
+    status: drafted
+    date: '2026-10-31'
+  recall-estimate:
+    sources:
+    - wider/recall/estimate.py
+    - wider/recall/uncertainty.py:stratified_uncertainty
+    - wider/recall/uncertainty.py:ratio_variance
+    - wider/recall/uncertainty.py:beta_interval
+    - wider/recall/uncertainty.py:model_interval
+    - wider/recall/uncertainty.py:METHOD_SENTENCE
+    - wider/recall/uncertainty.py:recall_uncertainty
+    - wider/recall/uncertainty.py:empty_sampled_bands
+    - wider/recall/curve.py:series
+    fingerprint: 958de54ce4e066b557e68d191b423eb32ef8a19c44bec06444cadbbfee4123c8
+    text: 6e5c6617303d2574aeaa77a5230f7c81da3aecba2cda4a83f35930be916c378f
+    status: drafted
+    date: '2026-11-01'
+  recall-target:
+    sources:
+    - wider/recall/anytime.py
+    - wider/recall/validation.py:judge
+    - wider/recall/validation.py:outcome
+    - wider/recall/validation.py:look_block
+    - wider/recall/validation.py:record_look
+    - wider/recall/validation.py:timing_lines
+    - wider/recall/validation.py:save_protocol
+    - wider/recall/validation.py:needs_choice
+    - wider/recall/validation.py:method_lines
+    - wider/sample/plan.py:simulate
+    - wider/sample/plan.py:suggest
+    - wider/sample/plan.py:sample_cells
+    - wider/sample/plan.py:impractical_lines
+    fingerprint: 50f214d49016d335d977659129171efdbc614fab60784baee7edd041c79abc95
+    text: ec029c73c674c7f3a1c203080a9eeec9f5cdbaede840a729d9852b0edfe48bc7
+    status: drafted
+    date: '2026-11-01'
+  llm-screening:
+    sources:
+    - wider/screen/rule.py
+    - wider/screen/codebook.py:build
+    - wider/screen/engine.py:screen_async
+    - wider/screen/engine.py:replay
+    - wider/screen/engine.py:eval_key
+    - wider/screen/engine.py:rule_spec
+    - wider/screen/engine.py:user_message
+    - wider/screen/protocol.py:run_protocol_async
+    - wider/screen/protocol.py:majority
+    - wider/screen/protocol.py:second_screen_async
+    - wider/screen/protocol.py:pass_backends
+    - wider/screen/agreement.py:pass_agreement
+    - wider/screen/agreement.py:route_of
+    - wider/screen/agreement.py:kappa
+    - wider/screen/evaluate.py:evaluate
+    - wider/screen/evaluate.py:score
+    - wider/screen/compare.py:check_sample
+    - wider/screen/compare.py:results
+    - wider/screen/review.py:flagged
+    - wider/screen/review.py:decide
+    - wider/screen/review.py:qc_pool
+    - wider/screen/review.py:qc_draw
+    - wider/screen/adjudication.py:import_adjudication
+    - wider/screen/devgate.py:check
+    - wider/core/matching.py:quote_verified
+    fingerprint: 96153c6a1d4819a0d8bdbd2e063611cb71620eadbb2517f85e5007851036c192
+    text: 4deaa7e0b96bcd7c2d87fc3e467e313b62f8a2ecaf7acf1818d7d9da29e7a740
+    status: drafted
+    date: '2026-11-01'
+  labels-and-agreement:
+    sources:
+    - wider/sample/labels.py:agreement
+    - wider/sample/labels.py:adjudicate
+    - wider/sample/labels.py:final_labels
+    - wider/sample/labels.py:_record_final
+    - wider/sample/labels.py:completeness
+    - wider/sample/labels.py:lock
+    - wider/sample/labels.py:unlock
+    - wider/sample/labels.py:seal_look
+    - wider/sample/labels.py:criteria_change
+    - wider/sample/labels.py:assess_criteria
+    - wider/sample/labels.py:due_labels
+    - wider/sample/labels.py:import_csv
+    - wider/sample/labels.py:import_sample_csv
+    - wider/screen/agreement.py:kappa
+    fingerprint: 506f4ea31f31b8ab0df178d12d2d125febd024baecb8cb3ed1457c1ac22735bd
+    text: c447bf006372d3afeccf1d2512df3d5d821011dc2fccc2966fc789984695e849
+    status: drafted
+    date: '2026-11-01'
+  blinding:
+    sources:
+    - wider/sample/labels.py:queue
+    - wider/sample/labels.py:_items
+    - wider/sample/labels.py:queue_left_out
+    - wider/sample/labels.py:second_reviewer_queue
+    - wider/sample/labels.py:_second_pairs
+    - wider/sample/labels.py:label_item
+    - wider/sample/labels.py:_independent
+    - wider/sample/labels.py:_save_value
+    - wider/sample/labels.py:declare_independent
+    - wider/sample/package.py:make
+    - wider/sample/package.py:page_data
+    - wider/sample/package.py:import_file
+    - wider/screen/devgate.py:hidden_ids
+    - wider/screen/devgate.py:open_samples
+    - wider/screen/devgate.py:check
+    - wider/screen/review.py:_hidden
+    - wider/core/journal.py:changes
+    fingerprint: 78ceef5d317b890b2238e0a4ce10b2f4cccda4e758c06caa374ce0170272808b
+    text: 20bc31f6d115b2e855f13e696aeb9be7ff41998774bf5faa9c1fd5d908adddb8
+    status: drafted
+    date: '2026-11-01'
+  consent-and-privacy:
+    sources:
+    - wider/core/backend_consent.py
+    - wider/core/send_notice.py
+    - wider/core/summary.py:host_class
+    - wider/core/summary.py:provider_locality
+    - wider/core/detect.py:effective_locality
+    - wider/core/lookups.py:require_consent
+    - wider/core/sanitize.py:scan_for_secrets
+    - wider/assistant/context.py:budget
+    - wider/assistant/context.py:default_budget
+    fingerprint: 976c53e639d916056a5a48071f710a517bdf5b903fb45f001ff68b46ea707ffd
+    text: 66e3c5a727eb9e4cde78026e82f3e7acc268915cbe990db1ed0f3759838bd2b4
+    status: drafted
+    date: '2026-11-01'
+  provenance-and-reporting:
+    sources:
+    - wider/core/journal.py:recording
+    - wider/core/journal.py:Recorder
+    - wider/core/journal.py:undo
+    - wider/core/journal.py:_check
+    - wider/core/journal.py:_permanent
+    - wider/core/journal.py:_set_in_use
+    - wider/core/journal.py:_blocker
+    - wider/core/journal.py:current_author
+    - wider/recall/report.py:build_report
+    - wider/recall/report.py:interventions
+    - wider/recall/outputs.py:prisma_counts
+    - wider/recall/outputs.py:methods_draft
+    - wider/recall/outputs.py:write_package
+    - wider/recall/prisma_2020.py:build
+    - wider/recall/prisma_s.py:build
+    - wider/core/provenance.py:RunSpec
+    - wider/recall/outputs.py:search_sentence
+    - wider/recall/outputs.py:screening_sentences
+    - wider/recall/outputs.py:recall_sentences
+    - wider/recall/prisma_items.yaml
+    - wider/recall/reporting.py:evidence
+    - wider/recall/reporting.py:coverage
+    - wider/recall/reporting.py:status
+    - wider/recall/reporting.py:excluded_split
+    - wider/recall/reporting.py:methods_text
+    - wider/recall/flow_layout.py:flow_boxes
+    fingerprint: ccee4963ed47da30c9f5899aa25803097dc0beb7a459a1e5e0ccee982898a240
+    text: c0ac611b9412abcee3d70aeefbf44daca54be49908cbf367db5baaba1bbd2884
+    status: drafted
+    date: '2026-11-01'
+glossary:
+  text: 506bc2622ca8a9c26bca57b59a3fc4d8a09be0e34ee514ffbdb7405e220031cb
+  status: drafted
+  date: '2026-11-01'
+python: '3.11'
+outside:
+  modules:
+    wider/rank/update.py: the guided re-run of the ranking; plumbing, no method
+    wider/rank/versions.py: version records, input hashes and needs-review flags; provenance, no method
+    wider/embeddings/cache.py: a cache of embeddings, no method
+    wider/embeddings/sentence_transformers.py: a backend adapter (batching, retries), no method
+    wider/embeddings/ollama.py: a backend adapter (batching, retries), no method
+    wider/embeddings/openai_compat.py: a backend adapter (batching, retries), no method
+    wider/embeddings/fake.py: a hashed bag-of-words backend used only in tests
+    wider/construct/benchmark.py: reads benchmark.csv into a table and fetches abstracts by DOI; IO, no method
+    wider/recall/independent.py: capture-recapture and Clopper-Pearson on independent seed papers; query-side, to
+      be placed by a later topic (owner question)
+    wider/recall/adjacent.py: counts exclusions per adjacent literature for the report; no method
+    wider/recall/selection.py: record selection and export; no method
+    wider/recall/docx_shapes.py: Word drawing markup for the flow diagram; layout, no method
+    wider/recall/reporting_docx.py: writes the Word copies of the reporting exports; layout, no method
+    wider/recall/dashboard.py: assembles the Results page; layout, no method
+    wider/screen/decisions.py: stores decisions and imports CSV decisions; IO, no method
+    wider/screen/export.py: CSV export; no method
+    wider/screen/models_summary.py: usage and cost summary; no method
+    wider/screen/preflight.py: refusal checks before a run; no method
+    wider/screen/progress.py: read-only status, steps and counts; no method
+    wider/screen/result_sets.py: rerun bookkeeping and the active result set; no method
+  settings:
+    sampling.plan_seconds: a time limit; a plan that runs out of time is marked approximate
+    recall.suggest_seconds: a time limit; past it the suggestion is marked approximate
+    screening.max_tokens: the output budget of one call, not a decision rule (a cut-off answer fails and is reported)

@@ -1,0 +1,122 @@
+question: What leads employees to speak up, stay silent or report problems upward or outward at work, and what follows
+  when they do?
+target_description: Empirical studies of employees who voluntarily raise suggestions, concerns or problems with
+  someone who could act on them (a supervisor, senior management, an internal or external authority), or who withhold
+  such input, where the study measures what predicts that behaviour or what follows from it.
+elements:
+- id: e1
+  name: Voice, silence or reporting behaviour
+  rule: The study measures employees speaking up, withholding input, or reporting problems.
+  counts:
+  - voice behaviour
+  - speaking up
+  - issue selling
+  - upward communication
+  - dissent
+  - employee silence
+  - whistleblowing
+  does_not_count:
+  - a climate or culture measure alone
+  - a composite citizenship scale in which voice is not analysed separately
+- id: e2
+  name: Discretionary and directed upward or outward
+  rule: The behaviour is the employee's own choice and is directed at someone who could act on it.
+  counts:
+  - informal suggestions to a supervisor
+  - reports to a regulator or hotline
+  does_not_count:
+  - formal participation schemes such as works councils
+  - grievance procedures as the only channel
+  - sharing information with peers only
+- id: e3
+  name: Antecedents or consequences are studied
+  rule: The study relates the behaviour to predictors, reactions or outcomes.
+  counts:
+  - predictors of voice or silence
+  - receiver reactions
+  - career, well-being or performance outcomes
+  does_not_count:
+  - scale development with no substantive relation tested
+- id: e4
+  name: Employees in work organisations
+  rule: The actors are employees, members or contractors of an organisation.
+  counts:
+  - employees
+  - nurses
+  - crew members
+  - students in a work placement
+  does_not_count:
+  - customers or consumers
+  - citizens addressing government
+  - patients
+exclusion_reasons:
+- code: a
+  text: no voice, silence or reporting behaviour measured
+  element: e1
+- code: b
+  text: not discretionary or not directed at someone who could act
+  element: e2
+- code: c
+  text: no antecedent or consequence studied
+  element: e3
+- code: d
+  text: actors are not employees
+  element: e4
+- code: e
+  text: not empirical
+- code: f
+  text: too little information
+adjacent_literatures:
+- name: participation schemes and industrial democracy (works councils, codetermination)
+  strains_element: e2
+  decision: exclude
+  reason_code: b
+- name: grievance procedures as a formal channel
+  strains_element: e2
+  decision: maybe
+  reason_code: b
+  note: include when the decision to file is studied as the employee's choice
+- name: organisational citizenship behaviour composites
+  strains_element: e1
+  decision: maybe
+  reason_code: a
+  note: include when voice is analysed as a separate dimension
+- name: psychological safety as a climate construct
+  strains_element: e1
+  decision: maybe
+  reason_code: a
+  note: include when voice or silence is also measured
+- name: customer and consumer complaining
+  strains_element: e4
+  decision: exclude
+  reason_code: d
+- name: citizen participation and political voice
+  strains_element: e4
+  decision: exclude
+  reason_code: d
+- name: peer information sharing and team communication
+  strains_element: e2
+  decision: exclude
+  reason_code: b
+checks:
+- key: voice_subscale_only
+  question: Is voice only one sub-dimension of a broader scale that is not analysed separately?
+  if_yes: maybe
+- key: formal_scheme_only
+  question: Does the study examine only a formal participation scheme or procedure?
+  if_yes: maybe
+edge_cases:
+- key: non_empirical
+  case: reviews and conceptual papers on the topic
+  default: maybe
+- key: qualitative_only
+  case: qualitative studies with no measured antecedent or outcome
+  default: maybe
+labels:
+- group: target
+  values:
+  - supervisor
+  - senior_management
+  - external_body
+  - peers
+thin_abstract_rule: A record with no usable abstract is maybe unless the title alone settles it.

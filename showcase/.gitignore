@@ -1,0 +1,5 @@
+# made by showcase/record.py and copied in before a deploy; too large for git
+site/wider-showcase.mp4
+site/poster.jpg
+# the Vercel CLI link to the deployed project
+site/.vercel/

@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIDER</title>
+<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="/static/focus.css">
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
+  <symbol id="i-overview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="7" rx="1"/><rect x="14" y="4" width="7" height="7" rx="1"/><rect x="3" y="15" width="7" height="5" rx="1"/><rect x="14" y="15" width="7" height="5" rx="1"/></symbol>
+  <symbol id="i-model" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></symbol>
+  <symbol id="i-notes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12l-4 4H4z"/><path d="M16 20v-4h4"/><path d="M8 9h8M8 13h5"/></symbol>
+  <symbol id="i-setup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></symbol>
+  <symbol id="i-construct" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><circle cx="17" cy="7.2" r="3.3"/><path d="M7.2 13.5l3.6 6.5H3.6z"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="3.25"/></symbol>
+  <symbol id="i-query" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.6-5.6"/></symbol>
+  <symbol id="i-import" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"/></symbol>
+  <symbol id="i-dedup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+  <symbol id="i-enrich" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7"/><path d="M18 14v6M15 17h6"/></symbol>
+  <symbol id="i-rank" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M6 20V10M12 20V4M18 20v-7"/></symbol>
+  <symbol id="i-sample" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l1.5 1.5L8 5"/><path d="M11 6h9"/><path d="M4 12l1.5 1.5L8 11"/><path d="M11 12h9"/><circle cx="6" cy="18" r="1.5"/><path d="M11 18h9"/></symbol>
+  <symbol id="i-screen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16l-6 7.5V19l-4 2v-8.5z"/></symbol>
+  <symbol id="i-review" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="13" height="18" rx="2"/><path d="M8 8h5M8 12h3"/><circle cx="16.5" cy="16.5" r="3"/><path d="M18.7 18.7L21 21"/></symbol>
+  <symbol id="i-recall" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.6"/></symbol>
+  <symbol id="i-results" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 17v-4M11 17v-2M15 17v-5"/></symbol>
+  <symbol id="i-reporting" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3"/><path d="M8.5 11l1.5 1.5 3-3"/><path d="M8.5 16.5h7"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+  <symbol id="i-questions" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M10 9.2a2 2 0 1 1 2.8 1.8c-.5.2-.8.7-.8 1.2"/><path d="M12 14.2h.01"/></symbol>
+  <symbol id="i-history" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6"/><path d="M3 4v4h4"/><path d="M12 8v4l3 2"/></symbol>
+  <symbol id="i-panel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a1 1 0 0 1 1-1h4l2 2h8a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l5.5-3.5z" fill="currentColor"/></symbol>
+</svg>
+<a class="skip-link" href="#main">Skip to content</a>
+<header id="topbar" class="top">
+  <button type="button" class="tb-btn tb-menu" id="menu-btn" aria-controls="sidebar" aria-expanded="false">Menu</button>
+  <span class="brand">WIDER</span>
+  <a class="tb-btn" id="tb-home" href="#home" title="All projects"><svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="2" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="2" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="2" y="9" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span class="tb-lbl">All projects</span></a>
+  <span class="plbl" id="tb-plbl" aria-hidden="true" hidden>Open project</span>
+  <nav class="tb-crumb" id="tb-crumb" aria-label="Breadcrumb" hidden></nav>
+  <span class="sp"></span>
+  <span class="tb-actions"><span id="tb-notebook"></span><span id="tb-main"></span></span>
+  <button type="button" class="tb-btn quiet" id="tb-ask" aria-controls="guide-panel" aria-expanded="false" hidden>Ask WIDER</button>
+  <a class="tb-btn quiet" id="tb-questions" href="#questions" data-key="questions" hidden>Questions <span class="count-badge" id="q-count" hidden></span></a>
+  <span id="tb-guide"></span>
+  <span id="tb-more"></span>
+  <span class="brk" aria-hidden="true"></span>
+  <a class="tb-btn quiet tb-help" id="tb-help" href="#help" data-key="help">Help</a>
+  <span class="tb-name" id="tb-name"></span>
+</header>
+<nav class="route" id="route" aria-label="Where the project stands" hidden></nav>
+<button type="button" class="btn quiet small route-show" id="route-show" hidden aria-controls="route" aria-expanded="false">Show the journey line</button>
+<div class="shell">
+<nav class="sidebar" id="sidebar" aria-label="Pages">
+  <div class="sidebar-top">
+    <button class="icon-btn" id="sidebar-toggle" aria-controls="sidebar" aria-expanded="true" aria-label="Collapse the sidebar" title="Collapse the sidebar"><svg class="icon"><use href="#i-panel"/></svg></button>
+    <span class="brand-text"><b>WIDER</b></span>
+  </div>
+  <a class="nav-link" href="#home" data-key="home" title="Home"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span class="label">Home</span></a>
+  <a class="nav-project-box" href="#home" title="The open project; open another one from Home"><span class="label"><span id="nav-project"></span><small>Open project</small></span></a>
+  <a class="nav-link nav-overview" id="nav-overview-link" href="#overview" data-key="overview" title="Overview" hidden><svg class="icon" aria-hidden="true"><use href="#i-overview"/></svg><span class="label">Overview</span></a>
+  <div id="stage-links" aria-label="Stages"></div>
+  <span class="nav-spacer"></span>
+  <a class="nav-link" href="#notes" data-key="notes" title="Notes and tags"><svg class="icon" aria-hidden="true"><use href="#i-notes"/></svg><span class="label">Notes and tags</span></a>
+  <a class="nav-link" href="#history" data-key="history" title="History"><svg class="icon" aria-hidden="true"><use href="#i-history"/></svg><span class="label">History</span></a>
+  <a class="nav-link" href="#settings" data-key="settings" title="Settings"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg><span class="label">Settings</span></a>
+  <div class="nav-foot" id="nav-foot" hidden></div>
+</nav>
+<main id="main" tabindex="-1">
+  <div id="job-bar" class="job-bar" hidden></div>
+  <div id="load-error" class="stage-error" role="alert" hidden></div>
+  <section id="page-home" class="page" hidden>
+    <div class="page-head"><div><h1>Your projects</h1><p>Each project is a folder on this computer.</p></div><span class="spacer"></span>
+      <button class="secondary" id="home-open-toggle" aria-expanded="false" aria-controls="home-open"><svg class="icon" aria-hidden="true"><use href="#i-folder"/></svg> Open project</button>
+      <button id="home-create-toggle" aria-expanded="false" aria-controls="home-new"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg> New project</button></div>
+    <p id="home-status" class="bad" role="status"></p>
+    <div class="card" id="home-new" role="region" aria-labelledby="hn-h" hidden>
+      <h2 id="hn-h" tabindex="-1">Start a new project</h2>
+      <p>Start from what you already have. Every start leads into the same method. WIDER stores nothing about your choice: it works out the next step from what your project holds, so you can change course at any time.</p>
+    <div class="card home-name" id="home-name" role="region" aria-labelledby="home-name-h" hidden></div>
+      <div class="starts">
+        <article class="start-card" aria-labelledby="st-question"><h3 id="st-question">A research question</h3><p id="sq-question">You need the question, your inclusion and exclusion notes, and papers you already know belong.</p><p id="sc-question">WIDER helps you write concepts and synonyms, builds the search strings and checks them on your seed papers. The project opens on Model for query creation. Recommended for a new review.</p>
+          <details class="cmdline"><summary>Command line</summary><p class="small"><code id="sc-cmd-question">wider providers</code></p></details>
+          <div class="row"><button class="secondary small-btn" data-start="question" aria-describedby="sq-question">Start from a question</button></div></article>
+        <article class="start-card" aria-labelledby="st-strategy"><h3 id="st-strategy">A search strategy you already have</h3><p id="sq-strategy">You need your search strings, and seed papers to check them on.</p><p id="sc-strategy">The project opens on Search strings, where you import the string as a draft; the Review plan and Concepts and synonyms are still needed. WIDER checks how many seed papers the strings find, and you freeze them before searching.</p>
+          <details class="cmdline"><summary>Command line</summary><p class="small"><code id="sc-cmd-strategy">wider query import</code></p></details>
+          <div class="row"><button class="secondary small-btn" data-start="strategy" aria-describedby="sq-strategy">Start from a strategy</button></div></article>
+        <article class="start-card" aria-labelledby="st-records"><h3 id="st-records">Records you already retrieved</h3><p id="sq-records">You need the export files from each database (RIS, CSV, Excel or BibTeX). Seed papers are still useful.</p><p id="sc-records">The project opens on Search results. Writing search strings becomes optional; the Review plan and Concepts and synonyms are still needed for ranking and screening.</p>
+          <details class="cmdline"><summary>Command line</summary><p class="small"><code id="sc-cmd-records">wider import</code></p></details>
+          <div class="row"><button class="secondary small-btn" data-start="records" aria-describedby="sq-records">Start from records</button></div></article>
+      </div>
+      <p>An existing WIDER project: you need the project folder on this computer. <a href="#home" data-start="existing">Open project</a></p>
+      <div id="home-create" hidden>
+        <h3 id="hc-h">Create a project</h3>
+        <p class="small">WIDER makes a new folder for this review on this computer. Give its full path.</p>
+        <label>Folder (full path, new or empty) <input id="hc-path" placeholder="full path of a new or empty folder" autocomplete="off"></label>
+        <label>Title <input id="hc-title"></label>
+        <label>Research question(s), one per line (optional, you can add them on the Review plan) <textarea id="hc-questions" rows="2"></textarea></label>
+        <label>Databases in search order, comma-separated keys (optional; the first starts as the development platform, which you can change on the Review plan) <input id="hc-platforms" placeholder="scopus, wos, ebsco"></label>
+        <div class="row"><button id="hc-create">Create and open</button><span id="hc-msg" class="small" role="status"></span></div>
+        <details class="cmdline"><summary>Command line</summary><p class="small"><code>wider init</code>, then <code id="hc-cmd">wider providers</code></p></details>
+      </div>
+    </div>
+    <div class="card" id="home-open" role="region" aria-labelledby="ho-h" hidden>
+      <h2 id="ho-h">Open a project</h2>
+      <p>Give the full path of a WIDER project folder on this computer. WIDER opens it on its Overview and adds it to the list below. To update an older review, copy the folder first.</p>
+      <div class="row"><input id="ho-path" placeholder="full path of the project folder" style="flex:1" aria-label="Project folder (full path)" autocomplete="off"><button class="secondary" id="ho-open">Open</button></div>
+      <span id="ho-msg" class="small" role="status"></span>
+      <details class="cmdline"><summary>Command line</summary><p class="small"><code>wider ui --dir &lt;folder&gt;</code></p></details>
+    </div>
+    <aside class="home-demo" aria-labelledby="h-demo"><a class="demo-play" href="https://wider-showcase.vercel.app/demo/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><svg class="icon"><use href="#i-play"/></svg></a><div><b id="h-demo">New to WIDER? Try the interactive demo first.</b>
+      <p id="demo-note">It walks through a whole review on invented data and is separate from your projects. It opens a page on the internet; nothing from your projects is sent.</p></div>
+      <a class="btn" id="home-demo-link" href="https://wider-showcase.vercel.app/demo/" target="_blank" rel="noopener noreferrer" aria-describedby="demo-note">Explore the demo<span class="sr-only"> (opens in a new tab)</span></a></aside>
+    <h2 id="home-recent-h">Recent</h2>
+    <p id="home-empty" hidden>Projects will be listed here once created or opened.</p>
+    <div class="project-grid" id="home-projects" aria-labelledby="home-recent-h"></div>
+    <p class="small" id="home-note"></p>
+  </section>
+  <section id="page-notes" class="page" hidden>
+    <div class="page-head"><h1>Notes and tags</h1></div>
+    <div class="card" id="notes-card">
+      <p class="muted small">Notes and tags on records, added in the record drawer on the labelling, screening and evaluation tables; press a row to open the record.</p>
+      <div class="row"><input id="an-search" type="search" placeholder="words in a title, note or tag" aria-label="Search notes and tags" style="flex:1;min-width:160px">
+        <select id="an-tag" aria-label="Tag"><option value="">any tag</option></select>
+        <input id="an-author" placeholder="author (optional)" aria-label="Author" style="width:160px"></div>
+      <table id="an-table" class="rec-table"></table>
+      <details class="cmdline"><summary>Command line</summary><p class="small"><code>wider notes list</code></p></details>
+    </div>
+  </section>
+  <section id="page-questions" class="page" hidden>
+    <div class="page-head"><h1>Questions</h1></div>
+    <p class="muted">When the tool is in doubt it asks instead of guessing: a screening answer that could not be used, three reads that all disagree, a DOI or seed paper that finds no abstract, a proposal the model could not produce, and while the query is refined, the questions the evidence raises (a name to add, a noise term, a seed not retrieved), each with its default and consequence. Each answer is applied at once and the change is recorded with the question.</p>
+    <div class="card" id="q-mode-card">
+      <h2>When a question comes up</h2>
+      <label class="inline"><input type="radio" name="q-mode" value="queue"> <b>Queue it</b>: questions wait on this page; runs continue.</label>
+      <label class="inline"><input type="radio" name="q-mode" value="ask"> <b>Ask me at once</b>: each question opens in a dialog as it arrives while the run continues; "Later" puts it back in the queue.</label>
+      <span id="q-mode-msg" class="muted small" role="status"></span>
+    </div>
+    <div id="q-open"></div>
+    <details class="card" id="q-history"><summary>Answered and dismissed</summary><div id="q-done"></div></details>
+    <details class="card" id="q-decisions"><summary>Decisions</summary>
+      <p class="muted small">Every answer, accepted default and dismissal of a refinement question, with its round (the synonyms version) and author. Later synonyms proposals and mining prompts list them under "Decisions from the researcher"; quotes from seed papers are kept as references, never as text.</p>
+      <div id="q-decisions-list"></div>
+      <div class="row"><button class="secondary small-btn" id="q-decisions-export">Export decisions.jsonl and .csv</button><span id="q-decisions-msg" class="muted small" role="status"></span></div></details>
+  </section>
+  <section id="page-history" class="page" hidden>
+    <div class="page-head"><h1>History</h1><span class="spacer"></span><button class="secondary" id="hist-undo-mine">Undo my last change</button></div>
+    <p class="muted">Every change you make by hand is kept here: labels, adjudications, duplicate decisions, the status of concepts and synonyms, notes, tags, answered questions and every settings or protocol edit. Undo puts back what was there before, but only when nothing has changed it since; an undo is a change too, so it can be undone. A freeze is final, and saved versions of concepts and synonyms never change (restore an older one as a new version on the Concepts and synonyms page). <kbd>Ctrl</kbd>/<kbd>&#8984;</kbd>+<kbd>Z</kbd> outside a text field undoes your last change.</p>
+    <div class="row"><label class="inline">Show <select id="hist-kind"><option value="">all changes</option></select></label>
+      <label class="inline"><input type="checkbox" id="hist-mine"> only mine</label>
+      <label class="inline"><input type="checkbox" id="hist-blind" checked> Blind: hide which sample a record is in</label><span id="hist-msg" class="muted small" role="status"></span></div>
+    <p id="hist-near" role="status"></p>
+    <table id="hist-table" class="rec-table"></table>
+  </section>
+  <!-- the project's Overview (ui-redesign D7): Continue, Needs attention, Research journey, Project summary; shell.js -->
+  <section id="page-overview" class="page" hidden>
+    <div class="page-head"><h1 id="ov-title">Overview</h1></div>
+    <p id="ov-route" class="ov-route"></p>
+    <section class="ov-sec" aria-labelledby="ov-h-continue"><h2 id="ov-h-continue">Continue</h2><div id="ov-continue" class="card ov-continue"></div></section>
+    <section class="ov-sec" aria-labelledby="ov-h-needs"><h2 id="ov-h-needs">Needs attention</h2><div id="ov-needs"></div><p id="ov-msg" class="small" role="status"></p></section>
+    <section class="ov-sec" aria-labelledby="ov-h-journey"><h2 id="ov-h-journey">Research journey</h2><div id="ov-board"></div></section>
+    <section class="ov-sec" aria-labelledby="ov-h-summary"><h2 id="ov-h-summary">Project summary</h2><dl id="ov-summary" class="ov-sum"></dl></section>
+  </section>
+  <section id="page-help" class="page" hidden>
+    <div class="page-head"><h1>Help</h1></div>
+    <p class="muted">Each stage page explains itself with its <b>Explain this step</b> button. The full guide is part of the WIDER documentation.</p>
+    <details class="cmdline"><summary>Command line</summary><p class="small"><code>wider next --why</code> prints the next step with its reasons.</p></details>
+    <p id="help-methods"><a href="#methods">Methods: why WIDER works this way</a> explains each method choice in plain words, then for auditors.</p>
+    <div class="card"><h2 id="help-keys-h">Keyboard</h2><table id="help-keys" class="summary-table" aria-labelledby="help-keys-h"></table></div>
+    <div class="card"><h2>Page names and commands</h2><div id="help-stages"></div></div>
+    <div class="card"><h2 id="help-marks-h">Status marks</h2><table class="summary-table" aria-labelledby="help-marks-h">
+      <tr><th scope="row" class="kv"><span class="dot-demo state-done"></span> completed</th><td>the step holds what later steps need (its checks pass against the store); you can still change it</td></tr>
+      <tr><th scope="row" class="kv"><span class="dot-demo state-ready"></span> not started</th><td>the step has not run yet; when it reads "needs … first", an earlier step must be done before it can run, and the page opens anyway so you can read it</td></tr>
+      <tr><th scope="row" class="kv">not started, work here next</th><td>the recommended next step, the one Continue opens</td></tr>
+      <tr><th scope="row" class="kv">current step</th><td>the same recommended step, as the Overview marks it</td></tr>
+      <tr><th scope="row" class="kv">in progress</th><td>a job of this step is running, or the step has started (it holds a result or a draft) but is not completed yet</td></tr>
+      <tr><th scope="row" class="kv">needs attention</th><td>the step is completed but has work left for you, named after the word</td></tr>
+      <tr><th scope="row" class="kv">needs review</th><td>the step is completed, but what it read has changed since</td></tr>
+      <tr><th scope="row" class="kv">Test model</th><td>the results come from the test model only, not from a model chosen for the review</td></tr>
+      <tr><th scope="row" class="kv">open any time</th><td>a page outside the numbered steps</td></tr>
+      <tr><th scope="row" class="kv">Groups: completed, current, partly done, upcoming</th><td>a group of steps is completed when all its steps are, current when it holds the page you are on or the next step, partly done when some of its steps are completed, and upcoming otherwise</td></tr>
+    </table></div>
+  </section>
+  <section id="page-methods" class="page" hidden>
+    <div class="page-head"><h1>Methods</h1></div>
+    <p>Why WIDER works this way: each method choice in plain words, why it was made, and the details for auditors.</p>
+    <details class="cmdline"><summary>Command line</summary><p class="small"><code>wider guide methods</code> lists the topics; <code>wider guide methods &lt;topic&gt;</code> prints one, <code>wider guide methods glossary</code> the glossary.</p></details>
+    <p id="methods-status" class="methods-status" role="status" hidden></p>
+    <div class="methods-layout"><nav id="methods-list" class="methods-list" aria-label="Methods topics"></nav><article id="methods-view" class="methods-view"></article></div>
+  </section>
+  <section id="page-settings" class="page" hidden>
+    <div class="page-head"><h1>Settings and data</h1></div>
+    <div id="settings-leaves-slot"></div>
+    <p class="settings-intro">Settings of the open project: the AI models and which one each step uses, the data policies, the review protocol and the doubt settings. Models are added and chosen on the Model for query creation page and the Ranking page; this page edits and removes them and checks that they answer.</p>
+    <!-- a section list on the left, one section shown at a time (owner, 29 Oct: Settings option A) -->
+    <div class="settings-two">
+      <nav class="settings-nav" aria-label="Settings sections">
+        <button type="button" data-settings-sec="models" aria-current="true">Language models</button>
+        <button type="button" data-settings-sec="data">Data policies</button>
+        <button type="button" data-settings-sec="protocol">Review protocol</button>
+        <button type="button" data-settings-sec="doubts">When the tool is in doubt</button>
+        <button type="button" data-settings-sec="computer">This computer</button>
+      </nav>
+      <div class="settings-body">
+      <div class="card" id="settings-backends" data-settings-part="models"></div>
+      <div class="card" id="settings-assistant" data-settings-part="models"></div>
+      <div class="card" id="settings-policy" data-settings-part="data" hidden></div>
+      <div class="card" id="settings-lookups" data-settings-part="data" hidden></div>
+      <div class="card" id="settings-seeds" data-settings-part="data" hidden></div>
+      <div class="card" id="settings-protocol" data-settings-part="protocol" hidden><h2>Review protocol</h2>
+        <p class="muted small" id="protocol-rationale">The defaults reproduce the original review and are tuned for <b>recall first</b>: a record is excluded only when the model can show, with a verbatim quote, that the construct is absent or the study is unrelated; everything uncertain goes to <i>maybe</i> for a human. The sampling bands put a census on the top of the ranking and a thinning probability sample below it, so the recall estimate has a confidence interval rather than a guess. Two independent passes and a blind third read resolve disagreements by majority. Open the panel below only when a reviewer, a budget, or a methods section asks for something different; every setting carries its own explanation.</p>
+        <div id="protocol-editor"></div></div>
+      <div class="card" id="settings-doubts" data-settings-part="doubts" hidden></div>
+      <div class="card" id="settings-computer" data-settings-part="computer" hidden></div>
+      </div>
+    </div>
+  </section>
+  <section id="page-model" class="page" hidden>
+    <div class="page-head"><h1>Model for query creation</h1></div>
+    <div class="can-do" id="can-do-model" role="note" aria-label="What you can do here now" hidden></div>
+    <div id="model-body"></div>
+  </section>
+  <section id="page-setup" class="page" hidden>
+    <div class="page-head"><h1>Review plan</h1><span class="state-chip" data-chip="setup"></span><span class="spacer"></span><select class="run-select small-select" data-runs="setup" aria-label="Show an earlier result of this stage" hidden></select><button class="btn-quiet small-btn explain-btn" data-explain="setup" aria-expanded="false" aria-controls="why-setup">Explain this step</button></div>
+    <p class="project-name" id="project-name"></p>
+    <details class="small"><summary>Project folder</summary><p id="project-root"></p></details>
+    <div class="can-do" id="can-do-setup" role="note" aria-label="What you can do here now" hidden></div>
+    <div class="stage-why" id="why-setup" data-why="setup" hidden></div>
+    <div class="stage-result prev" data-prev="setup" hidden></div>
+    <div class="stage-result" data-result="setup" hidden></div>
+
+    <!-- the Review plan (review-plan-and-question-window D2-D4): five task cards; #setup?task=<key> shows one task -->
+    <div id="plan-view">
+      <p>Five tasks set up the review. Do them in any order and come back to change any answer; a task with a question from WIDER says so on its card.</p>
+      <ul class="plan-cards" id="plan-cards"></ul>
+      <p class="plan-next" id="plan-next" hidden></p>
+      <p class="plan-summary-line" id="plan-summary-line" role="status"></p>
+      <details class="plan-summary" id="plan-summary-fold"><summary>Plan summary</summary>
+        <p class="small">What the project file now records. Every later stage reads it; the run specs and the report carry its hash.</p>
+        <div class="card wide" id="setup-summary"></div>
+      </details>
+    </div>
+    <div class="task-page" id="task-question" data-task="question" hidden>
+      <p class="task-back"><a href="#setup">‹ Review plan</a></p>
+      <h2 class="task-title">Research question</h2>
+      <p class="small">The question and the notes are shown to the model in every proposal and every screening prompt, in your words. Write the question as a reader of the review would understand it; use the notes for scope you already know you want in or out.</p>
+      <div class="card">
+        <label>Title <input id="title"></label>
+        <label>Research question(s), one per line <textarea id="questions" rows="4"></textarea></label>
+        <label>What to include (optional notes) <textarea id="include_notes" rows="3"></textarea></label>
+        <label>What to exclude (optional notes) <textarea id="exclude_notes" rows="3"></textarea></label>
+        <button id="save" class="main-act">Save</button> <span id="save-msg" role="status"></span>
+      </div>
+      <p class="task-next" data-next="question"></p>
+    </div>
+    <div class="task-page" id="task-seeds" data-task="seeds" hidden>
+      <p class="task-back"><a href="#setup">‹ Review plan</a></p>
+      <h2 class="task-title">Seed papers</h2>
+      <p class="small">Development seed papers are used while you build; validation seed papers are held back and checked once, so a good split needs papers in both.</p>
+      <div class="card wide" id="setup-seed"></div>
+      <p class="task-next" data-next="seeds"></p>
+    </div>
+    <div class="task-page" id="task-prior" data-task="prior" hidden>
+      <p class="task-back"><a href="#setup">‹ Review plan</a></p>
+      <h2 class="task-title">Prior reviews</h2>
+      <p class="small">Earlier reviews of the construct, or of a neighbouring one, give a second check: their included studies should turn up in your exports (coverage check) and their reference lists and citing works can be chained into the corpus. Add a reference export, paste DOIs or titles, or drop the review's PDF; the reference list is extracted on this computer.</p>
+      <div class="card wide" id="setup-prior"></div>
+      <p class="task-next" data-next="prior"></p>
+    </div>
+    <div class="task-page" id="task-databases" data-task="databases" hidden>
+      <p class="task-back"><a href="#setup">‹ Review plan</a></p>
+      <h2 class="task-title">Databases</h2>
+      <p class="small">Pick the databases and their order. Give the platform you know best the development role in the table below; when no role is set, the first platform is the development platform.</p>
+      <div class="card wide" id="setup-databases"></div>
+      <p class="task-next" data-next="databases"></p>
+    </div>
+    <div class="task-page" id="task-more" data-task="more" hidden>
+      <p class="task-back"><a href="#setup">‹ Review plan</a></p>
+      <h2 class="task-title">Find more seed papers <span class="badge">optional</span></h2>
+      <p class="small">The reference lists of your development seed papers and the works citing them can name papers you have not found yet. Nothing becomes a seed paper until you add it.</p>
+      <div id="more-lookups" class="card"></div>
+      <div id="seed-refs" class="card"></div>
+      <div id="seed-chain" class="card"></div>
+    </div>
+    <nav class="pn" data-pn="setup" aria-label="Previous and next step" hidden></nav>
+  </section>
+  <section id="page-construct" class="page" hidden>
+    <div class="page-head"><h1>Concepts and synonyms</h1><span class="state-chip" data-chip="construct"></span><span class="spacer"></span><select class="run-select small-select" data-runs="construct" aria-label="Show an earlier result of this stage" hidden></select><button class="btn-quiet small-btn explain-btn" data-explain="construct" aria-expanded="false" aria-controls="why-construct">Explain this step</button></div>
+    <div class="can-do" id="can-do-construct" role="note" aria-label="What you can do here now" hidden></div>
+    <div class="stage-why" id="why-construct" data-why="construct" hidden></div>
+    <div class="stage-result prev" data-prev="construct" hidden></div>
+    <div class="stage-result" data-result="construct" hidden></div>
+    <p>Open a tab (cells, codebook, synonyms, anchors, near_miss) and press <b>Propose with LLM</b>, or type your own; save it as a new version, approve the version later stages should use, and freeze when done. Seed papers ground every proposal.</p>
+    <div class="tabs" id="art-tabs" role="tablist" aria-label="Parts of concepts and synonyms"></div>
+    <div class="card" id="art-panel" role="tabpanel">
+      <div class="row">
+        <select id="art-version" aria-label="Version"></select>
+        <button class="secondary" id="art-restore" title="Bring the selected older version back as the newest draft">Restore as new version</button>
+        <button class="secondary" id="art-propose">Propose with LLM</button>
+        <select id="art-provider" aria-label="Model for Propose with LLM"></select>
+        <button class="secondary" id="art-prompt">Show prompt</button>
+        <span class="spacer"></span>
+        <button class="secondary" id="art-approve">Approve</button>
+        <button class="secondary" id="art-freeze">Freeze</button>
+        <button class="secondary" id="art-unlock" hidden title="Copy this frozen query into a new draft to edit (recorded, final)">Unlock</button>
+      </div>
+      <p id="art-estimate" class="small" aria-live="polite"></p>
+      <p id="art-status" class="muted small" role="status"></p>
+      <p id="art-refusal" class="bad" role="alert" hidden></p>
+      <div id="art-items"></div>
+      <details id="art-text-wrap"><summary>Show as text (edit here)</summary>
+      <textarea id="art-text" rows="28" spellcheck="false" aria-label="Text of this version"></textarea>
+      </details>
+      <div class="row"><button id="art-save" class="main-act">Save as new version</button></div>
+      <details id="art-diff-wrap"><summary>Diff with previous version</summary><pre id="art-diff" class="small"></pre></details>
+      <details id="art-prompt-wrap"><summary>Prompt sent to the model</summary><pre id="art-prompt-text" class="small"></pre></details>
+    </div>
+    <details class="card" id="construct-more">
+      <summary><h2 class="inline-h">More ways to find terms</h2></summary>
+      <p>Seed papers, adjacent literatures and names from the seed papers' full texts.</p>
+      <div class="more-sec">
+        <h2>Seed papers <button class="secondary small-btn" id="bm-fetch">Fetch missing abstracts</button> <span id="bm-msg" class="muted" role="status"></span></h2><p class="send-note" data-send="seed_abstracts" hidden></p>
+        <table id="bm-table"></table>
+      </div>
+      <div class="more-sec" id="adj-card">
+        <h2>Adjacent literatures</h2>
+        <p class="muted small">Which adjacent literatures could contaminate your results? Name the neighbouring bodies of work the search will retrieve although they do not answer the question. Approved entries draw marginal cases into the development set and become the <code>adjacent_literature</code> screening label.</p>
+        <div class="row"><input id="adj-name" aria-label="Name of the adjacent literature" placeholder="name of the literature" style="flex:1"><input id="adj-cue" aria-label="Discriminating cue (optional)" placeholder="discriminating cue (optional)" style="flex:1"><button class="secondary" id="adj-add">Add</button></div>
+        <textarea id="adj-desc" rows="2" aria-label="What these studies examine (optional)" placeholder="what these studies examine, in their own words (optional)"></textarea>
+        <div class="row"><details class="more-acts" id="adj-more"><summary>More</summary><button class="link-btn" id="adj-seed">Seed from codebook</button><button class="link-btn" id="adj-propose">Propose from question (LLM)</button><button class="link-btn" id="adj-find">Find in ranking (LLM)</button></details><span id="adj-msg" class="muted small" role="status"></span></div><p class="send-note" data-send="construct" hidden></p><p class="send-note" data-send="rank_adjacent" hidden></p>
+        <div id="adj-list"></div>
+      </div>
+      <div class="more-sec" id="sn-card">
+        <h2>Names from seed papers</h2>
+        <p class="muted small">Names the seed papers' full texts use for your constructs, found on this computer (the PDFs and their text never leave it). A name joins a block only when you add it: "retrieves B002" means the dry run turns that development seed from miss to hit; a name that retrieves none needs your note.</p>
+        <div class="row"><button class="secondary small-btn" id="sn-extract">Extract</button><details class="more-acts" id="sn-more"><summary>More</summary><button class="link-btn" id="sn-mine-plain">Mine (patterns only)</button><button class="link-btn" id="sn-mine">Mine with the model</button></details><span id="sn-msg" class="muted small" role="status"></span></div><p class="send-note" data-send="seed_references" hidden></p><p class="send-note" data-send="seed_mine" hidden></p>
+        <div class="row"><label class="small" for="sn-block">Block</label><select id="sn-block"></select><input id="sn-note" placeholder="your note (needed for a name that retrieves no seed)" style="flex:1" aria-label="Note for the name you add"></div>
+        <div id="sn-names"></div>
+        <h3>Name map</h3>
+        <div id="sn-map"></div>
+        <h3>Names by venue (streams)</h3>
+        <div id="sn-streams"></div>
+        <div class="row"><label class="small" for="sn-venue">Venue</label><select id="sn-venue"></select><input id="sn-stream" placeholder="stream label (empty removes it)" style="flex:1" aria-label="Stream label for the venue"><button class="secondary small-btn" id="sn-label-save">Save label</button></div>
+      </div>
+    </details>
+    <nav class="pn" data-pn="construct" aria-label="Previous and next step" hidden></nav>
+  </section>
+  <section id="page-query" class="page" hidden>
+    <div class="page-head"><h1>Search strings</h1><span class="state-chip" data-chip="query"></span><span class="spacer"></span><select class="run-select small-select" data-runs="query" aria-label="Show an earlier result of this stage" hidden></select><button class="btn-quiet small-btn explain-btn" data-explain="query" aria-expanded="false" aria-controls="why-query">Explain this step</button></div>
+    <div class="can-do" id="can-do-query" role="note" aria-label="What you can do here now" hidden></div>
+    <div class="stage-why" id="why-query" data-why="query" hidden></div>
+    <div class="stage-result prev" data-prev="query" hidden></div>
+    <div class="stage-result" data-result="query" hidden></div>
+    <p class="muted">The synonyms from Concepts and synonyms are written out as a search string for each platform in your search order. Copy a string, run it on the platform, export the results and upload them on the Search results page. The development platform is named below; the Validation set of seed papers (not any platform) stays hidden until the query is frozen or the uploads are marked final.</p>
+    <p id="q-dev" class="muted small"></p>
+    <div class="card">
+      <div class="row">
+        <span id="q-status" class="muted small"></span>
+        <span class="spacer"></span>
+        <button class="secondary" id="q-import-toggle" aria-expanded="false" aria-controls="q-import">Import a string</button>
+      </div>
+      <div id="q-import" hidden>
+        <label class="small">Written for <select id="q-import-platform">
+          <option value="ebsco">EBSCO</option><option value="scopus">Scopus</option><option value="wos">Web of Science</option>
+          <option value="proquest">ProQuest</option><option value="ovid">Ovid</option><option value="pubmed">PubMed</option>
+        </select></label>
+        <textarea id="q-import-text" rows="8" aria-label="Search string to import" placeholder="Paste a Boolean string in the chosen platform's syntax, e.g. EBSCO: (TI (a OR b*) OR AB (a OR b*)) AND ..."></textarea>
+        <button class="secondary" id="q-import-preview">Preview</button>
+        <button id="q-import-save" class="main-act">Parse and save as new synonyms version</button> <span id="q-import-msg" class="muted" role="status"></span>
+        <ul id="q-import-findings" class="small"></ul>
+      </div>
+      <div id="q-blocks-wrap"><h2 class="h-sub">Blocks and the fields they search</h2><ul id="q-blocks" class="small"></ul></div>
+      <details id="q-yield-wrap"><summary>Yield: how many works each term, or the whole query, finds on OpenAlex</summary><p class="muted small">Count sends one term to OpenAlex under the search-term switch (Settings); nothing else leaves this computer.</p><div id="q-yield"></div><details class="cmdline"><summary>Command line</summary><p class="small"><code>wider query yield "&lt;term&gt;"</code></p></details>
+        <div id="q-oa-check"><h2 class="h-sub">OpenAlex check</h2><p class="small">The whole query, rendered for OpenAlex's title-and-abstract search, is sent under the search-term switch; "Count and check seeds" also sends the DOIs of the Development seeds (never a Validation seed) and needs the DOI consent too. Not comparable with a term's count.</p>
+        <button type="button" class="secondary small-btn" data-oa-run="count">Count the query</button> <button type="button" class="secondary small-btn" data-oa-run="seeds">Count and check seeds</button> <span id="q-oa-msg" class="small" role="status"></span><p class="send-note" data-send="query_yield" hidden></p><p class="send-note" data-send="query_seed_check" hidden></p><div id="q-oa-out" aria-live="polite"></div><details class="cmdline"><summary>Command line</summary><p class="small"><code>wider query yield --query [--seeds]</code></p></details></div></details>
+      <details id="q-lint-wrap"><summary>Syntax check</summary><label class="small">Platform limits <select id="q-lint-platform"><option value="">strictest of all platforms</option></select></label><table id="q-lint" aria-label="Syntax check"></table></details>
+    </div>
+    <div id="q-strings"></div>
+    <div class="card" id="q-review-card">
+      <h2>Second reader <button class="secondary small-btn" id="q-review-run">Read the strings</button> <span id="q-review-msg" class="muted small" role="status"></span></h2><p class="send-note" data-send="search_review" hidden></p>
+      <p class="muted small">One or two models read each string against the PRESS checklist (Peer Review of Electronic Search Strategies, a standard list of what a librarian checks in a search: translation, operators, subject headings, text words, spelling and syntax, limits), with the query, its translation notes, the syntax-check and string-check findings and your query decisions; no seed-paper text. A finding is kept only when it quotes the string; findings both runs report are <b>agreed</b>, the rest <b>unsure</b>. Nothing is changed. A model second reader, not a human peer review. The default readers are set in Settings (the review row).</p>
+      <div class="row"><label class="small">Reader 1 <select id="q-review-r1"></select></label> <label class="small">Reader 2 <select id="q-review-r2"></select></label> <label class="small">Platform <select id="q-review-platform"><option value="">every chosen platform</option></select></label></div>
+      <ul id="q-review-readers" class="small" aria-label="Readers"></ul>
+      <div id="q-review-out"></div>
+      <details class="cmdline"><summary>Command line</summary><p class="small"><code>wider query review</code></p></details>
+    </div>
+    <div class="card" id="q-dry-card">
+      <h2>Dry run</h2>
+      <p class="muted small">Checks the query on this computer against the seed papers' titles, abstracts and keywords, the way each database would read it (its profile: fields, truncation, phrases, proximity). Nothing is sent to any database. A result the profile cannot decide is <i>uncertain</i>, with the reason, and is never counted as retrieved.</p>
+      <div class="row"><label class="small">Synonyms version <input id="dr-version" type="number" min="1" size="4" placeholder="newest"></label> <label class="small">Platform <select id="dr-platform" class="small-select"></select></label> <button class="secondary small-btn" id="dr-run">Run the dry run</button> <span id="dr-msg" class="small" role="status"></span></div>
+      <p id="dr-reason" class="small" aria-live="polite"></p>
+      <div id="dr-out"></div>
+    </div>
+    <div class="card" id="q-rounds-card"><h2>Rounds <button class="secondary small-btn" id="rd-refresh">Dry-run every round</button> <span id="rd-msg" class="small" role="status"></span></h2><p class="muted small">One round per synonyms version: development recall from its last dry run, and the records its string returned (from an imported export, or typed from the database's result page and marked <i>pasted</i>). Accepting a round names each seed it loses against the round accepted before; any round can be accepted, and the accepted round is the default of this page.</p><div id="rd-out"></div><details class="cmdline"><summary>Command line</summary><p class="small"><code>wider query rounds</code>, <code>wider query count</code>, <code>wider query accept</code></p></details></div>
+    <div class="card" id="q-prov-card"><h2>Provenance <span id="prov-msg" class="muted small" role="status"></span></h2><p class="muted small">One round's decisions, the model calls that shaped its query (input and output hashes only, never a prompt) and the outside requests with the switch that allowed each. Choose "Provenance" on a round above.</p><div id="prov-out"></div><details class="cmdline"><summary>Command line</summary><p class="small"><code>wider query provenance &lt;round&gt;</code>, which also writes <code>exports/provenance_&lt;round&gt;.json</code></p></details></div>
+    <div class="card" id="q-archive-card">
+      <h2>Search-strings archive <button class="secondary small-btn" id="q-archive">Archive these strings</button> <span id="q-archive-msg" class="muted small" role="status"></span></h2>
+      <p class="muted small">Every string you run is kept with its date, platform and synonyms version in <code>exports/search_strings/</code>, for the methods section and for reviewers. Freezing the synonyms archives them automatically; an unchanged string is not stored twice.</p>
+      <table id="q-archive-table"></table>
+    </div>
+    <nav class="pn" data-pn="query" aria-label="Previous and next step" hidden></nav>
+  </section>
+  <section id="page-import" class="page" hidden>
+    <div class="page-head"><h1>Search results</h1><span class="state-chip" data-chip="import"></span><span class="spacer"></span><select class="run-select small-select" data-runs="import" aria-label="Show an earlier result of this stage" hidden></select><button class="btn-quiet small-btn explain-btn" data-explain="import" aria-expanded="false" aria-controls="why-import">Explain this step</button></div>
+    <div class="can-do" id="can-do-import" role="note" aria-label="What you can do here now" hidden></div>
+    <div class="stage-why" id="why-import" data-why="import" hidden></div>
+    <div class="stage-result prev" data-prev="import" hidden></div>
+    <div class="stage-result" data-result="import" hidden></div>
+    <div class="card">
+      <h2>Exports</h2>
+      <p class="muted small">First upload each platform's exports (RIS, CSV/TSV, XLS/XLSX, BibTeX), then import them. Each file is imported once, however often you upload it.</p>
+      <details class="small"><summary>Or put the files in the project folder</summary><p>Put each platform's exports in <code id="imp-root"></code>/&lt;platform&gt;/; WIDER reads them from there.</p></details>
+      <div class="row" id="imp-upload-row"><label class="small" for="imp-upload-pick">Platform</label> <select id="imp-upload-pick" class="small-select"><option value="">choose a platform</option><option value="__other">Other…</option></select> <input id="imp-upload-platform" aria-label="Other platform: a lower-case key" placeholder="a lower-case key, e.g. jstor" size="22" hidden> <input type="file" id="imp-upload-file" aria-label="Export file to upload" accept=".ris,.csv,.tsv,.txt,.xls,.xlsx,.bib"> <button class="secondary small-btn" id="imp-upload">Upload and check</button> <label class="small">Round <select id="imp-round" class="small-select" aria-label="The synonyms version these exports answer"></select></label> <span id="imp-upload-msg" class="muted" role="status"></span></div>
+      <div class="row" id="imp-run-row"><button class="secondary" id="imp-run">Import the uploaded files</button> <span id="imp-msg" class="small" role="status"></span></div>
+      <table id="imp-files"></table>
+      <div class="row" id="imp-final-row"><button class="secondary" id="imp-final" aria-describedby="imp-final-why">These uploads are final</button> <span id="imp-final-msg" class="small" role="status"></span></div>
+      <p id="imp-final-why" class="muted small">Mark the uploads final once every search is exported and imported: the validation set opens as it does when the query is frozen, and a file added later reopens the uploads (recorded in History). The mark can be undone on the History page.</p>
+    </div>
+    <div class="card">
+      <h2>Export sanity check <button class="link-btn" id="imp-check">Re-check</button> <span id="imp-check-msg" class="muted" role="status"></span></h2>
+      <p class="muted small">Per file: records, format, seed papers found, share of records containing a query term, export caps and duplicate files. A file with no seed paper hit and little vocabulary overlap is probably not the result of your query.</p>
+      <div id="imp-sanity"></div>
+    </div>
+    <div class="card">
+      <h2>Seed paper coverage</h2>
+      <div class="row toolbar"><button class="secondary small-btn" id="cov-plat">Per platform</button> <button class="secondary small-btn" id="cov-corpus">Deduplicated corpus</button> <label class="small muted" title="Before the query is frozen or the uploads are marked final, looking at the validation set is logged in the history"><input type="checkbox" id="cov-val"> include validation set</label></div>
+      <p id="cov-note" class="muted small"></p>
+      <div id="cov-tables"></div>
+    </div>
+    <div class="card" id="diag-card">
+      <h2>Diagnostic report <button class="secondary small-btn" id="diag-run">Diagnose</button> <span id="diag-msg" class="muted" role="status"></span></h2>
+      <p class="muted small">What each block and term retrieved in the exports imported against a synonyms version, the records no term explains, recall per seed set and the noise terms; then the records grouped by the terms that matched them. Marking a cluster relevant or noise is your judgement only: no record is screened by it.</p>
+      <div class="row"><label class="small">synonyms version <input id="diag-version" size="4" inputmode="numeric" placeholder="newest"></label> <label class="small">platform <input id="diag-platform" size="12" placeholder="every imported"></label></div>
+      <div id="diag-out"></div>
+      <div id="diag-edits"></div>
+      <div id="diag-missed"></div>
+      <details class="cmdline"><summary>Command line</summary><p class="small"><code>wider query diagnose</code>, <code>wider query clusters</code></p></details>
+    </div>
+    <div class="card" id="idx-card"><h2>Indexing check <span id="idx-msg" class="muted" role="status"></span></h2><p class="muted small">For each seed paper a platform did not retrieve: the known-item string to paste into that database by hand, then whether the database holds the paper. Nothing is searched from here; each verdict is listed in History, where you can undo it.</p><div id="idx-out"></div></div>
+    <div class="card" id="prior-cov-card">
+      <h2>Prior-review coverage</h2>
+      <details class="more-acts" id="prior-cov-more"><summary>More</summary><button class="link-btn" id="prior-cov-plat">Per platform</button> <button class="link-btn" id="prior-cov-corpus">Deduplicated corpus</button></details>
+      <p class="muted small">Which studies included in the prior reviews you added in setup each export retrieved. Matched locally (DOI, exact title, fuzzy title); a descriptive second check that was not used to tune the query, so it is reported at any time.</p>
+      <p id="prior-cov-note" class="muted small"></p>
+      <div id="prior-cov-tables"></div>
+    </div>
+    <div class="card" id="prior-chain-card">
+      <h2>Citation chaining <button class="secondary small-btn" id="prior-chain-run">Chain citations</button> <span id="prior-chain-msg" class="muted" role="status"></span></h2><p class="send-note" data-send="prior_chain" hidden></p>
+      <p class="muted small">Fetch the references and citing works of the prior-review studies from OpenAlex and write them as an export file in <code>inputs/citation_chain/</code>, which the importer treats as one more platform. Needs the lookup switch in the Prior reviews task of the Review plan; nothing is sent while it is off.</p>
+      <div class="row"><label>direction <select id="prior-chain-dir"><option value="both">references and citing works</option><option value="backward">references only</option><option value="forward">citing works only</option></select></label></div>
+    </div>
+    <nav class="pn" data-pn="import" aria-label="Previous and next step" hidden></nav>
+  </section>
+  <section id="page-dedup" class="page dd-page" hidden>
+    <div class="page-head dd-head"><div class="dd-titles"><div class="dd-titleline"><h1>Deduplication</h1><span id="dd-chip"></span></div>
+      <p class="dd-lead muted" id="dd-lead"></p></div><span class="spacer"></span><button class="btn-quiet small-btn explain-btn" data-explain="dedup" aria-expanded="false" aria-controls="why-dedup">Explain this step</button><a class="btn-quiet small-btn dd-quiet-link dd-ghost" id="dd-add-uploads" href="#import">Add or change uploads</a></div>
+    <div class="can-do" id="can-do-dedup" role="note" aria-label="What you can do here now" hidden></div>
+    <div class="stage-why" id="why-dedup" data-why="dedup" hidden></div>
+    <div class="card dd-flowcard">
+      <div class="dd-flow" id="dd-flow" role="group" aria-label="Deduplication counts: press a box to list its records"></div>
+      <div class="dd-side">
+        <p class="dd-msgline"><span class="dd-msg-icon" id="dd-msg-icon" aria-hidden="true" hidden></span><span id="dd-msg" class="dd-msg" role="status"></span></p>
+        <p id="dd-error" class="bad small" role="alert" hidden></p>
+        <p class="small muted dd-hint" id="dd-hint" hidden>Press a box to list its records below. To spot-check what WIDER removed on its own, press <b>Duplicates removed</b>.</p>
+        <p class="muted small dd-caption">These counts go into the PRISMA flow diagram of your report.</p>
+        <p class="small dd-sidelinks"><a href="#enrich" id="dd-continue" hidden>Continue to Missing abstracts</a></p>
+        <details id="dd-details" class="dd-details small"><summary>Details</summary><div id="dd-result"></div><table id="dd-runtable" class="small" aria-label="Deduplication run details"></table></details>
+      </div>
+    </div>
+    <div class="dd-work">
+      <div class="card dd-listcard">
+        <h2 id="dd-list-head"></h2>
+        <p id="dd-approx" class="muted small" hidden></p>
+        <div class="row dd-tools"><span class="dd-searchbox"><svg class="dd-search-ic" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><input id="dd-search" type="search" placeholder="Search titles or authors" aria-label="Search the list by title or author words"></span><label class="dd-openfirst"><input type="checkbox" id="dd-openfirst" checked> Open first</label></div>
+        <table id="dd-list" class="rec-table" aria-label="Deduplication list"></table>
+        <p class="dd-foot small"><span id="dd-shown" class="muted"></span><button class="btn-quiet small-btn dd-ghost" id="dd-more" hidden>Show more</button></p>
+      </div>
+      <div class="dd-pair" id="dd-pair" aria-label="Selected pair"></div>
+    </div>
+    <div class="card settings-card" id="dd-settings" aria-label="Settings of this step"></div>
+    <aside class="dd-panel card" id="dd-notebook" aria-label="Step notebook" tabindex="-1" hidden></aside>
+  </section>
+  <section id="page-enrich" class="page" hidden>
+    <div class="page-head"><h1>Missing abstracts</h1><span class="state-chip" data-chip="enrich"></span><span class="spacer"></span><select class="run-select small-select" data-runs="enrich" aria-label="Show an earlier result of this stage" hidden></select><button class="btn-quiet small-btn explain-btn" data-explain="enrich" aria-expanded="false" aria-controls="why-enrich">Explain this step</button></div>
+    <div class="can-do" id="can-do-enrich" role="note" aria-label="What you can do here now" hidden></div>
+    <div class="stage-why" id="why-enrich" data-why="enrich" hidden></div>
+    <div class="stage-result prev" data-prev="enrich" hidden></div>
+    <div class="stage-result" data-result="enrich" hidden></div>
+    <!-- layout A chosen by the owner (28 Oct, mock redesign-c): where this stands with the run button, before you run,
+         then the records by state and by source (owner walkthrough M2-M7) -->
+    <section class="card en-standing" aria-labelledby="en-h-st"><h2 id="en-h-st">Where this stands</h2>
+      <dl class="facts en-facts" id="en-facts"></dl>
+      <p id="en-qnote" hidden></p>
+      <p class="en-where"><b>Where WIDER looks:</b> unique records with no abstract, or one shorter than the thin-abstract words, are looked up by DOI in the sources below, in their order, stopping at the first abstract found; a record without a DOI is looked up in OpenAlex by its exact title. An existing abstract is never overwritten. Runs in batches and resumes.</p>
+      <div class="row"><button id="en-run" class="main-act">Fetch next 100</button> <button id="en-retry" class="secondary" hidden>Retry failed lookups</button> <span id="en-msg" role="status"></span></div><p class="send-note" data-send="enrich" hidden></p>
+      <p id="en-s2"></p>
+      <details class="cmdline"><summary>Command line</summary><p class="small"><code id="en-cmd">wider enrich --limit 100</code> looks up the next batch; <code>--retry</code> retries failed lookups; <code>wider enrich --records failed</code> lists a group of records.</p></details>
+      <details class="en-more"><summary>All counts</summary><table id="en-summary" aria-label="All counts"></table></details>
+    </section>
+    <section class="card en-before" aria-labelledby="en-h-before"><h2 id="en-h-before">Before you run</h2>
+      <label class="en-field" for="en-limit">Batch size (records)</label>
+      <input id="en-limit" type="number" min="1" step="1" value="100" style="width:110px" aria-describedby="en-limit-help">
+      <p id="en-limit-help">How many records one click looks up. 100 is WIDER's default. It changes no result and is not in the methods text. The thin-abstract words are under Settings of this step, below.</p>
+      <div id="en-apply"></div>
+    </section>
+    <section class="card en-recs-card" aria-labelledby="en-h-recs"><h2 id="en-h-recs">The records</h2><div id="en-recs"></div></section>
+    <div class="card settings-card" id="en-settings" aria-label="Settings of this step"></div>
+    <nav class="pn" data-pn="enrich" aria-label="Previous and next step" hidden></nav>
+  </section>
+  <section id="page-rank" class="page" hidden>
+    <div class="page-head"><h1>Ranking</h1><span class="state-chip" data-chip="rank"></span><span class="spacer"></span><select class="run-select small-select" data-runs="rank" aria-label="Show an earlier result of this stage" hidden></select><button class="btn-quiet small-btn explain-btn" data-explain="rank" aria-expanded="false" aria-controls="why-rank">Explain this step</button></div>
+    <div class="can-do" id="can-do-rank" role="note" aria-label="What you can do here now" hidden></div>
+    <div class="stage-why" id="why-rank" data-why="rank" hidden></div>
+    <div class="stage-result prev" data-prev="rank" hidden></div>
+    <div class="stage-result" data-result="rank" hidden></div>
+    <div class="card" id="rk-review" role="region" aria-label="Ranking needs review" hidden></div>
+    <div class="card" id="rk-embeddings"></div>
+    <!-- three numbered step cards, as the steps on Home (owner, 29 Oct: Ranking option A) -->
+    <div class="rk-steps">
+      <div class="card rk-step"><h2 class="rk-hd"><span class="rk-n" aria-hidden="true">1</span>Embed the corpus</h2>
+        <p class="rk-what">Each record becomes a vector, so it can be compared with the seed papers.</p>
+        <div class="row"><button class="secondary" id="rk-embed">Embed corpus</button></div>
+        <p class="send-note" data-send="embed" hidden></p>
+      </div>
+      <div class="card rk-step"><h2 class="rk-hd"><span class="rk-n" aria-hidden="true">2</span>Rank by closeness to the seed papers</h2>
+        <div class="row">
+          <select id="rk-anchors" aria-label="Anchor version"></select>
+          <label class="inline">top-N <input id="rk-topn" type="text" inputmode="numeric" placeholder="default" aria-label="top-N: cell similarities averaged per record" aria-describedby="rk-topn-hint" style="width:70px;display:inline-block"></label>
+        </div>
+        <p id="rk-topn-hint" class="muted small">Empty top-N = the protocol default, capped at the number of cells.</p>
+        <div class="row"><button id="rk-run" class="main-act">Rank</button><button class="secondary" id="rk-update">Update ranking</button></div>
+        <p class="send-note" data-send="embed_short" hidden></p>
+        <p id="rk-keep-note" hidden></p>
+      </div>
+      <div class="card rk-step"><h2 class="rk-hd"><span class="rk-n" aria-hidden="true">3</span>Check the ranking</h2>
+        <div class="rk-check"><p class="rk-what">Where do the seed papers land?</p><button class="secondary" id="rk-validate">Check the seed papers</button></div>
+        <div class="rk-check"><p class="rk-what">Leave one part out at a time.</p><button class="secondary" id="rk-ablate">Ablation</button></div>
+        <label class="inline small" id="rk-ablate-val-label"><input type="checkbox" id="rk-ablate-val" aria-describedby="rk-ablate-val-why"> Include the validation set</label>
+        <p id="rk-ablate-val-why" class="muted small" hidden></p>
+        <div class="rk-check"><p class="rk-what">Topics among the top records.</p><button class="secondary" id="rk-cluster">Clusters</button></div>
+      </div>
+    </div>
+    <p id="rk-msg" class="muted small" role="status"></p>
+    <div class="card rk-out" id="rk-out">
+      <div id="rk-validation"></div>
+      <div id="rk-ablation"></div>
+      <div id="rk-clusters"></div>
+    </div>
+    <div class="card">
+      <h2>Explorer <span id="rk-info" class="muted"></span></h2>
+      <div class="row"><select id="rk-ranking" aria-label="Ranking to explore"></select><select id="rk-cell" aria-label="Cell"><option value="">all cells</option></select>
+        <button class="secondary small-btn" id="rk-prev" aria-label="Previous page">◀</button><span id="rk-page" class="muted small"></span><button class="secondary small-btn" id="rk-next" aria-label="Next page">▶</button></div>
+      <div id="rk-versions"></div>
+      <table id="rk-table"></table>
+    </div>
+    <nav class="pn" data-pn="rank" aria-label="Previous and next step" hidden></nav>
+  </section>
+  <section id="page-sample" class="page" hidden>
+    <div class="page-head"><h1>Samples and labelling</h1><span class="state-chip" data-chip="sample"></span><span class="spacer"></span><select class="run-select small-select" data-runs="sample" aria-label="Show an earlier result of this stage" hidden></select><button class="btn-quiet small-btn explain-btn" data-explain="sample" aria-expanded="false" aria-controls="why-sample">Explain this step</button></div>
+    <div class="can-do" id="can-do-sample" role="note" aria-label="What you can do here now" hidden></div>
+    <div class="stage-why" id="why-sample" data-why="sample" hidden></div>
+    <div class="stage-result prev" data-prev="sample" hidden></div>
+    <div class="stage-result" data-result="sample" hidden></div>
+    <div class="card" id="val-card">
+      <h2><span class="step-no">1</span> Recall target and rule</h2>
+      <p>Set these before you see any recall result.</p>
+      <div class="row">
+        <label class="inline">Recall target <input data-val-target="target" type="number" step="any" min="0" max="100" style="width:80px" title="A fraction (0.95) or a percentage (95)"></label>
+        <label class="inline">If the target is not met <select data-val-target="rule"><option value="">choose</option><option value="maybes-as-includes">count maybes as kept</option><option value="top-strata">screen the top bands by hand</option><option value="revise-prompt">revise the prompt</option></select></label>
+        <label class="inline" id="val-depth" hidden>Depth <input data-val-target="depth" type="number" min="1" style="width:80px"></label>
+        <label class="inline">Margin wanted (optional) <input data-val-target="precision" type="number" step="0.01" min="0" max="1" style="width:80px"></label>
+        <button class="secondary" data-val-act="target" data-sm-step="1">Save target</button>
+      </div>
+      <p id="val-target-msg" role="status"></p>
+      <h2><span class="step-no">2</span> Plan the validation sample</h2>
+      <div class="row">
+        <label class="inline">Labels you can give <input data-val-field="budget" type="number" min="1" style="width:90px"></label>
+        <label class="inline">Margin wanted (optional) <input data-val-field="precision" type="number" step="0.01" min="0" max="1" style="width:80px"></label>
+        <label class="inline">Relevant rates per band <input data-val-field="rates" placeholder="S1 0.3, S2 0.01" style="width:160px"></label>
+        <label class="inline">Expected recall <input data-val-field="expected_recall" type="number" step="0.01" min="0" max="1" style="width:80px"></label>
+        <label class="inline">Seed recall at the top % of the ranking <input data-val-field="percentiles" placeholder="1,5,10,25,50" style="width:120px"></label>
+        <label class="inline">Your own allocation <input data-val-field="allocation" placeholder="S1=100,S2=200" style="width:160px"></label>
+        <button class="secondary" id="val-plan" data-val-act="plan" data-sm-step="2">Plan</button>
+      </div>
+      <p id="val-msg" role="status"></p>
+      <div id="val-table"></div>
+    </div>
+    <div class="card" id="sm-draw-card">
+      <h2><span class="step-no">3</span> Draw samples</h2>
+      <div class="row"><button class="secondary" id="sm-draw" data-sm-step="3">Draw samples from the ranking</button> <span id="sm-msg" class="muted" role="status"></span></div><p class="send-note" data-send="embed_short" hidden></p>
+      <p id="sm-dedup-warn" class="needs-line" hidden></p>
+      <div id="sm-fresh"></div>
+      <div id="sm-samples"></div>
+    </div>
+    <div class="card" id="sm-settings"></div>
+    <div class="card" id="lb-card">
+      <h2><span class="step-no">4a</span> Labelling queue</h2>
+      <div class="row">
+        <label class="inline">Queue <select id="lb-mode" autocomplete="off"><option value="queue">Labelling</option><option value="recheck">Re-check</option><option value="second">Second reviewer</option></select></label>
+        <label class="inline">Sample <select id="lb-sample" autocomplete="off"><option value="">all samples</option></select></label>
+        <label class="inline"><input type="checkbox" id="lb-blind" checked autocomplete="off"> Blind</label>
+        <label class="inline">Show <select id="lb-filter"><option value="unlabelled">not labelled yet</option><option value="all">all</option><option value="labelled">labelled</option></select></label>
+        <input id="lb-search" type="search" placeholder="search titles, your notes and tags" aria-label="Search the queue" style="flex:1;min-width:160px">
+        <button class="secondary" id="lb-load" data-sm-step="4">Open queue</button>
+        <span id="lb-progress" role="status"></span>
+      </div>
+      <p id="lb-signing"></p>
+      <p class="lb-keys">Open a record with a click or Enter; while the focus is in the drawer on the right, it takes the keys <kbd>1</kbd> include, <kbd>2</kbd> exclude, <kbd>3</kbd> maybe, <kbd>j</kbd>/<kbd>k</kbd> next and previous, <kbd>n</kbd> note, <kbd>t</kbd> tag, <kbd>Esc</kbd> close. Blind mode: rank, score, cell, band and sample are hidden, and so are other reviewers' decisions, notes and tags.</p>
+      <div id="lb-lines"></div>
+      <table id="lb-table" class="rec-table"></table>
+    </div>
+    <div class="card" id="bp-card">
+      <h2><span class="step-no">4b</span> Or label in a review package</h2>
+      <p id="bp-reviewers"></p>
+      <p id="bp-limits"></p>
+      <div class="row">
+        <label class="inline">Reviewer <input id="bp-reviewer" placeholder="reviewer name" style="width:160px"></label>
+        <span id="bp-samples" role="group" aria-label="Samples in the package"></span>
+        <label class="inline">Mode <select id="bp-mode"></select></label>
+        <button class="secondary" id="bp-make">Make a review package</button>
+      </div>
+      <div class="row">
+        <label class="inline">Import decisions file (the wider-decisions file the reviewer sends back) <input type="file" id="bp-import" accept=".json,application/json"></label>
+      </div>
+      <p id="bp-msg" role="status"></p>
+      <div id="bp-list"></div>
+    </div>
+    <div class="card" id="ag-card">
+      <h2>Second reviewer and adjudication</h2>
+      <div class="row">
+        <select id="ag-sample" aria-label="Sample to compare"></select>
+        <input id="ag-a" placeholder="reviewer A" aria-label="Reviewer A" list="ag-names" style="width:140px"><input id="ag-b" placeholder="reviewer B" aria-label="Reviewer B" list="ag-names" style="width:140px">
+        <datalist id="ag-names"></datalist>
+        <button class="secondary" id="ag-run">Agreement</button>
+        <span id="ag-summary" class="muted small"></span>
+        <span class="spacer"></span>
+        <button class="secondary" id="ag-lock">Lock sample</button>
+      </div>
+      <p id="ag-hints" class="bad" role="status"></p>
+      <p class="muted small">Disagreements open in the drawer with both decisions side by side; <kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd> adjudicate.</p>
+      <table id="ag-disagreements" class="rec-table"></table>
+    </div>
+    <nav class="pn" data-pn="sample" aria-label="Previous and next step" hidden></nav>
+  </section>
+  <section id="page-screen" class="page" hidden>
+    <div class="page-head"><h1>Screening</h1><span class="state-chip" data-chip="screen"></span><span class="spacer"></span><button class="btn-quiet small-btn explain-btn" data-explain="screen" aria-expanded="false" aria-controls="why-screen">Explain this step</button></div>
+    <div class="can-do" id="can-do-screen" role="note" aria-label="What you can do here now" hidden></div>
+    <div class="stage-why" id="why-screen" data-why="screen" hidden></div>
+    <div class="card sc-overview" id="sc-overview" aria-labelledby="sc-overview-h"><h2 id="sc-overview-h">Where screening stands</h2><p class="muted">Loading…</p></div>
+    <div class="page-tabs" role="tablist" aria-label="Screening tasks"><button type="button" role="tab" id="sc-tabbtn-setup" data-tab="setup" aria-controls="sc-tab-setup">1 Set up and run</button><button type="button" role="tab" id="sc-tabbtn-review" data-tab="review" aria-controls="sc-tab-review">2 Decisions and result sets</button><button type="button" role="tab" id="sc-tabbtn-quality" data-tab="quality" aria-controls="sc-tab-quality">3 Check quality</button></div>
+    <div class="tab-panel" data-panel="setup" role="tabpanel" id="sc-tab-setup" aria-labelledby="sc-tabbtn-setup" hidden>
+      <div class="card" id="sc-models"></div>
+      <div class="card" id="sc-passes" hidden></div>
+      <div class="card" id="sc-run-card">
+        <h2>Start screening</h2>
+        <p class="section-intro">The model reads each record's title and abstract and answers include, maybe or exclude. <b>One pass</b> is one reading of every record. <b>Protocol A/B + third read</b> reads every record twice, independently, and a third time where the two disagree; the majority decides. <b>Second screen of maybes</b> reads the maybes again.</p>
+        <div class="row">
+          <button class="secondary" id="sc-build">Build prompt from codebook</button>
+        </div>
+        <div class="row sc-fields">
+          <label class="inline">Screening prompt <select id="sc-prompt" aria-label="Screening prompt"></select></label>
+          <label class="inline">Records to screen <select id="sc-scope" aria-label="Records to screen"></select></label>
+          <label class="inline">Screening mode <select id="sc-mode" aria-label="Screening mode"><option value="pass">one pass</option><option value="protocol">protocol A/B + third read</option><option value="second">second screen of maybes</option></select></label>
+          <label class="inline">Pass name <input id="sc-pass" value="A" style="width:50px" aria-label="Pass name"></label>
+          <label class="inline">Protocol name <input id="sc-protocol" value="main" style="width:90px" aria-label="Protocol name"></label>
+          <label class="inline">Record limit <input id="sc-limit" type="text" inputmode="numeric" placeholder="all" aria-label="Record limit (empty = every record)" aria-describedby="sc-limit-why" style="width:80px"></label>
+          <label class="inline" id="sc-from-row" hidden>Maybes from <select id="sc-from-set" aria-label="Result set whose maybes are screened again"></select></label>
+        </div>
+        <p id="sc-limit-why" class="muted small">Record limit: caps the new model calls at this many per pass, as only the first records of the scope are screened and records already screened are not called again. A protocol run whose passes are finished still decides every record, without new calls.</p>
+        <p id="sc-run-line" aria-live="polite"></p>
+        <p id="sc-estimate" aria-live="polite"></p>
+        <div class="row"><button class="secondary" id="sc-run" aria-describedby="sc-run-line">Run</button></div>
+        <p class="send-note" data-send="screen" hidden></p>
+        <p id="sc-msg" class="muted small" role="status"></p>
+        <div id="sc-refusal" hidden></div>
+      </div>
+      <details class="card sc-history" id="sc-rounds-card">
+        <summary><h2>Screening history</h2> <span class="muted" id="sc-history-count"></span></summary>
+        <p class="section-intro">Every screening round, newest first, with what it screened, its counts and its cost. <b>Show</b> puts a round in the summary at the top. While a round runs, its progress, time left and cost are also in the bar at the top of every page.</p>
+        <table id="sc-runs"></table>
+      </details>
+    </div>
+    <div class="tab-panel" data-panel="review" role="tabpanel" id="sc-tab-review" aria-labelledby="sc-tabbtn-review" hidden>
+      <div class="card" id="sc-decisions-card">
+        <h2>Protocol decisions <button class="secondary small-btn" id="sc-export">Export CSV</button></h2>
+        <p class="section-intro">The final include, maybe or exclude of each record. <b>Export CSV</b> saves these decisions, and every model answer behind them (which screening round and model; no abstracts), to the exports folder of the project, for the protocol and set chosen under Models used below.</p>
+        <p id="sc-export-msg" class="muted small" role="status"></p>
+        <table id="sc-protocols"></table>
+      </div>
+      <div class="card">
+        <h2>Records of one round</h2>
+        <div class="row"><select id="in-run" aria-label="Run"></select><select id="in-decision" aria-label="Decision"><option value="">all</option><option>include</option><option>maybe</option><option>exclude</option></select><button class="secondary" id="in-btn">Show</button>
+          <input id="in-search" type="search" placeholder="search titles, notes and tags" aria-label="Search the run" style="flex:1;min-width:160px"></div>
+        <p class="section-intro">Lists the records of one screening round. Open a record to read its abstract with the model's quotes highlighted, the model's grades and summary, and to add notes and tags.</p>
+        <p id="in-hidden" role="note" hidden></p>
+        <table id="in-table" class="rec-table"></table>
+      </div>
+      <div class="card" id="sc-sets-card">
+        <h2>Result sets</h2>
+        <p class="section-intro">Screening again with other settings keeps the earlier decisions and puts the new ones in a new <b>result set</b>. The set marked <b>active</b> is the one recall, the report and the exports use, unless you choose another there.</p>
+        <div class="row"><select id="ss-protocol" aria-label="Protocol"></select>
+          <button class="secondary small-btn" id="ss-new">Screen again as a new result set</button>
+          <span id="ss-msg" class="muted small" role="status"></span></div>
+        <div id="ss-table"></div>
+        <div class="row"><label class="inline">Compare set <select id="ss-a" aria-label="First set"></select></label><label class="inline">with set <select id="ss-b" aria-label="Second set"></select></label>
+          <label class="inline"><input type="checkbox" id="ss-models-only"> Models only</label><button class="secondary small-btn" id="ss-compare">Compare</button></div>
+        <div id="ss-compare-out"></div>
+      </div>
+      <div class="card" id="sc-used-card">
+        <h2>Models used</h2>
+        <div class="row"><select id="mu-protocol" aria-label="Protocol of the models summary"></select><select id="mu-set" aria-label="Result set of the models summary"></select>
+          <span id="mu-msg" class="muted small" role="status"></span></div>
+        <div id="mu-out"></div>
+      </div>
+    </div>
+    <div class="tab-panel" data-panel="quality" role="tabpanel" id="sc-tab-quality" aria-labelledby="sc-tabbtn-quality" hidden>
+      <div class="card" id="cmp-card">
+        <h2>Compare configurations</h2>
+        <p class="section-intro">Screen the locked development sample with several models, prompt versions or temperatures, each repeated, and
+          see how each one's decisions differ from the development labels. Rows keep the order you give; none is marked best.</p>
+        <div id="cmp-form"></div>
+        <div id="cmp-gate"></div>
+        <h3>Results</h3>
+        <div id="cmp-results"></div>
+      </div>
+      <div class="card">
+        <h2>Development evaluation</h2>
+        <div class="row"><select id="ev-run" aria-label="Run"></select><select id="ev-sample" aria-label="Sample"></select><button class="secondary" id="ev-run-btn">Evaluate</button>
+          <label class="inline">Show <select id="ev-filter"><option value="">all disagreements</option><option>MISS</option><option>FALSE INCLUDE</option><option>FALSE MAYBE</option></select></label>
+          <span id="ev-summary" class="muted small"></span></div><div id="ev-lines"></div>
+        <p class="section-intro">Compares the model's decisions with your own labels on the development sample. Open a disagreement to read the abstract, with the model's quotes highlighted, next to both decisions.</p>
+        <table id="ev-table" class="rec-table"></table>
+      </div>
+      <div class="card" id="adj-cases-card">
+        <h2>Adjacent literature cases</h2>
+        <p class="section-intro">Where the model missed a relevant paper or included an irrelevant one, grouped by the neighbouring literature it came from, with the model's quotes. To fix a pattern: edit the codebook on the Concepts and synonyms page, press Build prompt from codebook on the Start screening tab, then Re-run dev evaluation here.</p>
+        <div class="row"><button class="secondary" id="adj-cases-btn">Show cases</button><button class="secondary" id="adj-rerun-btn">Re-run dev evaluation</button><span id="adj-cases-msg" class="muted small" role="status"></span></div>
+        <div id="adj-cases-table"></div>
+        <div id="adj-cases"></div>
+      </div>
+    </div>
+    <nav class="pn" data-pn="screen" aria-label="Previous and next step" hidden></nav>
+  </section>
+  <section id="page-review" class="page" hidden>
+    <div class="page-head"><h1>Screening review</h1></div>
+    <p id="rv-sentence" class="rv-sentence"></p>
+    <div id="rv-empty" class="card rv-empty" hidden></div>
+    <div id="rv-body">
+      <div class="card rv-toolbar" id="rv-toolbar">
+        <div class="row"><label class="inline">Protocol <select id="rv-protocol" aria-label="Protocol"></select></label>
+          <label class="inline">Result set <select id="rv-set" aria-label="Result set"></select></label>
+          <label class="inline">Show <select id="rv-show" aria-label="Show">
+            <option value="flagged">records that need a person</option><option value="majority">also third-read majorities</option>
+            <option value="qc">quality-control sample only</option><option value="all">all records of the set</option></select></label>
+          <button type="button" class="secondary" id="rv-qc-btn">Draw quality-control sample</button></div>
+        <p id="rv-signing" class="rv-signing"></p>
+        <p id="rv-count" class="rv-count" role="status"></p>
+        <p id="rv-qc-sentence" class="rv-qc-sentence" hidden></p>
+        <p id="rv-hidden" class="rv-qc-sentence" role="note" hidden></p>
+        <p id="rv-msg" class="rv-msg" role="status"></p>
+      </div>
+      <div id="rv-qc-dialog" class="card rv-qc-dialog" role="dialog" aria-labelledby="rv-qc-title" hidden>
+        <h2 id="rv-qc-title">Draw quality-control sample</h2>
+        <p>A seeded random sample of records the LLM settled (not decided by a person, not in a labelling sample, not already listed).</p>
+        <p id="rv-qc-signing"></p>
+        <div class="row"><label class="inline">Size <input id="rv-qc-n" type="number" min="1" step="1"></label>
+          <label class="inline">Seed (empty: chosen at random and recorded) <input id="rv-qc-seed" type="number" step="1"></label></div>
+        <div class="row"><button type="button" id="rv-qc-go">Draw</button><button type="button" class="secondary" id="rv-qc-cancel">Cancel</button></div>
+        <p id="rv-qc-msg" role="status"></p>
+      </div>
+      <details id="rv-criteria" class="card rv-criteria"><summary><h2>Criteria</h2></summary><div id="rv-criteria-body"></div></details>
+      <div class="rv-split">
+        <div id="rv-list" class="rv-list"></div>
+        <aside id="rv-drawer" class="rv-drawer" aria-label="Record"></aside>
+      </div>
+      <p class="rv-keys small">Keys while the focus is in the list or the record: <kbd>1</kbd> include · <kbd>2</kbd> exclude · <kbd>3</kbd> maybe · <kbd>j</kbd>/<kbd>k</kbd> next, previous · not while typing in a field</p>
+    </div>
+    <details id="rv-cmd" class="card rv-cmd cmdline"><summary>Command line</summary>
+      <pre>wider review list [PROTOCOL] [--set N] [--show flagged|majority|qc|all] [--json]
+wider review show RECORD [PROTOCOL] [--set N] [--json]
+wider review decide RECORD include|exclude|maybe --by NAME [--reason TEXT] [PROTOCOL] [--set N]
+wider review criteria [PROTOCOL] [--set N] [--json]
+wider review qc draw [PROTOCOL] [--set N] --n N [--seed S] --by NAME</pre></details>
+  </section>
+  <section id="page-recall" class="page" hidden>
+    <div class="page-head"><h1>Recall and report</h1><span class="state-chip" data-chip="recall"></span><span class="spacer"></span><select class="run-select small-select" data-runs="recall" aria-label="Show an earlier result of this stage" hidden></select><button class="btn-quiet small-btn explain-btn" data-explain="recall" aria-expanded="false" aria-controls="why-recall">Explain this step</button></div>
+    <div class="can-do" id="can-do-recall" role="note" aria-label="What you can do here now" hidden></div>
+    <div class="stage-why" id="why-recall" data-why="recall" hidden></div>
+    <div class="stage-result prev" data-prev="recall" hidden></div>
+    <div class="stage-result" data-result="recall" hidden></div>
+    <div class="card" id="rc-card"><h2>Estimate recall</h2>
+      <p class="recall-kind">Screening recall: the share of relevant records the screening kept, estimated from the validation sample.</p>
+      <p class="section-intro">Recall is the share of the relevant papers that screening kept. It is estimated on the labelled sample: the papers you judged by hand are compared with the screening decisions of one result set.</p>
+      <div class="row sc-fields"><label class="inline">Protocol <select id="rc-protocol"></select></label><label class="inline">Result set <select id="rc-set"></select></label><label class="inline">Labelled sample <select id="rc-sample"></select></label>
+        <label class="inline">Compare with set <select id="rc-compare"></select></label></div>
+      <div class="row"><button id="rc-run" class="main-act">Estimate recall</button><span id="rc-msg" class="muted small" role="status"></span></div>
+      <div id="rc-tables"></div>
+      <div id="rc-validation"></div>
+      <div id="rc-benchmark"></div>
+    </div>
+    <div class="card" id="rs-card"><h2>Names in shared files</h2>
+      <div id="rs-modes" class="row" role="radiogroup" aria-label="Names in shared files"></div>
+      <p id="rs-explain"></p>
+      <table id="rs-table" class="small"></table>
+      <p id="rs-verify"></p>
+      <p id="rs-msg" class="small" role="status"></p>
+    </div>
+    <div class="card" id="rp-card"><h2>Report</h2>
+      <p class="section-intro"><b>Build report</b> writes the report into the exports folder of the project: the counts of every stage, recall with its method, and the models used. <b>Write share bundle</b> writes a folder to send to a colleague or a journal, without abstracts.</p>
+      <div class="row"><button class="secondary" id="rp-build">Build report</button><button class="secondary" id="rp-bundle">Write share bundle</button><span id="rp-mode"></span><span id="rp-msg" class="muted small" role="status"></span></div>
+      <pre id="rp-md" class="small"></pre>
+    </div>
+    <div class="card" id="out-validity-card">
+      <h2>Search validity</h2>
+      <p class="recall-kind">Search recall: the share of the validation papers the search query found. It says nothing about the screening.</p>
+      <p class="muted small">Whether the search was tested on validation seed papers it was not tuned on. The report, the methods draft and the replication package give the same note.</p>
+      <div id="out-validity" role="status"></div>
+    </div>
+    <div class="card" id="out-independent-card">
+      <h2>Independent check</h2>
+      <p class="recall-kind">Screening recall on independent validation papers: a second look at the screening, on papers the validation sample did not choose.</p>
+      <p class="muted small">Recall on the seed papers that did not come from the query's results (found by you, a colleague, another database, a prior review or chaining), and after screening an estimate of what may be missing. The report and the replication package give the same lines.</p>
+      <div id="out-independent" role="status"></div>
+    </div>
+    <div class="card" id="out-prisma-card">
+      <h2>PRISMA report</h2>
+      <p>The PRISMA 2020 flow diagram, PRISMA-S and the PRISMA 2020 checklist are filled in and checked on <a href="#reporting">PRISMA reporting</a>.</p>
+      <p>Plain files from the store, for the protocol and set chosen above (the replication package includes them):
+        <button class="link-btn" id="out-prisma">Diagram</button> <span id="out-prisma-msg" class="small" role="status"></span>
+        · <button class="link-btn" id="out-prisma-s">PRISMA-S</button> <span id="out-prisma-s-msg" class="small" role="status"></span>
+        · <button class="link-btn" id="out-prisma-2020">Checklist</button> <span id="out-prisma-2020-msg" class="small" role="status"></span></p>
+    </div>
+    <div class="card" id="out-methods-card">
+      <h2>Methods paragraph</h2>
+      <p class="muted small">A draft built from the project's facts (databases, dates, counts, models, protocol, recall). Rewrite it in your words; saving keeps it in the project folder, and the replication package includes it.</p>
+      <div class="row"><button class="secondary small-btn" id="out-methods-draft">Draft from the project</button><button class="secondary small-btn" id="out-methods-save">Save methods paragraph</button><span id="out-methods-msg" class="muted small" role="status"></span></div>
+      <textarea id="out-methods-text" rows="10" aria-label="Methods paragraph"></textarea>
+    </div>
+    <div class="card" id="out-refs-card">
+      <p data-export-link>Reference files are exported on the <a href="#results">Results dashboard (Export records)</a>.</p>
+    </div>
+    <div class="card" id="out-corpus-card">
+      <h2>Plain corpus export</h2>
+      <p class="small">Every unique record with its bibliographic data only (title, authors, year, journal, DOI, abstract, source database), with no screening decision, evaluation or model output, as RIS, BibTeX and CSV in the exports folder of the project. It can be written while labelling is open. These files carry abstracts and stay on this computer.</p>
+      <div class="row"><button class="secondary small-btn" id="out-corpus">Export every record</button><span id="out-corpus-msg" class="small" role="status"></span></div>
+    </div>
+    <div class="card" id="out-package-card">
+      <h2>Replication package</h2>
+      <p class="muted small">One zip for a journal or a repository: the share bundle (no abstracts, no database exports, no raw model responses), the PRISMA diagram, the methods paragraph and the search-strings archive, with a list of checksums that shows no file changed.</p>
+      <div class="row"><button class="secondary small-btn" id="out-package">Build the package</button><span id="out-package-mode"></span><span id="out-package-msg" class="muted small" role="status"></span></div>
+    </div>
+    <nav class="pn" data-pn="recall" aria-label="Previous and next step" hidden></nav>
+  </section>
+  <section id="page-results" class="page" hidden>
+    <div class="page-head"><h1>Results dashboard</h1></div>
+    <div class="card">
+      <div class="row"><label class="inline">Protocol <select id="rs-protocol" aria-label="Protocol"></select></label> <label class="inline">Result set <select id="rs-set" aria-label="Result set"></select></label> <label class="inline">Sample <select id="rs-sample" aria-label="Sample"></select></label></div>
+      <p>Choosing a set here only shows it; it does not make it the active set. Opening this page estimates nothing and records no look.</p>
+      <p>An owner view: it shows results built from the labels. A blind second reviewer labels in the queue on Samples and labelling only.</p>
+    </div>
+    <div id="rs-body"></div>
+  </section>
+  <section id="page-reporting" class="page" hidden>
+    <div class="page-head"><h1>PRISMA reporting</h1></div>
+    <div class="card">
+      <div class="row"><label class="inline">Protocol <select id="rp-protocol" aria-label="Protocol"></select></label> <label class="inline">Result set <select id="rp-set" aria-label="Result set"></select></label></div>
+      <p>Choosing a set here only shows it; it does not make it the active set. Your text is kept apart from WIDER's records.</p>
+      <p>An owner view: it shows what WIDER recorded, including screening results. A blind second reviewer labels in the queue on Samples and labelling only.</p>
+    </div>
+    <div id="rp-body"></div>
+  </section>
+  <!-- the question window (review-plan-and-question-window D7): WIDER's open questions about this page; qwindow.js -->
+  <div id="qwindow" class="qwindow" role="region" aria-label="Questions from WIDER" hidden></div>
+</main>
+<aside class="guide-panel" id="guide-panel" aria-label="Guide and Ask WIDER" tabindex="-1" hidden></aside>
+</div>
+<div id="toasts" class="toasts"></div>
+<!-- toasts are read out here (one short line each); the toast boxes themselves are not live regions -->
+<p id="toast-live" class="sr-only" role="status"></p><p id="toast-alert" class="sr-only" role="alert"></p>
+<span id="row-hint" class="sr-only">Press Enter to open it.</span>
+<dialog id="ask-dialog" aria-labelledby="ask-title">
+  <p class="small muted" id="ask-count"></p>
+  <div id="ask-body"></div>
+  <div class="row"><span class="spacer"></span><button class="secondary" id="ask-later">Later</button></div>
+</dialog>
+<aside id="drawer" class="drawer" tabindex="-1" aria-labelledby="dw-title" hidden>
+  <div class="dw-head"><span id="dw-kind" class="small muted"></span><span class="spacer"></span><span id="dw-pos" class="small muted"></span>
+    <button class="icon-btn" id="dw-prev" aria-label="Previous record (k)" title="Previous (k)">&#8593;</button>
+    <button class="icon-btn" id="dw-next" aria-label="Next record (j)" title="Next (j)">&#8595;</button>
+    <button class="icon-btn" id="dw-close" aria-label="Close the drawer (Esc)" title="Close (Esc)">&#215;</button></div>
+  <div id="dw-decide" class="dw-decide" hidden></div>
+  <div id="dw-body" class="dw-body"></div>
+  <section id="dw-notes" class="dw-notes" aria-label="Notes and tags" hidden></section>
+  <p class="dw-keys small muted">Keys while the focus is in this panel: <span class="dw-keys-decide"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> decide · </span><kbd>j</kbd>/<kbd>k</kbd> next, previous · <span class="dw-keys-notes"><kbd>n</kbd> note · <kbd>t</kbd> tag · </span><kbd>Esc</kbd> <span class="dw-keys-esc">close</span></p>
+</aside>
+<script src="/static/common.js"></script>
+<script src="/static/settings_card.js"></script>
+<script src="/static/backends.js"></script>
+<script src="/static/compare.js"></script>
+<script src="/static/validation.js"></script>
+<script src="/static/sample_extend.js"></script>
+<script src="/static/pickers.js"></script>
+<script src="/static/model.js"></script>
+<script src="/static/app.js"></script>
+<script src="/static/refine.js"></script>
+<script src="/static/coverage_bars.js"></script>
+<script src="/static/dryrun.js"></script>
+<script src="/static/seeds.js"></script>
+<script src="/static/diagnose.js"></script>
+<script src="/static/rounds.js"></script>
+<script src="/static/yield.js"></script>
+<script src="/static/import.js"></script>
+<script src="/static/indexing.js"></script>
+<script src="/static/setup.js"></script>
+<script src="/static/adjacent.js"></script>
+<script src="/static/drawer.js"></script>
+<script src="/static/focus.js"></script>
+<script src="/static/records.js"></script>
+<script src="/static/blinding.js"></script>
+<script src="/static/dedup.js"></script>
+<script src="/static/jobs.js"></script>
+<script src="/static/outputs.js"></script>
+<script src="/static/researchers.js"></script>
+<script src="/static/qwindow.js"></script>
+<script src="/static/questions.js"></script>
+<script src="/static/history.js"></script>
+<script src="/static/results.js"></script>
+<script src="/static/reporting.js"></script>
+<script src="/static/review.js"></script>
+<script src="/static/methods.js"></script>
+<script src="/static/shell.js"></script>
+</body>
+</html>

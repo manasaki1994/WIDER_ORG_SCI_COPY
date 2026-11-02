@@ -1,0 +1,3 @@
+# Vercel uploads everything else in this folder (the video and poster are gitignored but must go up)
+.env*
+.gitignore

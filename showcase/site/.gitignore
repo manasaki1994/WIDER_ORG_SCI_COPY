@@ -1,0 +1,6 @@
+*.mp4
+poster.jpg
+.vercel
+.env*
+demo/
+wider-showcase.*.vtt

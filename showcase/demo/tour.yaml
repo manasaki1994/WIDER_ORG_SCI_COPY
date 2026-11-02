@@ -1,0 +1,582 @@
+# The guided tour of the interactive demo (openspec change interactive-demo, design D7, D8).
+#
+# Data only: showcase/demo/tour.js shows the steps, build_demo.py fills the {placeholders} from the recorded
+# snapshot (so every number matches the pages) and drops a step whose checkpoint is not recorded yet.
+#
+# A step: id, stage, page (an app page key), checkpoint (the demo stage the step belongs to; "last" is the last one
+# recorded), target (an element id on that page or in the demo layer), who ("You decide" or "WIDER does"), title,
+# body (paragraphs split by a blank line), and optionally:
+#   choice: true    a choice between methods; it needs a tradeoff
+#   tradeoff        the "Trade-off" line
+#   concept         the id of a concept card linked from the step
+#   action          kind, see tour.js: terms, dedup, rank, draw, label, screen, screen2, recall
+#   needs           more checkpoints the step needs recorded
+#   drawn: true     the target is drawn by the page's code (not in index.html)
+#   core: true      the step is on the Quick tour (demo-chapters-and-video D3)
+# chapters: one per stage (stage, title, intro): the intro says what the stage is for and is shown above a chapter's
+# first step (demo-chapters-and-video D1, D2).
+# Words follow docs/plain-words.md: text inside “curly quotes” is a label of the app, quoted as it reads.
+
+chapters:
+  - stage: Start
+    title: Getting started
+    intro: This chapter is for getting your bearings in the invented project.
+  - stage: Question
+    title: The question
+    intro: This chapter is for writing down what the review asks and which papers belong in it, before you see any
+      results.
+  - stage: Search strings
+    title: Search strings
+    intro: This chapter is for building the search you will type into each database.
+  - stage: Search results
+    title: Search results
+    intro: This chapter is for bringing in the files you saved from each database.
+  - stage: Deduplication
+    title: Deduplication
+    intro: "This chapter is for removing duplicates: the same paper found in more than one database."
+  - stage: Ranking
+    title: Ranking
+    intro: This chapter is for putting the records in order, most likely relevant first.
+  - stage: Samples
+    title: Samples
+    intro: This chapter is for labelling a few records by hand, to compare the AI model with later.
+  - stage: Screening
+    title: Screening
+    intro: This chapter is for letting the AI model read every title and abstract and suggest Include or Exclude.
+  - stage: Recall
+    title: Recall
+    intro: This chapter is for estimating how many of the relevant papers the screening kept.
+  - stage: History
+    title: History
+    intro: This chapter is for the record of every change made by hand, so someone else can check your review later.
+
+steps:
+  # ---- Home ------------------------------------------------------------------------------------------------------
+  - id: welcome
+    core: true
+    stage: Start
+    page: home
+    checkpoint: imported
+    target: home-projects
+    who: WIDER does
+    title: Welcome to the guided tour
+    body: |
+      WIDER helps you carry out a systematic review on your own computer: from the question, through searching and
+      screening, to an estimate of how many relevant papers your screening found.
+
+      This tour follows one invented review, about employees speaking up or staying silent at work. The Quick tour
+      shows the main steps; Chapters, at the bottom of this card, holds every stage in full. Every card says who
+      acts: “You decide” marks your choices, “WIDER does” marks the work WIDER takes over.
+  - id: home-card
+    stage: Start
+    page: home
+    checkpoint: imported
+    target: home-projects
+    who: WIDER does
+    title: One project, already started
+    body: |
+      This is the project list. The open project is the invented review. Its searches are done: {imp.records} records
+      came in from {imp.files} invented databases.
+
+      Use Next (or the Right arrow key) to go on, Back to return. Play reads the tour to you at your pace and stops
+      wherever you need to do something. You can switch to Free in the demo bar at any time and come back.
+
+  # ---- Setup -----------------------------------------------------------------------------------------------------
+  - id: setup-rules
+    core: true
+    stage: Question
+    page: setup
+    checkpoint: imported
+    target: include_notes
+    who: You decide
+    title: What to include and what to exclude
+    body: |
+      Here you say which papers count and which do not, in your own words, before you see any results: rules
+      written first cannot be bent to fit what you found. WIDER shows these words to the AI model in every screening
+      instruction, so they matter later. WIDER never writes them for you.
+    choice: true
+    tradeoff: Narrow rules make screening quicker and more consistent but can leave out borderline papers; broad
+      rules keep them but leave more for you to check by hand.
+  - id: setup-known
+    stage: Question
+    page: setup
+    checkpoint: imported
+    target: setup-summary
+    who: You decide
+    title: Papers you already know
+    body: |
+      You also name papers you already know belong in the review: here {kp.n} seed papers. {kp.dev} of them help
+      build the search (development); {kp.val} are kept aside to test it (validation).
+
+      A test on papers the search was not built on is fairer than a test on the papers it was built on.
+    concept: sets
+
+  # ---- Search strings --------------------------------------------------------------------------------------------
+  - id: query-check
+    stage: Search strings
+    page: query
+    checkpoint: imported
+    target: q-dev
+    who: WIDER does
+    title: The search, checked against known papers
+    body: |
+      You split the question into concepts, here “speaking up or staying silent” and “at work”, and collect
+      synonyms for each; WIDER can suggest some with the AI model, and you keep or drop each one.
+
+      WIDER turns your synonyms into one search per database and checks which of your seed papers it would find.
+      A search that misses a paper you know belongs is a warning that it misses others too.
+  - id: query-terms
+    core: true
+    stage: Search strings
+    page: query
+    checkpoint: imported
+    target: demo-terms
+    who: You decide
+    title: Try a change to the terms
+    body: |
+      This panel is part of the demo only. Remove a term, for example suggestion*, and watch the count: some
+      include papers are lost. Then add a broad word such as share* to “Speaking up or staying silent” and see what
+      comes in.
+
+      The counts use the demo's {dd.final} invented records, one per paper after duplicates are removed, so you see
+      at once what a change would do.
+    choice: true
+    tradeoff: A broader search misses fewer relevant papers but gives you more to screen; a narrower one is quicker
+      to screen but may miss papers.
+    action: terms
+  - id: query-strings
+    stage: Search strings
+    page: query
+    checkpoint: imported
+    target: q-strings
+    who: You decide
+    title: You search; WIDER does not
+    body: |
+      WIDER writes the search in each database's own form. You type or paste it into the database yourself and
+      save the results to a file. WIDER never searches a database for you, so you keep control of what was
+      searched and when.
+
+  # ---- Import ----------------------------------------------------------------------------------------------------
+  - id: import-check
+    stage: Search results
+    page: import
+    checkpoint: imported
+    target: imp-files
+    who: WIDER does
+    title: Each file checked
+    body: |
+      Here {imp.files} files came in with {imp.records} records ({imp.per}). WIDER checks each file: is it complete,
+      is it on topic, does it hold your seed papers? Here every file looks
+      complete, and all {imp.found} seed papers are in the files.
+
+  # ---- Deduplication ---------------------------------------------------------------------------------------------
+  - id: dedup-pairs
+    stage: Deduplication
+    page: dedup
+    checkpoint: imported
+    target: dd-list
+    who: You decide
+    title: Pairs WIDER is not sure about
+    body: |
+      {dd.imported} records came in; WIDER merged {dd.auto} that share a DOI on its own, which leaves {dd.left}.
+      {dd.pairs} pairs have the same title but no shared DOI. WIDER cannot be sure they are one paper, so it asks
+      you. Open a pair to see the two records side by side, with the differences marked.
+    choice: true
+    tradeoff: Merging two different papers loses one of them; keeping a duplicate means reading it twice. When
+      unsure, choose Unsure and come back later.
+  - id: dedup-act
+    core: true
+    stage: Deduplication
+    page: dedup
+    checkpoint: imported
+    target: dd-list
+    who: You decide
+    title: Decide a duplicate pair, then apply
+    body: |
+      Open a pair in the list and decide: Duplicate or Not duplicate. Then press “Apply decisions and check again”
+      at the top of the page.
+
+      The record count changes only once the decisions are applied. At the start: {dd.imported} records came in, WIDER
+      merged {dd.auto} on its own, {dd.left} are left, and {dd.pairs} pairs wait for you. Reviewer A judged each of
+      the {dd.pairs} pairs to be one paper, so the later pages count {dd.final} records: {dd.removed} duplicates
+      removed in all.
+    action: dedup
+  - id: dedup-rest
+    stage: Deduplication
+    page: dedup
+    checkpoint: imported
+    target: dd-flow
+    who: You decide
+    title: The other pairs
+    body: |
+      In WIDER you decide every pair yourself. In this demo, Reviewer A, the invented researcher, has decided
+      them all, each pair as one paper. When you go on to ranking, the demo uses Reviewer A's decisions so the
+      numbers on every page agree: {dd.final} records after removing duplicates ({dd.imported} imported, {dd.removed}
+      removed: {dd.auto} by WIDER and {dd.pairs} by Reviewer A).
+
+  # ---- Ranking ---------------------------------------------------------------------------------------------------
+  - id: rank-act
+    core: true
+    stage: Ranking
+    page: rank
+    checkpoint: imported
+    target: rk-run
+    who: WIDER does
+    title: Press Rank
+    body: |
+      WIDER compares each title and abstract with short sentences that describe what you are looking for (anchor
+      sentences, one per concept), using a ranking model on this computer. Ranking only orders the records; it
+      removes none.
+
+      Press “Rank”. On a real review this takes from seconds to minutes; the demo replays the recorded result.
+      It ranks the {dd.final} records left after Reviewer A's duplicate decisions: if your own count above differs,
+      the pages switch to Reviewer A's {dd.final} once the ranking comes in.
+    action: rank
+  - id: rank-score
+    core: true
+    stage: Ranking
+    page: rank
+    checkpoint: ranked
+    target: rk-table
+    who: WIDER does
+    title: A score for every record
+    body: |
+      Each record now has a score: how close it is to the nearest anchor sentences. Rank 1 is “{rk.top_title}”
+      with score {rk.top_score}.
+
+      A score means something only next to the other scores of the same ranking. A score of 0.7 is not a 70%
+      chance of being relevant.
+    concept: scores
+  - id: rank-pct
+    stage: Ranking
+    page: rank
+    checkpoint: ranked
+    target: rk-table
+    who: WIDER does
+    title: A rank as a share of all records
+    body: |
+      To read a rank, compare it with the number of records. The seed paper “{rk.ex_title}” is rank {rk.ex_rank} of
+      {rk.n}: in the top {rk.ex_pct}% of records by score ({rk.ex_rank} ÷ {rk.n}, rounded up).
+
+      WIDER shows scores, not these shares. The share is the demo's own explanation.
+    concept: scores
+  - id: rank-check
+    stage: Ranking
+    page: rank
+    checkpoint: ranked
+    target: rk-validate
+    who: You decide
+    title: Does the ranking put known papers high?
+    body: |
+      Press “Check the seed papers” to see where your seed papers landed. The {rk.dev_n} development papers are at
+      middle rank {rk.dev_median}; the {rk.val_n} validation papers, kept out of building the anchor sentences, at
+      middle rank {rk.val_median}, out of {rk.n}.
+
+      With only {rk.val_n} validation papers this is a rough check, not proof. You judge whether the order is good
+      enough to go on.
+    concept: sets
+
+  # ---- Samples ---------------------------------------------------------------------------------------------------
+  - id: sample-draw
+    core: true
+    stage: Samples
+    page: sample
+    checkpoint: ranked
+    target: sm-draw
+    who: WIDER does
+    title: Draw the samples
+    body: |
+      Your labels are the measure the AI model is compared with later. Press “Draw samples from the ranking”.
+      WIDER draws two samples: a development sample, which you use to write and test the instructions for the AI
+      model, and a validation sample, kept apart, which later measures how well screening worked.
+    action: draw
+  - id: sample-two
+    stage: Samples
+    page: sample
+    checkpoint: sampled
+    target: sm-samples
+    who: WIDER does
+    title: Two samples, two jobs
+    body: |
+      The development sample ({sm.dev_n} records) is picked on purpose from different parts of the ranking: you use
+      it to write and test the instructions for the AI model.
+
+      The validation sample ({sm.val_n} records) is drawn at random within parts of the ranking and kept apart: it
+      measures how well screening worked. Testing on records you tuned on would make the result look better than
+      it is.
+    choice: true
+    tradeoff: A bigger validation sample gives a more precise recall estimate but takes longer to label.
+    concept: sets
+  - id: sample-label
+    core: true
+    stage: Samples
+    page: sample
+    checkpoint: sampled
+    target: lb-load
+    who: You decide
+    title: Label a record
+    body: |
+      Reviewer A has labelled all {sm.val_n} validation records and {sm.dev_done} of the {sm.dev_n} development
+      records. Press “Open queue”, open one of the {sm.dev_open} records not labelled yet and choose Include,
+      Exclude or Maybe (or press 1, 2 or 3). Watch the count of labelled records go up. Screening waits until
+      every development record has a final label, so the model's answers cannot sway the labels still open.
+    action: label
+
+  # ---- Screening -------------------------------------------------------------------------------------------------
+  - id: screen-act
+    core: true
+    stage: Screening
+    page: screen
+    checkpoint: sampled
+    target: sc-run
+    who: WIDER does
+    title: Screen the records
+    body: |
+      The AI model reads every title and abstract twice (read A and read B); where the two reads differ, a third
+      read decides.
+
+      The demo has set the two lists beside “Run” for you: “whole corpus” (every record, not only a sample) and
+      “protocol A/B + third read”. Press “Run” and watch the decisions come in below it, one record at a time. The
+      demo replays what the model answered when the demo was recorded; nothing is sent and nothing costs anything.
+      If development records are still unlabelled, “Run” is refused with “Continue labelling”: label them first,
+      or press Skip and the demo labels them as Reviewer A did.
+    choice: true
+    tradeoff: Two reads and a third cost more model calls than a single read, but they catch more of the model's
+      slips.
+    concept: disagree
+    action: screen
+    needs: [screened]
+  - id: screen-result
+    stage: Screening
+    page: screen
+    checkpoint: screened
+    target: sc-runs
+    who: WIDER does
+    title: The first screening round
+    body: |
+      {sc1.n} records screened with {sc1.model}: {sc1.include} Include, {sc1.maybe} Maybe, {sc1.exclude} Exclude
+      (simulated). A Maybe goes to a person: the model was not sure enough to decide. In this round reads A and B
+      differed on {sc1.disagree} record(s), and the third read decided each of them.
+    concept: disagree
+  - id: screen-second
+    stage: Screening
+    page: screen
+    checkpoint: screened
+    target: sc-run
+    who: You decide
+    title: Try a second setting
+    body: |
+      In the list of models, pick the card “openai-t07”: the same model at a warmer setting ({sc2.model}). Keep
+      the Mode and press “Run” again. WIDER asks before it starts a second round (“Screen again as a new result
+      set”): give the round a name and press “Screen all {sc2.n} records”. The first round stays as it was, so the
+      two can be compared.
+    choice: true
+    tradeoff: Comparing two settings shows how much the decisions depend on the setting, but each round costs
+      model calls on a real review.
+    action: screen2
+    needs: [screened2]
+  - id: screen-compare
+    core: true
+    stage: Screening
+    page: screen
+    checkpoint: screened2
+    target: ss-compare
+    who: You decide
+    title: Where the two rounds differ
+    body: |
+      Two different comparisons. Within one round, each record is read twice (reads A and B); where the two reads
+      disagree, a third read decides. In the first round that happened for {sc1.disagree} of {sc1.n} records, in the
+      second for {sc2.disagree}. Across rounds: press “Compare” to see the {sc2.changed} records whose final decision
+      differs between round 1 and round 2 (the other {sc2.agree} kept theirs). These are the records to read
+      yourself; they show where the instructions or the record leave room for doubt.
+    concept: disagree
+
+  # ---- Recall ----------------------------------------------------------------------------------------------------
+  - id: recall-why
+    stage: Recall
+    page: recall
+    checkpoint: screened2
+    target: rc-run
+    who: WIDER does
+    title: Estimate recall
+    body: |
+      Press “Estimate recall”. WIDER works it out on the validation sample, which you labelled by hand and kept
+      apart before screening.
+    action: recall
+  - id: recall-interval
+    core: true
+    stage: Recall
+    page: recall
+    checkpoint: screened2
+    target: rc-tables
+    press: rc-run
+    who: You decide
+    title: An estimate with its uncertainty
+    body: |
+      The table comes from “Estimate recall”; if it was not pressed yet, the demo presses it for you. Recall is
+      worked out for the first screening round, the one the page shows: the estimate is {rc.est}, with a 95% interval
+      from {rc.lo} to {rc.hi}. {rc.caveat}
+
+      {rc.advice}
+
+      Illustrative: invented papers, not evidence about any method. You decide whether an estimate is good enough
+      to stop screening; WIDER shows you the numbers to decide with.
+    choice: true
+    tradeoff: >-
+      A bigger validation sample means more labelling by hand; a small one gives an interval that says little.
+    concept: recall
+
+  # ---- History ---------------------------------------------------------------------------------------------------
+  - id: history
+    stage: History
+    page: history
+    checkpoint: last
+    target: hist-table
+    who: WIDER does
+    title: Every change, with who made it and when
+    body: |
+      Labels, duplicate decisions, settings: every change made by hand is listed with who made it and when. A change can be undone, and the undo is recorded too. This is what lets someone else
+      check your review later. In this demo the page shows Reviewer A's recorded changes; what you change here is
+      not added to it.
+  - id: finish
+    stage: History
+    page: history
+    checkpoint: last
+    target: hist-table
+    who: You decide
+    title: The end of the tour
+    body: |
+      You have seen each stage once. Finish shows how to start a review of your own; you can also keep exploring
+      this demo freely, or start the tour again.
+    concept: illustrative
+
+concepts:
+  - id: sets
+    title: Development and validation sets
+    defines: [development set, validation set]
+    body: |
+      WIDER keeps two groups apart. The development side is what you build with: {kp.dev} seed papers shape the
+      search, and the development sample ({sm.dev_n} records) is where you write and test the instructions for the
+      AI model.
+
+      The validation side is kept aside to test with: {kp.val} seed papers check the search, and the validation
+      sample ({sm.val_n} records, drawn at random) measures recall at the end.
+
+      If you tune on the records you test with, the test looks better than the method is. In this demo all of
+      these are invented papers.
+    fallback: |
+      WIDER keeps two groups apart. The development side is what you build with: seed papers that shape the search,
+      and a development sample where you write and test the instructions for the AI model.
+
+      The validation side is kept aside to test with: seed papers that check the search, and a validation sample
+      drawn at random that measures recall at the end.
+
+      If you tune on the records you test with, the test looks better than the method is. In this demo all of
+      these are invented papers.
+  - id: scores
+    title: Scores and percentiles
+    body: |
+      The Ranking page shows a score for each record: how close its title and abstract are to your anchor
+      sentences. A score is useful only next to the other scores of the same ranking; {rk.top_score} is not a
+      {rk.top_pct}% chance of anything.
+
+      To read a rank as a share, divide it by the number of records. The seed paper “{rk.ex_title}” is rank
+      {rk.ex_rank} of {rk.n}: in the top {rk.ex_pct}% of records by score.
+
+      The app shows scores; the demo works out the percentile. With {rk.n} invented records it says nothing about
+      how well ranking works on a real review.
+    fallback: |
+      The Ranking page shows a score for each record: how close its title and abstract are to your anchor
+      sentences. A score is useful only next to the other scores of the same ranking; it is not a chance of
+      anything. To read a rank as a share, divide it by the number of records.
+  - id: disagree
+    title: Disagreement and the third read
+    needs: [screened2]
+    body: |
+      At screening the AI model reads each record twice with the same instructions: read A and read B. Where both
+      agree, that is the decision. Where they differ, a third read decides.
+
+      In the second round of this demo, reads A and B differed on {sc2.disagree} records, and the third read
+      settled each one. Records like these are worth a look by hand: the instructions or the abstract leave room
+      for doubt.
+
+      Illustrative: invented papers, not evidence about any method.
+    fallback: |
+      At screening the AI model reads each record twice with the same instructions: read A and read B. Where both
+      agree, that is the decision. Where they differ, a third read decides.
+
+      Records like these are worth a look by hand: the instructions or the abstract leave room for doubt. The
+      screening rounds of this demo are not recorded yet, so this card has no numbers.
+  - id: recall
+    title: Recall and its uncertainty
+    needs: [screened]
+    body: |
+      Recall is the share of the relevant papers that screening kept. WIDER estimates it on the validation sample,
+      which you labelled by hand and kept apart: of its {rc.relevant} relevant records, the first round kept
+      {rc.kept}.
+
+      That gives an estimate of {rc.est}, with a 95% interval from {rc.lo} to {rc.hi}. {rc.caveat}
+
+      {rc.why}
+
+      {rc.advice}
+
+      Illustrative: invented papers, not evidence about any method.
+    fallback: |
+      Recall is the share of the relevant papers that screening kept. WIDER estimates it on the validation sample,
+      which you labelled by hand and kept apart, and gives a 95% interval with it. A small sample gives a wide
+      interval; a bigger validation sample narrows it. With few relevant records, all of them kept, the interval
+      still reaches well below 100%: that is how much doubt so few records leave.
+
+      Illustrative: invented papers, not evidence about any method. The screening rounds of this demo are not
+      recorded yet, so this card has no numbers.
+  - id: illustrative
+    title: Illustrative, not validated
+    body: |
+      Everything in this demo is invented: the papers, the databases, Reviewer A and the numbers. The ranking and
+      screening results were recorded once from real models on these invented papers and are replayed; nothing is
+      worked out when you press a button.
+
+      So the numbers show how WIDER reports results, not how well any model or method works. To learn that for
+      your own review, WIDER gives you the tools: seed papers kept aside, a validation sample kept apart, and
+      recall with its interval.
+
+end:
+  title: Start a review of your own
+  intro: |
+    WIDER runs on your own computer. Your records stay there; an online AI model gets titles and abstracts only if
+    you choose one and allow it.
+  commands:
+    - command: wider init <folder>
+      says: makes a new project folder for your review
+    - command: wider ui
+      says: opens this interface for it, in your browser, on your computer
+  rows:
+    - stage: Question
+      you: The question, and what to include and exclude.
+      wider: Keeps them and shows them to the AI model, word for word.
+      tradeoff: Narrow rules screen quicker; broad rules miss less.
+    - stage: Search strings
+      you: Concepts, synonyms and seed papers; you search each database yourself.
+      wider: Suggests synonyms, checks the search against seed papers.
+      tradeoff: A broader search misses less but gives more to screen.
+    - stage: Deduplication
+      you: The pairs WIDER is not sure about.
+      wider: Merges clear duplicates and asks about the rest.
+      tradeoff: Merging two papers loses one; keeping a duplicate costs a second read.
+    - stage: Ranking
+      you: The anchor sentences; whether the order is good enough.
+      wider: Scores and orders the records; shows where seed papers land.
+      tradeoff: Ranking shows where to look first; a low rank is no reason to exclude.
+    - stage: Samples
+      you: The labels, by hand.
+      wider: Draws a development and a validation sample.
+      tradeoff: A bigger validation sample takes longer but gives a more precise estimate.
+    - stage: Screening
+      you: The model, the instructions, a look at disagreements.
+      wider: Two reads per record, and a third where they differ.
+      tradeoff: More reads cost more but catch more slips.
+    - stage: Recall
+      you: Whether the estimate is good enough to stop.
+      wider: Estimates recall with its 95% interval.
+      tradeoff: A narrower interval needs more labelling.

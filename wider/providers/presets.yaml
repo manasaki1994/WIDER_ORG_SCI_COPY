@@ -1,0 +1,362 @@
+# Backend presets: the catalogue the setup page, `wider providers presets|detect|add --preset` and the API read.
+# Adding from a preset copies every value into project.yaml; `preset` there is only a label, so editing this file
+# never changes a saved backend. Keys are named by environment variable only, never stored.
+# Model ids are outside facts: a list holds only ids checked against the vendor's own page or tool on the day named
+# in `checked`; unchecked ids are left out and the researcher picks, loads or types a model.
+
+presets:
+  # ----- agentic CLIs (one process per call, empty temp folder, no tools) -----
+  - id: claude-code
+    family: cli
+    kind: cli_agent
+    label: Claude Code CLI
+    vendor: Anthropic
+    defaults:
+      model: claude-sonnet-5-5
+      command: ["claude", "-p", "--model", "{model}", "--system-prompt-file", "{system_file}",
+                "--tools", "", "--strict-mcp-config", "--setting-sources", "",
+                "--no-session-persistence", "--output-format", "json"]
+      extra:
+        stdin: user
+        output: claude_json
+        auth_patterns: ["not logged in", "please run /login", "invalid api key"]
+        auth_hint: "Claude Code is not signed in: run `claude login` in a terminal"
+    models: [claude-sonnet-5-5, claude-opus-5-5, claude-haiku-5-5, claude-fable-5-1]
+    detect:
+      binary: claude
+      version_args: ["--version"]
+      env: [ANTHROPIC_API_KEY]
+      credential_files: ["~/.claude/.credentials.json", "~/.claude.json"]
+      bundle_globs: ["~/Library/Application Support/Claude/claude-code/*/*/claude.app/Contents/MacOS/claude"]
+    billing: "Uses your Claude plan or ANTHROPIC_API_KEY; the CLI reports a cost per call"
+    checked: {"on": "2026-10-11", by: docs, source: "Anthropic model list in the Claude Code environment; claude --help"}
+    telemetry:
+      switch: null
+      checked: false
+      note: "This tool may send its own usage data to Anthropic; WIDER turns it off where the tool allows it. Not turned off: no switch was checked."
+
+  - id: codex
+    family: cli
+    kind: cli_agent
+    label: Codex CLI
+    vendor: OpenAI
+    defaults:
+      command: ["codex", "exec", "--json", "--model", "{model}", "--output-schema", "{schema_file}",
+                "--sandbox", "read-only", "--skip-git-repo-check", "--ephemeral", "--ignore-user-config",
+                "--ignore-rules", "-c", "developer_instructions={system_toml}", "-c", "web_search=\"disabled\"",
+                "-c", "features.shell_tool=false", "-c", "approval_policy=\"never\"", "-"]
+      extra:
+        stdin: user
+        output: codex_jsonl
+        strict_schema: true
+        auth_patterns: ["not logged in", "login"]
+        auth_hint: "Codex is not signed in: run `codex login` in a terminal"
+    models: []
+    detect:
+      binary: codex
+      version_args: ["--version"]
+      env: [OPENAI_API_KEY]
+      credential_files: ["~/.codex/auth.json"]
+      bundle_globs:
+        - "/Applications/Codex.app/Contents/Resources/codex-cli/bin/codex"
+        - "/Applications/ChatGPT.app/Contents/Resources/codex-cli/bin/codex"
+        - "~/.vscode/extensions/openai.chatgpt-*/bin/*/codex"
+    billing: "Uses your ChatGPT plan or OPENAI_API_KEY; no cost is reported per call"
+    checked: {"on": "2026-10-13", by: run, source: "real synthetic call with codex-cli 0.162.0-alpha.17.2 (developer_instructions applied, strict schema accepted); codex exec --help; learn.chatgpt.com config reference"}
+    telemetry:
+      switch: ["-c", "analytics.enabled=false", "-c", "otel.metrics_exporter=\"none\""]
+      checked: true
+      note: "This tool may send its own usage data to OpenAI; WIDER turns it off where the tool allows it (analytics.enabled=false and otel.metrics_exporter=none, from the Codex config reference, checked 13 Oct 2026)."
+
+  - id: gemini-cli
+    family: cli
+    kind: cli_agent
+    label: Gemini CLI
+    vendor: Google
+    experimental: true
+    limitations: [isolation_unverified]
+    defaults:
+      command: ["gemini", "--output-format", "json", "--model", "{model}", "--approval-mode", "plan",
+                "-e", "none", "-p", "Answer the request above."]
+      extra:
+        stdin: user
+        output: gemini_json
+        env: {GEMINI_SYSTEM_MD: "{system_file}"}
+        auth_exit_codes: [41]
+        fatal_exit_codes: [42]
+        retry_once_exit_codes: [53]
+        auth_hint: "Gemini CLI is not signed in: run `gemini` in a terminal and sign in, or set GEMINI_API_KEY"
+    models: []
+    detect:
+      binary: gemini
+      version_args: ["--version"]
+      env: [GEMINI_API_KEY, GOOGLE_API_KEY]
+      credential_files: ["~/.gemini/oauth_creds.json"]
+    billing: "Paid API key or Gemini Code Assist only; the free tier moved to Antigravity CLI on 18 Jun 2026"
+    checked: {"on": "2026-10-11", by: docs, source: "geminicli.com headless docs; google-gemini/gemini-cli source"}
+    telemetry:
+      switch: null
+      checked: false
+      note: "This tool may send its own usage data to Google; WIDER turns it off where the tool allows it. Could not be turned off: the switch is not yet checked."
+
+  - id: antigravity
+    family: cli
+    kind: cli_agent
+    label: Antigravity CLI
+    vendor: Google
+    experimental: true
+    limitations: [argv_exposure, instructions_in_prompt, instructions_unverified]
+    defaults:
+      command: ["agy", "-p", "{system}\n\n---\n\n{user}", "--output-format", "json", "--json-schema",
+                "{schema_file}", "--model", "{model}"]
+      extra:
+        stdin: none
+        output: agy_json
+        system_channel: prompt
+        auth_patterns: ["authentication required"]
+        auth_hint: "Antigravity CLI is not signed in: run `agy` in a terminal and sign in"
+    models: []
+    detect:
+      binary: agy
+      version_args: ["--version"]
+      env: []
+      credential_files: []
+    billing: "Free tier with a Google account, or your Google AI plan"
+    checked: {"on": "2026-10-11", by: docs, source: "antigravity.google/docs/cli/headless; antigravity-cli CHANGELOG"}
+    telemetry:
+      switch: null
+      checked: false
+      note: "This tool may send its own usage data to Google; WIDER turns it off where the tool allows it. Could not be turned off: no switch is known."
+
+  - id: custom-cli
+    family: cli
+    kind: cli_agent
+    label: Other command-line tool
+    vendor: ""
+    needs: [command, model]
+    defaults:
+      extra: {stdin: user, output: json}
+    models: []
+    detect: {}
+    billing: "Depends on the tool"
+    checked: {"on": "2026-10-11", by: docs, source: "WIDER's own CLI-agent adapter"}
+    telemetry:
+      switch: null
+      checked: false
+      note: "This tool may send its own usage data to its vendor; WIDER cannot turn that off for a tool it does not know."
+
+  # ----- cloud APIs -----
+  - id: openai
+    family: cloud
+    kind: openai_compat
+    label: OpenAI API
+    vendor: OpenAI
+    defaults: {base_url: "https://api.openai.com/v1", api_key_env: OPENAI_API_KEY}
+    models: []
+    detect: {env: [OPENAI_API_KEY]}
+    billing: "Paid per token; enter the prices from openai.com/api/pricing to see costs"
+    checked: {"on": "2026-10-11", by: docs, source: "platform.openai.com API reference"}
+
+  - id: anthropic
+    family: cloud
+    kind: anthropic
+    label: Anthropic API
+    vendor: Anthropic
+    defaults: {base_url: "https://api.anthropic.com", api_key_env: ANTHROPIC_API_KEY}
+    models: [claude-sonnet-5-5, claude-opus-5-5, claude-haiku-5-5, claude-fable-5-1]
+    detect: {env: [ANTHROPIC_API_KEY]}
+    billing: "Paid per token; enter the prices from anthropic.com/pricing to see costs"
+    checked: {"on": "2026-10-11", by: docs, source: "Anthropic model ids (Claude 5 family)"}
+
+  - id: openrouter
+    family: cloud
+    kind: openai_compat
+    label: OpenRouter
+    vendor: OpenRouter
+    defaults: {base_url: "https://openrouter.ai/api/v1", api_key_env: OPENROUTER_API_KEY}
+    models: []
+    detect: {env: [OPENROUTER_API_KEY]}
+    billing: "Paid per token, price depends on the model; enter it to see costs"
+    checked: {"on": "2026-10-11", by: docs, source: "openrouter.ai API docs"}
+
+  - id: gemini
+    family: cloud
+    kind: openai_compat
+    label: Google Gemini API
+    vendor: Google
+    defaults:
+      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
+      api_key_env: GEMINI_API_KEY
+    models: []
+    detect: {env: [GEMINI_API_KEY]}
+    billing: "Free tier with limits, then paid per token; enter the prices to see costs"
+    checked: {"on": "2026-10-11", by: docs, source: "ai.google.dev OpenAI compatibility"}
+
+  - id: azure-openai
+    family: cloud
+    kind: openai_compat
+    label: Azure OpenAI
+    vendor: Microsoft Azure
+    needs: [base_url]
+    defaults:
+      api_key_env: AZURE_OPENAI_API_KEY
+      extra: {auth: api-key}
+    models: []
+    detect: {env: [AZURE_OPENAI_API_KEY]}
+    billing: "Paid per token under your Azure subscription; enter the prices to see costs"
+    checked: {"on": "2026-10-11", by: docs, source: "learn.microsoft.com Azure OpenAI REST reference"}
+
+  - id: mistral
+    family: cloud
+    kind: openai_compat
+    label: Mistral API
+    vendor: Mistral AI
+    defaults: {base_url: "https://api.mistral.ai/v1", api_key_env: MISTRAL_API_KEY}
+    models: []
+    detect: {env: [MISTRAL_API_KEY]}
+    billing: "Paid per token; enter the prices to see costs"
+    checked: {"on": "2026-10-11", by: docs, source: "docs.mistral.ai API"}
+
+  - id: groq
+    family: cloud
+    kind: openai_compat
+    label: Groq
+    vendor: Groq
+    defaults: {base_url: "https://api.groq.com/openai/v1", api_key_env: GROQ_API_KEY}
+    models: []
+    detect: {env: [GROQ_API_KEY]}
+    billing: "Paid per token, free tier with limits; enter the prices to see costs"
+    checked: {"on": "2026-10-11", by: docs, source: "console.groq.com OpenAI compatibility"}
+
+  - id: together
+    family: cloud
+    kind: openai_compat
+    label: Together AI
+    vendor: Together AI
+    defaults: {base_url: "https://api.together.ai/v1", api_key_env: TOGETHER_API_KEY}
+    models: []
+    detect: {env: [TOGETHER_API_KEY]}
+    billing: "Paid per token; enter the prices to see costs"
+    checked: {"on": "2026-10-11", by: docs, source: "docs.together.ai OpenAI compatibility"}
+
+  - id: jev
+    family: cloud
+    kind: typesafe
+    label: Jev (TypeSafe AI)
+    vendor: TypeSafe AI
+    generates_text: false
+    defaults: {base_url: "https://api.typesafe.ai", api_key_env: TYPESAFE_API_KEY}
+    models: [jev-latest, jev-preview]
+    detect: {env: [TYPESAFE_API_KEY]}
+    billing: "About $0.04 per million input tokens, output free (vendor page, Oct 2026); enter the price yourself. Screening only: it cannot write text"
+    checked: {"on": "2026-10-11", by: docs, source: "docs.typesafe.ai quickstart and models"}
+
+  # ----- local model servers (free on this computer) -----
+  - id: ollama
+    family: local
+    kind: ollama
+    label: Ollama
+    vendor: Ollama
+    defaults:
+      base_url: "http://127.0.0.1:11434"
+      timeout_s: 1800
+      extra: {think: false}
+    models: []
+    detect: {ports: [{port: 11434, path: /api/tags}]}
+    billing: "Free on this computer; on another host, set a price if you pay for it. Models named *-cloud run on ollama.com"
+    checked: {"on": "2026-10-11", by: docs, source: "docs.ollama.com API"}
+
+  - id: lm-studio
+    family: local
+    kind: openai_compat
+    label: LM Studio
+    vendor: LM Studio
+    defaults: {base_url: "http://127.0.0.1:1234/v1", timeout_s: 1800}
+    models: []
+    detect: {ports: [{port: 1234, path: /v1/models}]}
+    billing: "Free on this computer; on another host, set a price if you pay for it"
+    checked: {"on": "2026-10-11", by: docs, source: "lmstudio.ai OpenAI compatibility"}
+
+  - id: vllm
+    family: local
+    kind: openai_compat
+    label: vLLM
+    vendor: vLLM
+    defaults: {base_url: "http://127.0.0.1:8000/v1", timeout_s: 1800}
+    models: []
+    detect: {ports: [{port: 8000, path: /v1/models}]}
+    billing: "Free on this computer; on another host, set a price if you pay for it"
+    checked: {"on": "2026-10-11", by: docs, source: "docs.vllm.ai OpenAI-compatible server"}
+
+  - id: llama-cpp
+    family: local
+    kind: openai_compat
+    label: llama.cpp server
+    vendor: llama.cpp
+    defaults: {base_url: "http://127.0.0.1:8080/v1", timeout_s: 1800}
+    models: []
+    detect: {ports: [{port: 9931, path: /v1/models}, {port: 8080, path: /v1/models}], health: /health}
+    billing: "Free on this computer; on another host, set a price if you pay for it"
+    checked: {"on": "2026-10-11", by: docs, source: "ggml-org/llama.cpp tools/server README (port 9931 unverified)"}
+
+embeddings:
+  - id: openai-3-small
+    family: cloud
+    kind: openai
+    label: OpenAI text-embedding-3-small
+    vendor: OpenAI
+    defaults: {model: text-embedding-3-small, api_key_env: OPENAI_API_KEY}
+    billing: "Paid per token; enter the price to see costs"
+  - id: openai-3-large
+    family: cloud
+    kind: openai
+    label: OpenAI text-embedding-3-large (1024 dimensions)
+    vendor: OpenAI
+    defaults: {model: text-embedding-3-large, api_key_env: OPENAI_API_KEY, dim: 1024}
+    billing: "Paid per token; enter the price to see costs"
+  - id: gemini-embedding
+    family: cloud
+    kind: openai_compat
+    label: Google gemini-embedding-001
+    vendor: Google
+    defaults:
+      model: gemini-embedding-001
+      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
+      api_key_env: GEMINI_API_KEY
+    billing: "Free tier with limits, then paid per token; enter the price to see costs"
+  - id: ollama-embed
+    family: local
+    kind: ollama
+    label: Ollama embedding model
+    vendor: Ollama
+    defaults: {model: nomic-embed-text, base_url: "http://127.0.0.1:11434"}
+    billing: "Free on this computer"
+  - id: lm-studio-embed
+    family: local
+    kind: openai_compat
+    label: LM Studio embedding model
+    vendor: LM Studio
+    needs: [model]
+    defaults: {base_url: "http://127.0.0.1:1234/v1"}
+    billing: "Free on this computer"
+  - id: bge-m3
+    family: local
+    kind: sentence_transformers
+    label: BAAI/bge-m3 (2.2 GB download)
+    vendor: BAAI
+    defaults: {model: BAAI/bge-m3, batch_size: 16}
+    billing: "Free on this computer; downloaded once on request"
+  - id: bge-base
+    family: local
+    kind: sentence_transformers
+    label: BAAI/bge-base-en-v1.5 (0.4 GB download)
+    vendor: BAAI
+    defaults: {model: BAAI/bge-base-en-v1.5}
+    billing: "Free on this computer; downloaded once on request"
+  - id: minilm
+    family: local
+    kind: sentence_transformers
+    label: all-MiniLM-L6-v2 (90 MB download)
+    vendor: sentence-transformers
+    defaults: {model: sentence-transformers/all-MiniLM-L6-v2}
+    billing: "Free on this computer; downloaded once on request"

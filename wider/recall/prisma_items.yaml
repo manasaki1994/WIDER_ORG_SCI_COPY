@@ -1,0 +1,447 @@
+# PRISMA 2020 and PRISMA-S items for the reporting assistant (prisma-reporting-assistant, design D1).
+# Per item: "no" (quoted: YAML 1.1 reads a bare no as false), section, topic, asks (one sentence paraphrased by WIDER,
+# not PRISMA's wording), official (the published checklist wording, copied unchanged), elements ({key, text}; an
+# element with outside_wider: true is a stage WIDER does not run), outside_wider (the whole item is such a stage),
+# draft (the item has a template draft, design D9) and, on PRISMA 2020 items only, related (PRISMA-S items that report
+# the same topic in detail). The loader builds the reverse links, so each PRISMA-S item knows its PRISMA 2020 item.
+#
+# Sources of the `official` wording (copied unchanged on 29 Oct 2026; `asks` and the element texts are WIDER's):
+# - PRISMA 2020: the checklist file PRISMA_2020_checklist.docx from https://www.prisma-statement.org/prisma-2020-checklist.
+#   Page MJ, McKenzie JE, Bossuyt PM, et al. The PRISMA 2020 statement: an updated guideline for reporting
+#   systematic reviews. BMJ 2021;372:n71. doi:10.1136/bmj.n71. Licensed under CC BY 4.0
+#   (https://creativecommons.org/licenses/by/4.0/).
+# - PRISMA-S: Table 1 of Rethlefsen ML, Kirtley S, Waffenschmidt S, et al. PRISMA-S: an extension to the PRISMA
+#   Statement for Reporting Literature Searches in Systematic Reviews. Syst Rev 2021;10:39.
+#   doi:10.1186/s13643-020-01542-z. Licensed under CC BY 4.0.
+#
+# `related` is WIDER's mapping, not PRISMA's: neither publication maps PRISMA-S items to PRISMA 2020 items. The
+# PRISMA 2020 explanation (BMJ 2021;372:n160) points to PRISMA-S under items 6 (what and when was searched) and
+# 7 (how); WIDER links PRISMA-S 1-7 and 13 to item 6, 8-12 and 14 to item 7, and 15-16 to item 16a.
+prisma_2020:
+  - "no": "1"
+    section: Title
+    topic: Title
+    asks: Say in the title that the report is a systematic review.
+    official: "Identify the report as a systematic review."
+    elements: [{key: identifies_sr, text: the title names the report as a systematic review}]
+  - "no": "2"
+    section: Abstract
+    topic: Abstract
+    asks: Give a structured abstract that follows the PRISMA 2020 for Abstracts checklist.
+    official: "See the PRISMA 2020 for Abstracts checklist."
+    elements: [{key: abstract_checklist, text: an abstract covering the PRISMA 2020 for Abstracts items}]
+  - "no": "3"
+    section: Introduction
+    topic: Rationale
+    asks: Explain why the review is needed, given what is already known.
+    official: "Describe the rationale for the review in the context of existing knowledge."
+    elements: [{key: rationale, text: the rationale in the context of existing knowledge}]
+  - "no": "4"
+    section: Introduction
+    topic: Objectives
+    asks: State the objectives or questions the review addresses.
+    official: "Provide an explicit statement of the objective(s) or question(s) the review addresses."
+    elements: [{key: question, text: the review's objectives or questions}]
+    draft: true
+  - "no": "5"
+    section: Methods
+    topic: Eligibility criteria
+    asks: Give the inclusion and exclusion criteria and how studies were grouped for the syntheses.
+    official: "Specify the inclusion and exclusion criteria for the review and how studies were grouped for the syntheses."
+    elements:
+      - {key: criteria, text: inclusion and exclusion criteria}
+      - {key: synthesis_groups, text: how studies were grouped for the syntheses, outside_wider: true}
+    draft: true
+  - "no": "6"
+    section: Methods
+    topic: Information sources
+    asks: Name every database, register, website, organisation, reference list and other source searched or consulted, with the date each was last searched or consulted.
+    official: "Specify all databases, registers, websites, organisations, reference lists and other sources searched or consulted to identify studies. Specify the date when each source was last searched or consulted."
+    elements:
+      - {key: databases, text: the databases and registers searched}
+      - {key: other_sources, text: "other sources (reference lists, websites, organisations, contacts)"}
+      - {key: dates, text: the date each source was last searched or consulted}
+    draft: true
+    related: [1, 2, 3, 4, 5, 6, 7, 13]
+  - "no": "7"
+    section: Methods
+    topic: Search strategy
+    asks: Give the full search strategies for all databases, registers and websites, with any filters and limits used.
+    official: "Present the full search strategies for all databases, registers and websites, including any filters and limits used."
+    elements:
+      - {key: strategies, text: search strategies for every source}
+      - {key: filters_limits, text: filters and limits}
+    draft: true
+    related: [8, 9, 10, 11, 12, 14]
+  - "no": "8"
+    section: Methods
+    topic: Selection process
+    asks: Say how it was decided whether a study met the criteria, how many reviewers screened each record and each report, whether they worked independently, and which automation tools were used.
+    official: "Specify the methods used to decide whether a study met the inclusion criteria of the review, including how many reviewers screened each record and each report retrieved, whether they worked independently, and if applicable, details of automation tools used in the process."
+    elements:
+      - {key: method, text: the methods used to decide eligibility}
+      - {key: reviewers_per_record, text: how many reviewers screened each record}
+      - {key: reviewers_per_report, text: how many reviewers assessed each full-text report, outside_wider: true}
+      - {key: independence, text: whether the reviewers worked independently}
+      - {key: automation, text: the automation tools used and how}
+    draft: true
+  - "no": "9"
+    section: Methods
+    topic: Data collection process
+    asks: Say how data were collected from reports, by how many reviewers, whether independently, any contact with investigators and any automation tools used.
+    official: "Specify the methods used to collect data from reports, including how many reviewers collected data from each report, whether they worked independently, any processes for obtaining or confirming data from study investigators, and if applicable, details of automation tools used in the process."
+    outside_wider: true
+    elements:
+      - {key: method, text: the data collection methods}
+      - {key: reviewers, text: how many reviewers collected data and whether independently}
+      - {key: contact, text: how data were obtained or confirmed from study investigators}
+      - {key: automation, text: the automation tools used}
+  - "no": 10a
+    section: Methods
+    topic: Data items
+    asks: List and define the outcomes for which data were sought and which results were sought for each.
+    official: "List and define all outcomes for which data were sought. Specify whether all results that were compatible with each outcome domain in each study were sought (e.g. for all measures, time points, analyses), and if not, the methods used to decide which results to collect."
+    outside_wider: true
+    elements: [{key: outcomes, text: the outcomes and which results were sought}]
+  - "no": 10b
+    section: Methods
+    topic: Data items
+    asks: List and define the other variables for which data were sought and the assumptions made about missing or unclear information.
+    official: "List and define all other variables for which data were sought (e.g. participant and intervention characteristics, funding sources). Describe any assumptions made about any missing or unclear information."
+    outside_wider: true
+    elements:
+      - {key: other_variables, text: the other variables sought}
+      - {key: missing_info, text: assumptions about missing or unclear information}
+  - "no": "11"
+    section: Methods
+    topic: Study risk of bias assessment
+    asks: Say how the risk of bias of the included studies was assessed, with the tool, the reviewers and any automation.
+    official: "Specify the methods used to assess risk of bias in the included studies, including details of the tool(s) used, how many reviewers assessed each study and whether they worked independently, and if applicable, details of automation tools used in the process."
+    outside_wider: true
+    elements:
+      - {key: tool, text: the risk-of-bias tool and how it was used}
+      - {key: reviewers, text: how many reviewers assessed each study and whether independently}
+      - {key: automation, text: the automation tools used}
+  - "no": "12"
+    section: Methods
+    topic: Effect measures
+    asks: Give the effect measures used for each outcome in the synthesis or presentation of results.
+    official: "Specify for each outcome the effect measure(s) (e.g. risk ratio, mean difference) used in the synthesis or presentation of results."
+    outside_wider: true
+    elements: [{key: measures, text: the effect measure for each outcome}]
+  - "no": 13a
+    section: Methods
+    topic: Synthesis methods
+    asks: Say how it was decided which studies were eligible for each synthesis.
+    official: "Describe the processes used to decide which studies were eligible for each synthesis (e.g. tabulating the study intervention characteristics and comparing against the planned groups for each synthesis (item #5))."
+    outside_wider: true
+    elements: [{key: eligibility_for_synthesis, text: how studies were chosen for each synthesis}]
+  - "no": 13b
+    section: Methods
+    topic: Synthesis methods
+    asks: Describe any preparation of the data for presentation or synthesis.
+    official: "Describe any methods required to prepare the data for presentation or synthesis, such as handling of missing summary statistics, or data conversions."
+    outside_wider: true
+    elements: [{key: data_preparation, text: how the data were prepared}]
+  - "no": 13c
+    section: Methods
+    topic: Synthesis methods
+    asks: Describe how the results of individual studies and syntheses were tabulated or displayed.
+    official: "Describe any methods used to tabulate or visually display results of individual studies and syntheses."
+    outside_wider: true
+    elements: [{key: display, text: how results were tabulated or displayed}]
+  - "no": 13d
+    section: Methods
+    topic: Synthesis methods
+    asks: Describe the methods used to synthesise results and why they were chosen.
+    official: "Describe any methods used to synthesize results and provide a rationale for the choice(s). If meta-analysis was performed, describe the model(s), method(s) to identify the presence and extent of statistical heterogeneity, and software package(s) used."
+    outside_wider: true
+    elements: [{key: synthesis_method, text: the synthesis methods and their rationale}]
+  - "no": 13e
+    section: Methods
+    topic: Synthesis methods
+    asks: Describe the methods used to explore possible causes of heterogeneity.
+    official: "Describe any methods used to explore possible causes of heterogeneity among study results (e.g. subgroup analysis, meta-regression)."
+    outside_wider: true
+    elements: [{key: heterogeneity, text: the methods to explore heterogeneity}]
+  - "no": 13f
+    section: Methods
+    topic: Synthesis methods
+    asks: Describe any sensitivity analyses used to judge the robustness of the results.
+    official: "Describe any sensitivity analyses conducted to assess robustness of the synthesized results."
+    outside_wider: true
+    elements: [{key: sensitivity, text: the sensitivity analyses}]
+  - "no": "14"
+    section: Methods
+    topic: Reporting bias assessment
+    asks: Say how the risk of bias due to missing results was assessed.
+    official: "Describe any methods used to assess risk of bias due to missing results in a synthesis (arising from reporting biases)."
+    outside_wider: true
+    elements: [{key: method, text: the method to assess bias due to missing results}]
+  - "no": "15"
+    section: Methods
+    topic: Certainty assessment
+    asks: Say how certainty or confidence in the body of evidence was assessed.
+    official: "Describe any methods used to assess certainty (or confidence) in the body of evidence for an outcome."
+    outside_wider: true
+    elements: [{key: method, text: the method to assess certainty in the evidence}]
+  - "no": 16a
+    section: Results
+    topic: Study selection
+    asks: Give the results of the search and selection, from the records identified to the studies included, ideally in a flow diagram.
+    official: "Describe the results of the search and selection process, from the number of records identified in the search to the number of studies included in the review, ideally using a flow diagram."
+    elements:
+      - {key: counts, text: the numbers of records at each step of the search and selection}
+      - {key: flow_diagram, text: a flow diagram}
+    draft: true
+    related: [15, 16]
+  - "no": 16b
+    section: Results
+    topic: Study selection
+    asks: Cite the studies that seemed to meet the criteria but were excluded, and say why.
+    official: "Cite studies that might appear to meet the inclusion criteria, but which were excluded, and explain why they were excluded."
+    elements: [{key: near_misses, text: the studies that nearly met the criteria and why they were excluded}]
+  - "no": "17"
+    section: Results
+    topic: Study characteristics
+    asks: Cite each included study and give its characteristics.
+    official: "Cite each included study and present its characteristics."
+    outside_wider: true
+    elements: [{key: characteristics, text: each included study and its characteristics}]
+  - "no": "18"
+    section: Results
+    topic: Risk of bias in studies
+    asks: Give the risk-of-bias assessment of each included study.
+    official: "Present assessments of risk of bias for each included study."
+    outside_wider: true
+    elements: [{key: assessments, text: the risk-of-bias assessment of each study}]
+  - "no": "19"
+    section: Results
+    topic: Results of individual studies
+    asks: For each outcome, give each study's summary statistics and effect estimate with its precision.
+    official: "For all outcomes, present, for each study: (a) summary statistics for each group (where appropriate) and (b) an effect estimate and its precision (e.g. confidence/credible interval), ideally using structured tables or plots."
+    outside_wider: true
+    elements: [{key: study_results, text: each study's results for each outcome}]
+  - "no": 20a
+    section: Results
+    topic: Results of syntheses
+    asks: Summarise the characteristics and risk of bias of the studies in each synthesis.
+    official: "For each synthesis, briefly summarise the characteristics and risk of bias among contributing studies."
+    outside_wider: true
+    elements: [{key: synthesis_studies, text: the studies in each synthesis}]
+  - "no": 20b
+    section: Results
+    topic: Results of syntheses
+    asks: Give the results of every statistical synthesis with its precision and heterogeneity.
+    official: "Present results of all statistical syntheses conducted. If meta-analysis was done, present for each the summary estimate and its precision (e.g. confidence/credible interval) and measures of statistical heterogeneity. If comparing groups, describe the direction of the effect."
+    outside_wider: true
+    elements: [{key: synthesis_results, text: the results of each synthesis}]
+  - "no": 20c
+    section: Results
+    topic: Results of syntheses
+    asks: Give the results of the investigations of possible causes of heterogeneity.
+    official: "Present results of all investigations of possible causes of heterogeneity among study results."
+    outside_wider: true
+    elements: [{key: heterogeneity_results, text: the results of the heterogeneity investigations}]
+  - "no": 20d
+    section: Results
+    topic: Results of syntheses
+    asks: Give the results of the sensitivity analyses.
+    official: "Present results of all sensitivity analyses conducted to assess the robustness of the synthesized results."
+    outside_wider: true
+    elements: [{key: sensitivity_results, text: the results of the sensitivity analyses}]
+  - "no": "21"
+    section: Results
+    topic: Reporting biases
+    asks: Give the assessments of risk of bias due to missing results for each synthesis.
+    official: "Present assessments of risk of bias due to missing results (arising from reporting biases) for each synthesis assessed."
+    outside_wider: true
+    elements: [{key: reporting_bias, text: the assessments of bias due to missing results}]
+  - "no": "22"
+    section: Results
+    topic: Certainty of evidence
+    asks: Give the certainty or confidence in the body of evidence for each outcome.
+    official: "Present assessments of certainty (or confidence) in the body of evidence for each outcome assessed."
+    outside_wider: true
+    elements: [{key: certainty, text: the certainty of the evidence for each outcome}]
+  - "no": 23a
+    section: Discussion
+    topic: Discussion
+    asks: Interpret the results in the context of other evidence.
+    official: "Provide a general interpretation of the results in the context of other evidence."
+    outside_wider: true
+    elements: [{key: interpretation, text: the interpretation of the results}]
+  - "no": 23b
+    section: Discussion
+    topic: Discussion
+    asks: Discuss the limitations of the evidence included in the review.
+    official: "Discuss any limitations of the evidence included in the review."
+    outside_wider: true
+    elements: [{key: evidence_limits, text: the limitations of the evidence}]
+  - "no": 23c
+    section: Discussion
+    topic: Discussion
+    asks: Discuss the limitations of the review processes used.
+    official: "Discuss any limitations of the review processes used."
+    elements: [{key: process_limits, text: the limitations of the review processes}]
+    draft: true
+  - "no": 23d
+    section: Discussion
+    topic: Discussion
+    asks: Discuss what the results mean for practice, policy and future research.
+    official: "Discuss implications of the results for practice, policy, and future research."
+    outside_wider: true
+    elements: [{key: implications, text: "the implications for practice, policy and research"}]
+  - "no": 24a
+    section: Other information
+    topic: Registration and protocol
+    asks: Give the registration details of the review, or say that it was not registered.
+    official: "Provide registration information for the review, including register name and registration number, or state that the review was not registered."
+    outside_wider: true
+    elements: [{key: registration, text: "the register name and number, or that the review was not registered"}]
+  - "no": 24b
+    section: Other information
+    topic: Registration and protocol
+    asks: Say where the review protocol can be accessed, or that no protocol was prepared.
+    official: "Indicate where the review protocol can be accessed, or state that a protocol was not prepared."
+    elements: [{key: protocol_access, text: where the protocol can be accessed}]
+  - "no": 24c
+    section: Other information
+    topic: Registration and protocol
+    asks: Describe any amendments to the information given at registration or in the protocol.
+    official: "Describe and explain any amendments to information provided at registration or in the protocol."
+    elements: [{key: amendments, text: the amendments to the registration or protocol}]
+  - "no": "25"
+    section: Other information
+    topic: Support
+    asks: Describe the financial and non-financial support for the review and the role of the funders or sponsors.
+    official: "Describe sources of financial or non-financial support for the review, and the role of the funders or sponsors in the review."
+    outside_wider: true
+    elements: [{key: support, text: the sources of support and the funders' role}]
+  - "no": "26"
+    section: Other information
+    topic: Competing interests
+    asks: Declare the competing interests of the review authors.
+    official: "Declare any competing interests of review authors."
+    outside_wider: true
+    elements: [{key: interests, text: the authors' competing interests}]
+  - "no": "27"
+    section: Other information
+    topic: Availability of data, code and other materials
+    asks: Say which materials are publicly available and where (data collection forms, extracted data, analysis data, code and other materials).
+    official: "Report which of the following are publicly available and where they can be found: template data collection forms; data extracted from included studies; data used for all analyses; analytic code; any other materials used in the review."
+    elements:
+      - {key: materials, text: which materials are available}
+      - {key: location, text: where they can be found}
+    draft: true
+
+prisma_s:
+  - "no": 1
+    section: Information sources and methods
+    topic: Database name
+    asks: Name each database searched and the platform used to search it.
+    official: "Name each individual database searched, stating the platform for each."
+    elements: [{key: database_and_platform, text: each database with its platform}]
+    draft: true
+  - "no": 2
+    section: Information sources and methods
+    topic: Multi-database searching
+    asks: When several databases were searched at once on one platform, name the platform and every database searched.
+    official: "If databases were searched simultaneously on a single platform, state the name of the platform, listing all of the databases searched."
+    elements: [{key: multi_listing, text: the platform and every database searched on it at once}]
+  - "no": 3
+    section: Information sources and methods
+    topic: Study registries
+    asks: Name every study registry that was searched.
+    official: "List any study registries searched."
+    elements: [{key: registries, text: the study registries searched}]
+  - "no": 4
+    section: Information sources and methods
+    topic: Online resources and browsing
+    asks: Describe any online or print sources searched or browsed on purpose, such as tables of contents, conference proceedings or websites, and how.
+    official: "Describe any online or print source purposefully searched or browsed (e.g., tables of contents, print conference proceedings, web sites), and how this was done."
+    elements: [{key: browsing, text: the sources browsed and how}]
+  - "no": 5
+    section: Information sources and methods
+    topic: Citation searching
+    asks: Say whether cited or citing references were examined, and how.
+    official: "Indicate whether cited references or citing references were examined, and describe any methods used for locating cited/citing references (e.g., browsing reference lists, using a citation index, setting up email alerts for references citing included studies)."
+    elements:
+      - {key: directions, text: whether cited and citing references were examined}
+      - {key: procedure, text: how the citation searching was done}
+    draft: true
+  - "no": 6
+    section: Information sources and methods
+    topic: Contacts
+    asks: Say whether additional studies or data were sought by contacting authors, experts, manufacturers or others.
+    official: "Indicate whether additional studies or data were sought by contacting authors, experts, manufacturers, or others."
+    elements: [{key: contacts, text: who was contacted for studies or data}]
+  - "no": 7
+    section: Information sources and methods
+    topic: Other methods
+    asks: Describe any other information sources or search methods used.
+    official: "Describe any additional information sources or search methods used."
+    elements: [{key: other_methods, text: the other sources and methods}]
+    draft: true
+  - "no": 8
+    section: Search strategies
+    topic: Full search strategies
+    asks: Give each database's full search strategy exactly as run.
+    official: "Include the search strategies for each database and information source, copied and pasted exactly as run."
+    elements: [{key: exact_strings, text: each full search strategy exactly as run}]
+    draft: true
+  - "no": 9
+    section: Search strategies
+    topic: Limits and restrictions
+    asks: Give any limits applied to the searches, such as date or language, and justify them.
+    official: "Specify that no limits were used, or describe any limits or restrictions applied to a search (e.g., date or time period, language, study design) and provide justification for their use."
+    elements: [{key: limits, text: the limits and their justification}]
+    draft: true
+  - "no": 10
+    section: Search strategies
+    topic: Search filters
+    asks: Say whether published search filters were used, cite them, and describe any changes made.
+    official: "Indicate whether published search filters were used (as originally designed or modified), and if so, cite the filter(s) used."
+    elements: [{key: filters, text: "the search filters used, with citations and changes"}]
+  - "no": 11
+    section: Search strategies
+    topic: Prior work
+    asks: Say whether search strategies from other studies were reused or adapted, and cite them.
+    official: "Indicate when search strategies from other literature reviews were adapted or reused for a substantive part or all of the search, citing the previous review(s)."
+    elements: [{key: reused_strategies, text: the reused or adapted strategies and their sources}]
+  - "no": 12
+    section: Search strategies
+    topic: Updates
+    asks: Report the methods used to update the search.
+    official: "Report the methods used to update the search(es) (e.g., rerunning searches, email alerts)."
+    elements: [{key: update_method, text: how the search was updated}]
+  - "no": 13
+    section: Search strategies
+    topic: Dates of searches
+    asks: Give the date of the last search of each source.
+    official: "For each search strategy, provide the date when the last search occurred."
+    elements: [{key: search_dates, text: the date each source was last searched}]
+    draft: true
+  - "no": 14
+    section: Peer review
+    topic: Peer review
+    asks: Describe any peer review of the search strategies.
+    official: "Describe any search peer review process."
+    elements: [{key: peer_review, text: the peer review of the search and how it was done}]
+    draft: true
+  - "no": 15
+    section: Managing records
+    topic: Total records
+    asks: Give the total number of records found in each database and other source.
+    official: "Document the total number of records identified from each database and other information sources."
+    elements: [{key: totals, text: the number of records from each source}]
+    draft: true
+  - "no": 16
+    section: Managing records
+    topic: Deduplication
+    asks: Describe how duplicates were removed and with which software.
+    official: "Describe the processes and any software used to deduplicate records from multiple database searches and other information sources."
+    elements:
+      - {key: dedup_process, text: the deduplication process}
+      - {key: software, text: the software used}
+    draft: true

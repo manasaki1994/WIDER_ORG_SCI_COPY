@@ -1,0 +1,15 @@
+topics:
+  alpha:
+    sources: [wider/recall/estimate.py]
+    text: e24428230aeff199246b28c65d15bfc4ae70f87fa3a390b6576989a8210079db
+    status: reviewed
+    date: 2026-10-30
+  beta:
+    sources: ["tests/fixtures/methods/src/method_b.py:weight"]
+    status: drafted
+    date: 2026-10-30
+glossary: {status: drafted, date: 2026-10-30}
+python: "3.11"
+outside:
+  modules: {}
+  settings: {}

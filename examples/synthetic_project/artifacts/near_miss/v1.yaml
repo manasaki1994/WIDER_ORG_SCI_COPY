@@ -1,0 +1,69 @@
+near_miss:
+- key: participation_schemes
+  breaks: e2
+  decision: exclude
+  note: formal representation, not the employee's own discretionary communication
+  text: This study examines whether works councils and other formal participation schemes raise establishment productivity
+    and lower turnover. We compare firms with and without codetermination bodies using matched establishment data.
+    The question is whether formal representation improves firm outcomes. This study examines whether works councils
+    and other formal participation schemes raise establishment productivity and lower turnover. We compare firms
+    with and without codetermination bodies using matched establishment data. The question is whether formal representation
+    improves firm outcomes.
+- key: grievance_procedures
+  breaks: e2
+  decision: maybe
+  note: a formal channel; include when filing is studied as the employee's choice
+  text: This study examines grievance filing rates and arbitration outcomes in unionised plants. We compare plants
+    by procedure design, steward presence and case type, using case records over ten years. The question is what
+    shapes the volume and resolution of formal grievances. This study examines grievance filing rates and arbitration
+    outcomes in unionised plants. We compare plants by procedure design, steward presence and case type, using case
+    records over ten years. The question is what shapes the volume and resolution of formal grievances.
+- key: citizenship_composite
+  breaks: boundary
+  decision: maybe
+  note: composite citizenship scales; include when the relevant dimension is analysed separately
+  text: This study examines the relation between organisational citizenship behaviour and unit performance across
+    published studies. We compare helping, compliance and civic virtue as a composite and test moderators such as
+    industry and measurement source. The question is how strongly citizenship relates to performance. This study
+    examines the relation between organisational citizenship behaviour and unit performance across published studies.
+    We compare helping, compliance and civic virtue as a composite and test moderators such as industry and measurement
+    source. The question is how strongly citizenship relates to performance.
+- key: psychological_safety
+  breaks: e1
+  decision: maybe
+  note: a climate construct; include when the behaviour itself is also measured
+  text: This study examines psychological safety climate and team learning behaviour in surgical units. We compare
+    units by leader coaching and team tenure and relate the climate to learning and error rates. The question is
+    whether a safe interpersonal climate supports team learning. This study examines psychological safety climate
+    and team learning behaviour in surgical units. We compare units by leader coaching and team tenure and relate
+    the climate to learning and error rates. The question is whether a safe interpersonal climate supports team
+    learning.
+- key: customer_voice
+  breaks: e4
+  decision: exclude
+  note: customers, not employees
+  text: This study examines how firms handle customer complaints and whether service recovery restores repurchase
+    intentions. We compare compensation, apology and speed of response in a retail setting using a scenario experiment
+    with consumers. The question is which recovery tactics retain complaining customers. This study examines how
+    firms handle customer complaints and whether service recovery restores repurchase intentions. We compare compensation,
+    apology and speed of response in a retail setting using a scenario experiment with consumers. The question is
+    which recovery tactics retain complaining customers.
+- key: citizen_participation
+  breaks: e4
+  decision: exclude
+  note: citizens addressing government, not employees
+  text: This study examines citizen participation in municipal budgeting and its effect on residents' trust in local
+    government. We compare municipalities with and without deliberative budgeting forums using panel surveys of
+    residents. The question is whether participatory budgeting builds trust. This study examines citizen participation
+    in municipal budgeting and its effect on residents' trust in local government. We compare municipalities with
+    and without deliberative budgeting forums using panel surveys of residents. The question is whether participatory
+    budgeting builds trust.
+- key: peer_information_sharing
+  breaks: e2
+  decision: exclude
+  note: lateral exchange among peers, not directed at someone who could act
+  text: This study examines information sharing among members of distributed software teams and its relation to
+    coordination quality. We compare teams by time-zone spread and tool use, using logs and surveys. The question
+    is what supports knowledge exchange between peers. This study examines information sharing among members of
+    distributed software teams and its relation to coordination quality. We compare teams by time-zone spread and
+    tool use, using logs and surveys. The question is what supports knowledge exchange between peers.
